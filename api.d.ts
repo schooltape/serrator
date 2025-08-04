@@ -893,6 +893,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/calendar/ajax/full": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get full calendar events for a given user
+         * @description Returns a list of calendar events for the user, including classes, pastoral care, ensembles, activities, due work, excursions, assemblies, and other scheduled items.
+         *
+         */
+        get: operations["getCalendarAjaxFull"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/calendar/event/create": {
         parameters: {
             query?: never;
@@ -2517,6 +2538,89 @@ export interface components {
          * @enum {integer}
          */
         queryBoolean: 0 | 1;
+        eventAjaxData: {
+            meta?: {
+                /** @description Unique identifier for the event. */
+                eventId?: number;
+                /**
+                 * @description Human-readable time range for the event.
+                 * @example 9:00am–9:00pm
+                 */
+                time?: string;
+                /** @description Title of the event. */
+                title?: string;
+                /** @description More details about the event. */
+                detail?: string;
+                /** @description Location name or description. */
+                location?: string;
+                eventType?: string;
+                variant?: string;
+                /**
+                 * @description Event category or type.
+                 * @example Sport
+                 */
+                type?: string;
+                author?: string;
+                authorId?: number;
+                level?: string;
+                /** @description Whether the event is completed. */
+                completed?: boolean;
+                /** @description Name of the folder associated with the event. */
+                folderName?: string;
+                /** @description ID of the folder associated with the event. */
+                folderId?: number;
+                workType?: string;
+                /** @description ID of the work type. */
+                workTypeId?: number;
+                weighted?: number;
+                /**
+                 * @description Assessment type.
+                 * @example project
+                 */
+                assessmentType?: string;
+                /** @description Colour associated with the event. */
+                colour?: string | null;
+                /** @description Whether the event is editable. */
+                editable?: boolean;
+            };
+            /** @description List of related links. */
+            links?: Record<string, never>[];
+            styles?: {
+                /** @description Whether the event is visible. */
+                visible?: boolean;
+            };
+            attendance?: {
+                icon?: boolean;
+                status?: boolean;
+                requestButton?: boolean;
+                listButton?: boolean;
+            };
+            custom?: {
+                modifyLink?: boolean;
+                moreDetailsLink?: string;
+            };
+        };
+        eventAjax: {
+            resourceId?: string | null;
+            /** @description The event title. */
+            title?: string;
+            /** @description Start time or date of the event (ISO 8601). */
+            start?: string;
+            /** @description End time or date of the event (ISO 8601). */
+            end?: string;
+            /** @description Whether the event is editable by the user. */
+            editable?: boolean;
+            /** @description Whether the event lasts all day. */
+            allDay?: boolean;
+            /**
+             * @description Hex code for the event color.
+             * @example #ff7537
+             */
+            color?: string;
+            className?: string;
+            /** @description Additional data related to the event. */
+            data?: components["schemas"]["eventAjaxData"];
+        }[];
         eventCommonProps: {
             /**
              * @description Whether the event is an all day event.
@@ -2716,7 +2820,7 @@ export interface components {
                 type?: string;
                 /**
                  * @description CSS colour string
-                 * @example null
+                 * @example #ff7537
                  */
                 color?: string;
             };
@@ -4913,6 +5017,15 @@ export interface components {
             };
             content?: never;
         };
+        /** @description A list of calendar events */
+        "event-list": {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["eventAjax"];
+            };
+        };
         /** @description Calendar event attendance. */
         "calendarAttendance-item": {
             headers: {
@@ -6879,6 +6992,29 @@ export interface operations {
                     })[];
                 };
             };
+            default: components["responses"]["problem"];
+        };
+    };
+    getCalendarAjaxFull: {
+        parameters: {
+            query: {
+                /** @description The ID of the user for whom to retrieve calendar events. */
+                userId: components["schemas"]["id"];
+                /** @description Unix timestamp representing the start of the date range for which to retrieve calendar events. */
+                start?: number;
+                /** @description Unix timestamp representing the end of the date range for which to retrieve calendar events. */
+                end?: number;
+                componentInstanceId?: components["schemas"]["id"];
+                /** @description If true, only timetable-based events are returned. */
+                timetableCalendar?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["event-list"];
             default: components["responses"]["problem"];
         };
     };
