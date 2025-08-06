@@ -1,11 +1,13 @@
 # Consumable Endpoints
 
+`{id}` represents your user ID
+
 Endpoints that are consumable by students:
 
 - `/api/search`
 - `/api/session`
-- `/api/user/{id}` (not documented)
-- `/calendar/ajax/full`
+- `/api/user/{id}`
+- `/calendar/ajax/full` (not documented)
 - `/learning/evidenceFeed/user/{id}`
 - `/news/lists/feed`
 - `/news/saved/{id}/add`
