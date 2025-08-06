@@ -1,17 +1,8 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { getClasses } from "../src/classes";
-import * as dotenv from "dotenv";
+import getEnv from "./env";
 
-dotenv.config();
-
-const API_URL = process.env.BASE_URL;
-if (!API_URL) {
-  throw new Error("BASE_URL is not defined in the environment variables");
-}
-const JWT = process.env.JWT;
-if (!JWT) {
-  throw new Error("JWT is not defined in the environment variables");
-}
+const { API_URL, JWT } = getEnv();
 
 describe("getClasses", () => {
   let html: string;
