@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll } from "vitest";
-import { getClassIds } from "../src/classes";
+import { getClasses } from "../src/classes";
 import { JSDOM } from "jsdom";
 import * as dotenv from "dotenv";
 
@@ -24,7 +24,7 @@ describe("getClasses", () => {
   });
 
   it("should extract class info from the HTML document", () => {
-    const result = getClassIds(document);
+    const result = getClasses(document);
     console.log(result);
 
     expect(Array.isArray(result)).toBe(true);
@@ -34,6 +34,10 @@ describe("getClasses", () => {
       expect(cls.id).toBeDefined();
       expect(typeof cls.id).toBe("string");
       expect(cls.id).toMatch(/^\d+$/); // id should be a string of numbers
+
+      // expect(cls).toHaveProperty("code");
+      // expect(cls.code).toBeDefined();
+      // expect(typeof cls.code).toBe("string");
 
       expect(cls).toHaveProperty("url");
       expect(cls.url).toBeDefined();
