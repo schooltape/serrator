@@ -3,6 +3,8 @@
  * route: /learning/classes
  */
 
+import { JSDOM } from "jsdom";
+
 interface SchoolboxClass {
   id: string;
   // code: string;
@@ -11,26 +13,30 @@ interface SchoolboxClass {
   imageUrl: string;
 }
 
-export function getClasses(document: Document): SchoolboxClass[] {
+export function getClasses(html: string): SchoolboxClass[] {
+  const dom = new JSDOM(html);
+  const document = dom.window.document;
+
   const classes: SchoolboxClass[] = [];
 
   document.querySelectorAll(".v-card:has(.classes)").forEach((el) => {
-    const url = el
-      .querySelector(".card-content > div > h3 > a")
-      .getAttribute("href");
+    const url =
+      (
+        el.querySelector(".card-content > div > h3 > a") as HTMLElement
+      ).getAttribute("href") ?? "";
 
-    const id = url.split("/").pop();
+    const id = url.split("/").pop() as string;
 
     // const code = el.querySelector(".card-content > div > p").textContent;
 
-    const name = el
-      .querySelector(".card-content > div > h3 > a")
-      .textContent.trim();
+    const name = (
+      el.querySelector(".card-content > div > h3 > a") as HTMLElement
+    ).textContent.trim();
 
     const imageUrl =
-      el
-        .querySelector("a > div.card-class-image")
-        ?.style.backgroundImage.match(/"(.*?)"/)?.[1] || "";
+      (
+        el.querySelector("a > div.card-class-image") as HTMLElement
+      )?.style.backgroundImage.match(/"(.*?)"/)?.[1] || "";
 
     classes.push({
       id,

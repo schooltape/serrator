@@ -1,19 +1,22 @@
 {
   "name": "serrator",
+  "type": "module",
   "module": "index.ts",
-  "devDependencies": {
-    "@types/bun": "latest",
-    "dotenv": "^17.2.1",
-    "jsdom": "^26.1.0",
-    "openapi-typescript": "^7.8.0",
-    "vitest": "^3.2.4"
-  },
-  "peerDependencies": {
-    "typescript": "^5.9.2"
-  },
   "scripts": {
     "test": "vitest run",
     "generate-types": "openapi-typescript ./api/openapi/openapi.yaml -o ./api.d.ts"
   },
-  "type": "module"
+  "dependencies": {
+    "jsdom": "^26.1.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.9.2"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/jsdom": "^21.1.7",
+    "dotenv": "^17.2.1",
+    "openapi-typescript": "^7.8.0",
+    "vitest": "^3.2.4"
+  }
 }
