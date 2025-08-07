@@ -1,8 +1,6 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { getClasses } from "../src/classes";
-import getEnv from "./env";
-
-const { BASE_URL, JWT } = getEnv();
+import { BASE_URL, JWT } from "./env";
 
 describe("getClasses", () => {
   let html: string;
@@ -16,7 +14,7 @@ describe("getClasses", () => {
     html = await response.text();
   });
 
-  it("should extract class info from the HTML document", () => {
+  it("should extract classes from /learning/classes", () => {
     const result = getClasses(html);
     console.log(result);
 
