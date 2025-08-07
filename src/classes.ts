@@ -7,7 +7,7 @@ import { JSDOM } from "jsdom";
 
 interface SchoolboxClass {
   id: string;
-  // code: string;
+  code: string;
   url: string;
   name: string;
   imageUrl: string;
@@ -27,7 +27,8 @@ export function getClasses(html: string): SchoolboxClass[] {
 
     const id = url.split("/").pop() as string;
 
-    // const code = el.querySelector(".card-content > div > p").textContent;
+    const code = (el.querySelector(".card-content > div > p") as HTMLElement)
+      .textContent;
 
     const name = (
       el.querySelector(".card-content > div > h3 > a") as HTMLElement
@@ -40,7 +41,7 @@ export function getClasses(html: string): SchoolboxClass[] {
 
     classes.push({
       id,
-      // code,
+      code,
       url,
       name,
       imageUrl,

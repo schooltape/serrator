@@ -2,13 +2,13 @@ import { describe, it, expect, beforeAll } from "vitest";
 import { getClasses } from "../src/classes";
 import getEnv from "./env";
 
-const { API_URL, JWT } = getEnv();
+const { BASE_URL, JWT } = getEnv();
 
 describe("getClasses", () => {
   let html: string;
 
   beforeAll(async () => {
-    const response = await fetch(API_URL, {
+    const response = await fetch(`${BASE_URL}/learning/classes`, {
       headers: {
         Authorization: `Bearer ${JWT}`,
       },
