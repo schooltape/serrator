@@ -14,9 +14,9 @@ describe("getClasses", () => {
     html = await response.text();
   });
 
-  it("should extract classes from /learning/classes", () => {
+  it("extract classes from /learning/classes", () => {
     const result = getClasses(html);
-    console.log(result);
+    // console.log(result);
 
     expect(Array.isArray(result)).toBe(true);
     expect(result.length).toBeGreaterThan(0);
