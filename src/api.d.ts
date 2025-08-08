@@ -2166,45 +2166,6 @@ export interface components {
          * @example 2018-01-28T00:00:00+11:00
          */
         dateTimeString: string;
-        /** Datetime Object */
-        dateTimeObject: {
-            /**
-             * @description A database representation of the date.  Eg. "2018-01-28 00:00:00"
-             *
-             * @example 2018-01-28 00:00:00
-             */
-            database?: string;
-            /**
-             * Format: int64
-             * @description The date as a Unix timestamp.  Eg. 1517058000
-             *
-             * @example 1517058000
-             */
-            unixTimestamp?: number;
-            /**
-             * @description A string representation of the date, localized to the Schoolbox
-             *     instance's settings.  Eg. "28/01/2018 12:00am".
-             *
-             * @example 28/01/2018 12:00am
-             */
-            local?: string;
-            /**
-             * Format: date-time
-             * @description The date as a RFC3339 string. Eg. "2018-01-28T00:00:00+11:00".
-             *
-             * @example 2018-01-28T00:00:00+11:00
-             */
-            json: string;
-        };
-        /**
-         * Datetime
-         * @description A JSON representation of a datetime.
-         *     For compatibility with existing code, can be defined as either:
-         *     * a RFC3339 string
-         *     * an object, which contains a datetime in several formats
-         *
-         */
-        dateTime: components["schemas"]["dateTimeString"] | components["schemas"]["dateTimeObject"];
         /**
          * Link
          * @description A JSON representation of a link to content within Schoolbox.
@@ -2263,8 +2224,8 @@ export interface components {
                     };
                 };
                 content?: string;
-                createdAt?: components["schemas"]["dateTime"];
-                updatedAt?: components["schemas"]["dateTime"];
+                createdAt?: components["schemas"]["dateTimeString"];
+                updatedAt?: components["schemas"]["dateTimeString"];
             }[];
             metadata?: components["schemas"]["listMetadata"];
         };
@@ -2276,8 +2237,8 @@ export interface components {
             id?: components["schemas"]["id"];
             /** @description Is the thread open for further comments? */
             open?: boolean;
-            createdAt?: components["schemas"]["dateTime"];
-            updatedAt?: components["schemas"]["dateTime"];
+            createdAt?: components["schemas"]["dateTimeString"];
+            updatedAt?: components["schemas"]["dateTimeString"];
             _links?: {
                 getComments?: components["schemas"]["link"] & unknown;
                 createComment?: components["schemas"]["link"] & unknown;
@@ -3873,8 +3834,8 @@ export interface components {
             thread?: components["schemas"]["discussionThread-read"];
             author: components["schemas"]["user-read"];
             content: string;
-            createdAt?: components["schemas"]["dateTime"];
-            updatedAt?: components["schemas"]["dateTime"];
+            createdAt?: components["schemas"]["dateTimeString"];
+            updatedAt?: components["schemas"]["dateTimeString"];
             parent?: components["schemas"]["discussionComment-read"];
             /** @description A list of direct children of this comment. */
             children?: components["schemas"]["discussionComment-readList"];
@@ -4875,8 +4836,8 @@ export interface components {
                         };
                     };
                     content?: string;
-                    createdAt?: components["schemas"]["dateTime"];
-                    updatedAt?: components["schemas"]["dateTime"];
+                    createdAt?: components["schemas"]["dateTimeString"];
+                    updatedAt?: components["schemas"]["dateTimeString"];
                     _links?: {
                         delete?: {
                             /** Format: uri */
@@ -5502,10 +5463,26 @@ export interface components {
                     /**
                      * @description The content of the notification message.
                      *
-                     * @example Checkout the 22.1 Release notes
+                     *     May contain placeholder values, preceded with a `:` character
+                     *     (e.g. `:placeholderName`): these will be replaced with the
+                     *     corresponding value in `messageParams`.
+                     *
+                     * @example Checkout the :version Release notes
                      *
                      */
                     message: string;
+                    /**
+                     * @description A set of key-value pairs: each key should match a placeholder in
+                     *     `message`, and its corresponding value will replace that placeholder
+                     *     in the final message.
+                     *
+                     * @example {
+                     *       "version": "25.0"
+                     *     }
+                     */
+                    messageParams?: {
+                        [key: string]: string;
+                    };
                     from?: {
                         /**
                          * @description User who initially created this message, if unset defaults to Unknown User.
@@ -6917,7 +6894,7 @@ export interface operations {
                          *     May be null, in which case there are no attachments.
                          *      */
                         attachments?: number;
-                        viewedAt?: unknown & components["schemas"]["dateTime"];
+                        viewedAt?: unknown & components["schemas"]["dateTimeString"];
                         _links?: components["schemas"]["links"];
                     })[];
                 };
