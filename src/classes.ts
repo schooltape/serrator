@@ -1,19 +1,10 @@
-/**
- * @file
- * route: /learning/classes
- */
-
 import { JSDOM } from "jsdom";
 import { getUrlFromCss } from "./utils";
+import type { SchoolboxClass } from "./types";
 
-interface SchoolboxClass {
-  id: string;
-  code: string;
-  url: string;
-  name: string;
-  imageUrl: string;
-}
-
+/**
+ * route: /learning/classes
+ */
 export function getClasses(html: string): SchoolboxClass[] {
   const dom = new JSDOM(html);
   const document = dom.window.document;

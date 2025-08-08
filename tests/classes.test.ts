@@ -1,34 +1,31 @@
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect, beforeAll } from "bun:test";
 import { getClasses } from "../src/classes";
-import { BASE_URL, JWT } from "./env";
+import { BASE_URL } from "./env";
+import type { SchoolboxClass } from "../src";
+import { makeAuthRequest } from "../src/utils";
 
 describe("getClasses", () => {
-  let html: string;
+  let result: SchoolboxClass[];
 
   beforeAll(async () => {
-    const response = await fetch(`${BASE_URL}/learning/classes`, {
-      headers: {
-        Authorization: `Bearer ${JWT}`,
-      },
-    });
-    html = await response.text();
+    result = await makeAuthRequest(`${BASE_URL}/learning/classes`, getClasses);
   });
 
   it("extract classes from /learning/classes", () => {
-    const result = getClasses(html);
     // console.log(result);
 
     expect(Array.isArray(result)).toBe(true);
     expect(result.length).toBeGreaterThan(0);
+
     result.forEach((cls) => {
       expect(cls).toHaveProperty("id");
       expect(cls.id).toBeDefined();
       expect(typeof cls.id).toBe("string");
       expect(cls.id).toMatch(/^\d+$/); // id should be a string of numbers
 
-      // expect(cls).toHaveProperty("code");
-      // expect(cls.code).toBeDefined();
-      // expect(typeof cls.code).toBe("string");
+      expect(cls).toHaveProperty("code");
+      expect(cls.code).toBeDefined();
+      expect(typeof cls.code).toBe("string");
 
       expect(cls).toHaveProperty("url");
       expect(cls.url).toBeDefined();
