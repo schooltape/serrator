@@ -4,6 +4,7 @@
  */
 
 import { JSDOM } from "jsdom";
+import { getUrlFromCss } from "./utils";
 
 interface SchoolboxClass {
   id: string;
@@ -34,10 +35,10 @@ export function getClasses(html: string): SchoolboxClass[] {
       el.querySelector(".card-content > div > h3 > a") as HTMLElement
     ).textContent.trim();
 
-    const imageUrl =
-      (
-        el.querySelector("a > div.card-class-image") as HTMLElement
-      )?.style.backgroundImage.match(/"(.*?)"/)?.[1] || "";
+    const imageUrl = getUrlFromCss(
+      (el.querySelector("a > div.card-class-image") as HTMLElement)?.style
+        .backgroundImage,
+    );
 
     classes.push({
       id,
