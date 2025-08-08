@@ -1,8 +1,7 @@
 import { describe, it, expect, beforeAll } from "bun:test";
-import { getHomepage } from "../src/homepage";
-import { BASE_URL, CLASS_CODE } from "./env";
-import type { SchoolboxHomepage } from "../src";
-import { makeAuthRequest } from "../src/utils";
+import { BASE_URL, CLASS_CODE } from "../env";
+import { getHomepage, type SchoolboxHomepage } from "..";
+import { makeAuthRequest } from "../utils";
 
 describe("getHomepage", () => {
   let result: SchoolboxHomepage;

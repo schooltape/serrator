@@ -1,6 +1,6 @@
 import { JSDOM } from "jsdom";
-import { getUrlFromCss } from "./utils";
-import type { SchoolboxClass } from "./types";
+import { getUrlFromCss } from "../utils";
+import type { SchoolboxClass } from "../types";
 
 /**
  * route: /learning/classes

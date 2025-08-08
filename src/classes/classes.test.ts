@@ -1,8 +1,7 @@
 import { describe, it, expect, beforeAll } from "bun:test";
-import { getClasses } from "../src/classes";
-import { BASE_URL } from "./env";
-import type { SchoolboxClass } from "../src";
-import { makeAuthRequest } from "../src/utils";
+import { BASE_URL } from "../env";
+import { getClasses, type SchoolboxClass } from "..";
+import { makeAuthRequest } from "../utils";
 
 describe("getClasses", () => {
   let result: SchoolboxClass[];

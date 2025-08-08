@@ -1,6 +1,6 @@
 import { JSDOM } from "jsdom";
-import { getUrlFromCss } from "./utils";
-import type { SchoolboxHomepage, Tile, TileGroup } from "./types";
+import { getUrlFromCss } from "../utils";
+import type { SchoolboxHomepage, Tile, TileGroup } from "../types";
 
 /**
  * route: /homepage/{id} or /homepage/code/{code}
