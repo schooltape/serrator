@@ -1,3 +1,8 @@
+export interface SchoolboxDashboard {
+  tiles: TileGroup[];
+  navLinks: NavLink[];
+}
+
 export interface SchoolboxHomepage {
   title: string;
   tiles: TileGroup[];
@@ -22,3 +27,10 @@ export interface Tile {
   imageUrl: string;
 }
 export type TileGroup = Tile[];
+
+export interface NavLink {
+  name: string;
+  description: string;
+  link: string;
+  iconId: string;
+}

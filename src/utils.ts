@@ -11,9 +11,7 @@ export function getTileGroups(dom: JSDOM): TileGroup[] {
 
   return Array.from(document.querySelectorAll(".tileList")).map((tileGroup) => {
     const tiles: Tile[] = Array.from(
-      tileGroup.querySelectorAll<HTMLLIElement>(
-        ".Schoolbox_Tile_Component_HomepageTileController li.tile",
-      ),
+      tileGroup.querySelectorAll<HTMLLIElement>("li.tile"),
     ).map((tile) => {
       return {
         title: tile.querySelector(".title")?.textContent?.trim() || "",
