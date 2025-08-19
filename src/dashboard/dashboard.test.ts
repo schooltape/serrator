@@ -18,7 +18,7 @@ describe("getHomepage", () => {
     const tiles = result.tiles;
     expect(tiles).toBeArray();
     tiles.forEach((tileGroup) => {
-      console.log(tileGroup);
+      // console.log(tileGroup);
       expect(tileGroup).toBeArray();
       expect(tileGroup.length).toBeGreaterThan(0);
 
