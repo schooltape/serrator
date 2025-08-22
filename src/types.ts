@@ -32,12 +32,17 @@ export interface SchoolboxHomepage {
   // widgets: Widget[];
 }
 
-export interface SchoolboxClass {
-  id: string;
-  code: string;
+export interface SchoolboxCard {
+  // in the format /homepage/{id}
   url: string;
+  id: string; // [TODO] make this a number
   name: string;
   imageUrl: string;
+}
+
+export interface SchoolboxClass extends SchoolboxCard {
+  // class code
+  code: string;
 }
 
 export interface Tile {

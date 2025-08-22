@@ -1,6 +1,6 @@
 import { JWT } from "./env";
 import { JSDOM } from "jsdom";
-import type { Tile, TileGroup } from "./types";
+import type { Tile, TileGroup, SchoolboxCard } from "./types";
 
 export function getUrlFromCss(css: string) {
   return css.match(/"(.*?)"/)?.[1] ?? "";
@@ -23,6 +23,31 @@ export function getTileGroups(dom: JSDOM): TileGroup[] {
     });
     return tiles;
   });
+}
+
+export function getCard(el: Element): SchoolboxCard {
+  const url =
+    (
+      el.querySelector(".card-content > div > h3 > a") as HTMLElement
+    ).getAttribute("href") ?? "";
+
+  const id = url.split("/").pop() as string;
+
+  const name = (
+    el.querySelector(".card-content > div > h3 > a") as HTMLElement
+  ).textContent.trim();
+
+  const imageUrl = getUrlFromCss(
+    (el.querySelector("a > div.card-class-image") as HTMLElement)?.style
+      .backgroundImage,
+  );
+
+  return {
+    url,
+    id,
+    name,
+    imageUrl,
+  };
 }
 
 export async function makeAuthRequest<T>(
