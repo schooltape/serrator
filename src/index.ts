@@ -1,7 +1,4 @@
-export { getHomepage } from "./homepage";
-export { getClasses } from "./classes";
-export { getDashboard } from "./dashboard";
-export { getGroups } from "./groups";
+export * from "./scrapers";
+export * from "./wrappers";
 
 export type * from "./api.d.ts";
-export type * from "./types";

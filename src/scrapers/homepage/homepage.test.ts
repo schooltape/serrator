@@ -1,22 +1,26 @@
 import { describe, it, expect, beforeAll } from "bun:test";
-import { BASE_URL } from "../env";
-import { getDashboard, type SchoolboxDashboard } from "..";
-import { makeAuthRequest } from "../utils";
+import { BASE_URL, CLASS_CODE } from "../../env";
+import { getHomepage, type SchoolboxHomepage } from "..";
+import { authFetchParse } from "../../utils";
 
 describe("getHomepage", () => {
-  let result: SchoolboxDashboard;
+  let result: SchoolboxHomepage;
 
   beforeAll(async () => {
-    result = await makeAuthRequest(`${BASE_URL}/`, getDashboard);
+    result = await authFetchParse(
+      `${BASE_URL}/homepage/code/${CLASS_CODE}`,
+      getHomepage,
+    );
   });
 
-  it("extract dashboard from /", () => {
+  it("can extract homepage from /homepage/code/{CLASS_CODE}", () => {
     // console.log(result);
 
     expect(result).toBeDefined();
-
+    expect(result.title).toBeString();
     const tiles = result.tiles;
     expect(tiles).toBeArray();
+
     tiles.forEach((tileGroup) => {
       // console.log(tileGroup);
       expect(tileGroup).toBeArray();

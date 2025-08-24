@@ -1,6 +1,6 @@
 import { JSDOM } from "jsdom";
 import { getTileGroups } from "../utils";
-import type { SchoolboxHomepage } from "../types";
+import type { SchoolboxHomepage } from "..";
 
 /**
  * route: /homepage/{id} or /homepage/code/{code}

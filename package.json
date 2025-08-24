@@ -6,6 +6,7 @@
     "generate-types": "openapi-typescript ./api/openapi/openapi.yaml -o ./src/api.d.ts"
   },
   "dependencies": {
+    "date-fns": "^4.1.0",
     "jsdom": "^26.1.0"
   },
   "peerDependencies": {

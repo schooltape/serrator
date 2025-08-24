@@ -1,6 +1,6 @@
 import { JSDOM } from "jsdom";
 import { getCard } from "../utils";
-import type { SchoolboxClass } from "../types";
+import type { SchoolboxClass } from "..";
 
 /**
  * route: /learning/classes

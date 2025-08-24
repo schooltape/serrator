@@ -1,5 +1,5 @@
 import { JSDOM } from "jsdom";
-import type { NavLink, SchoolboxDashboard } from "../types";
+import type { NavLink, SchoolboxDashboard, SchoolboxUser } from "..";
 import { getTileGroups } from "../utils";
 
 /**
@@ -22,8 +22,13 @@ export function getDashboard(html: string): SchoolboxDashboard {
     };
   });
 
+  const user: SchoolboxUser = JSON.parse(
+    document.head.innerHTML.match(/window\.schoolboxUser\s*=\s*({.*?});/)![1]!,
+  );
+
   return {
     navLinks,
     tiles: getTileGroups(dom),
+    user,
   };
 }

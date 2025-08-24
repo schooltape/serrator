@@ -1,16 +1,16 @@
 import { describe, it, expect, beforeAll } from "bun:test";
-import { BASE_URL } from "../env";
+import { BASE_URL } from "../../env";
 import { getClasses, type SchoolboxClass } from "..";
-import { makeAuthRequest } from "../utils";
+import { authFetchParse } from "../../utils";
 
 describe("getClasses", () => {
   let result: SchoolboxClass[];
 
   beforeAll(async () => {
-    result = await makeAuthRequest(`${BASE_URL}/learning/classes`, getClasses);
+    result = await authFetchParse(`${BASE_URL}/learning/classes`, getClasses);
   });
 
-  it("extract classes from /learning/classes", () => {
+  it("can extract classes from /learning/classes", () => {
     // console.log(result);
 
     expect(Array.isArray(result)).toBe(true);

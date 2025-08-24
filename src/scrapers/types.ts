@@ -1,6 +1,18 @@
 export interface SchoolboxDashboard {
   tiles: TileGroup[];
   navLinks: NavLink[];
+  user: SchoolboxUser;
+}
+
+export interface SchoolboxUser {
+  id: number;
+  externalId: string;
+  title: string;
+  firstname: string;
+  preferredName: string;
+  givenName: string;
+  lastname: string;
+  fullName: string;
 }
 
 export interface SchoolboxGroup {

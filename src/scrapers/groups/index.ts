@@ -1,6 +1,5 @@
 import { JSDOM } from "jsdom";
-import type { SchoolboxGroup } from "../types";
-import { getCard } from "../utils";
+import type { SchoolboxGroup } from "..";
 
 /**
  * route: /groups#all-groups

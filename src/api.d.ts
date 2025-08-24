@@ -2544,8 +2544,13 @@ export interface components {
                 /** @description Whether the event is editable. */
                 editable?: boolean;
             };
-            /** @description List of related links. */
-            links?: Record<string, never>[];
+            links?: {
+                category?: {
+                    id?: number;
+                    name?: string;
+                };
+                path?: string;
+            };
             styles?: {
                 /** @description Whether the event is visible. */
                 visible?: boolean;
@@ -2559,6 +2564,12 @@ export interface components {
             custom?: {
                 modifyLink?: boolean;
                 moreDetailsLink?: string;
+            };
+            timetable?: {
+                code?: string;
+                staff?: {
+                    [key: string]: string;
+                };
             };
         };
         eventAjax: {
