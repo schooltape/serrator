@@ -1,7 +1,7 @@
 {
   "name": "serrator",
   "type": "module",
-  "module": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
     "generate-types": "openapi-typescript ./api/openapi/openapi.yaml -o ./src/api.d.ts"
   },
