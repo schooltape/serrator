@@ -1,12 +1,9 @@
 # Serrator
 
-This repository aims to provide types for the Schoolbox API and utility functions for scraping information not exposed by the API to students.
+- TypeScript definitions for the Schoolbox API.
+- Wrappers around the Schoolbox API for simplicity.
+- Helper functions for scraping information from the DOM not exposed by the API to students.
 
 ## References
 
 - [Schoolbox API Documentation](https://github.com/schooltape/schoolbox-api-docs)
-
-## Features
-
-- [x] TypeScript types for the Schoolbox API.
-- [ ] Helper functions for scraping information not exposed by the API.
