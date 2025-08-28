@@ -1,5 +1,5 @@
+import type { NavLink, SchoolboxDashboard, SchoolboxUser } from "@/types";
 import { JSDOM } from "jsdom";
-import type { NavLink, SchoolboxDashboard, SchoolboxUser } from "..";
 import { getTileGroups } from "../utils";
 
 /**

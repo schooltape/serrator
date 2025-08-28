@@ -1,5 +1,5 @@
+import type { SchoolboxGroup } from "@/types";
 import { JSDOM } from "jsdom";
-import type { SchoolboxGroup } from "..";
 
 /**
  * route: /groups#all-groups

@@ -1,7 +1,8 @@
+import { BASE_URL } from "@/env";
+import type { SchoolboxDashboard } from "@/types";
+import { authFetchParse } from "@/utils";
 import { describe, it, expect, beforeAll } from "bun:test";
-import { BASE_URL } from "../../env";
-import { getDashboard, type SchoolboxDashboard } from "..";
-import { authFetchParse } from "../../utils";
+import { getDashboard } from ".";
 
 describe("getDashboard", () => {
   let result: SchoolboxDashboard;

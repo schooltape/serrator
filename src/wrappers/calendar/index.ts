@@ -1,6 +1,5 @@
+import type { SchoolboxEvent, operations } from "@/types";
 import { getUnixTime, parseISO } from "date-fns";
-import type { SchoolboxEvent } from "..";
-import type { operations } from "../../api";
 
 /**
  * route: /calendar/ajax/full

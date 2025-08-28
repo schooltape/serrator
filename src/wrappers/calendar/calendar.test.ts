@@ -1,9 +1,10 @@
+import { BASE_URL } from "@/env";
+import { getDashboard } from "@/scrapers";
+import type { SchoolboxUser } from "@/types";
+import { authFetchParse, authFetchParams } from "@/utils";
 import { describe, it, expect, beforeAll } from "bun:test";
-import { BASE_URL } from "../../env";
-import { getCalendar } from "..";
-import { getDashboard, type SchoolboxUser } from "../../scrapers";
 import { endOfWeek, startOfWeek } from "date-fns";
-import { authFetchParams, authFetchParse } from "../../utils";
+import { getCalendar } from ".";
 
 describe("getCalendar", () => {
   let user: SchoolboxUser;

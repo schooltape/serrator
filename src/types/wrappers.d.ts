@@ -1,4 +1,4 @@
-// API is documented in ../api.d.ts, these wrappers are simple abstractions over the Schoolbox API.
+// the Schoolbox API is documented in api.d.ts, these wrappers are simple abstractions over the Schoolbox API
 export interface SchoolboxEvent {
   title: string;
   start: Date;

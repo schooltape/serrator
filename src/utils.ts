@@ -2,15 +2,18 @@ import { BASE_URL, JWT } from "./env";
 
 export function authFetchParams(
   pathname: string,
-  params: URLSearchParams,
+  params?: URLSearchParams,
 ): Promise<Response> {
-  return fetch(`${BASE_URL}${pathname}?${params.toString()}`, {
-    headers: {
-      Authorization: `Bearer ${JWT}`,
-      Accept: "application/json",
-      "Content-Type": "application/json",
+  return fetch(
+    `${BASE_URL}${pathname}${params ? `?${params.toString()}` : ""}`,
+    {
+      headers: {
+        Authorization: `Bearer ${JWT}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
     },
-  });
+  );
 }
 
 export async function authFetchParse<T>(

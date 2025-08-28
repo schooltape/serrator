@@ -1,5 +1,5 @@
+import type { SchoolboxCard, Tile, TileGroup } from "@/types";
 import { JSDOM } from "jsdom";
-import type { Tile, TileGroup, SchoolboxCard } from "./types";
 
 export function getUrlFromCss(css: string) {
   return css.match(/"(.*?)"/)?.[1] ?? "";
