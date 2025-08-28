@@ -1,4 +1,5 @@
 import { BASE_URL, JWT } from "./env";
+import { JSDOM } from "jsdom";
 
 export function authFetchParams(
   pathname: string,
@@ -18,7 +19,7 @@ export function authFetchParams(
 
 export async function authFetchParse<T>(
   pathname: string,
-  func: (html: string) => T,
+  func: (document: Document) => T,
 ): Promise<T> {
   const response = await fetch(pathname, {
     headers: {
@@ -26,5 +27,6 @@ export async function authFetchParse<T>(
     },
   });
   const html = await response.text();
-  return func(html);
+  const dom = new JSDOM(html);
+  return func(dom.window.document);
 }

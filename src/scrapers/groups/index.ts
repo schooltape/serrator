@@ -1,13 +1,9 @@
 import type { SchoolboxGroup } from "@/types";
-import { JSDOM } from "jsdom";
 
 /**
  * route: /groups#all-groups
  */
-export function getGroups(html: string): SchoolboxGroup[] {
-  const dom = new JSDOM(html);
-  const document = dom.window.document;
-
+export function getGroups(document: Document): SchoolboxGroup[] {
   const groups = JSON.parse(
     document
       .querySelector("#manage-groups-container manage-groups")

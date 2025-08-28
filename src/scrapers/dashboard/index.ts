@@ -1,14 +1,10 @@
 import type { NavLink, SchoolboxDashboard, SchoolboxUser } from "@/types";
-import { JSDOM } from "jsdom";
 import { getTileGroups } from "../utils";
 
 /**
  * route: /
  */
-export function getDashboard(html: string): SchoolboxDashboard {
-  const dom = new JSDOM(html);
-  const document = dom.window.document;
-
+export function getDashboard(document: Document): SchoolboxDashboard {
   // get navigation links
   const navLinks: NavLink[] = Array.from(
     document.querySelectorAll<HTMLLIElement>("#overflow-nav li[data-id]"),
@@ -28,7 +24,7 @@ export function getDashboard(html: string): SchoolboxDashboard {
 
   return {
     navLinks,
-    tiles: getTileGroups(dom),
+    tiles: getTileGroups(document),
     user,
   };
 }

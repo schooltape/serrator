@@ -1,13 +1,10 @@
 import type { SchoolboxCard, Tile, TileGroup } from "@/types";
-import { JSDOM } from "jsdom";
 
 export function getUrlFromCss(css: string) {
   return css.match(/"(.*?)"/)?.[1] ?? "";
 }
 
-export function getTileGroups(dom: JSDOM): TileGroup[] {
-  const document = dom.window.document;
-
+export function getTileGroups(document: Document): TileGroup[] {
   return Array.from(document.querySelectorAll(".tileList")).map((tileGroup) => {
     const tiles: Tile[] = Array.from(
       tileGroup.querySelectorAll<HTMLLIElement>("li.tile"),
@@ -16,7 +13,9 @@ export function getTileGroups(dom: JSDOM): TileGroup[] {
         title: tile.querySelector(".title")?.textContent?.trim() || "",
         link: tile.querySelector("a")?.getAttribute("href") || "",
         imageUrl: getUrlFromCss(
-          dom.window.getComputedStyle(tile).backgroundImage,
+          document.defaultView
+            ? document.defaultView.getComputedStyle(tile).backgroundImage
+            : "",
         ),
       };
     });
