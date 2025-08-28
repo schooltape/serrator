@@ -9,7 +9,7 @@
   },
   "types": "./src/types/index.d.ts",
   "scripts": {
-    "generate-types": "openapi-typescript ./api/openapi/openapi.yaml -o ./src/api.d.ts"
+    "generate-types": "openapi-typescript ./api/openapi/openapi.yaml -o ./src/types/api.d.ts"
   },
   "dependencies": {
     "date-fns": "^4.1.0",
@@ -22,6 +22,6 @@
     "@types/bun": "latest",
     "@types/jsdom": "^21.1.7",
     "dotenv": "^17.2.1",
-    "openapi-typescript": "^7.8.0"
+    "openapi-typescript": "^7.9.1"
   }
 }
