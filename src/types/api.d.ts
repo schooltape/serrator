@@ -578,7 +578,12 @@ export interface paths {
          * @description In order to register your app to receive push notifications you first need to notify Schoolbox of a valid user and the app identifier. This process is handled via a POST call as specified below.
          */
         post: operations["mobileRegister"];
-        delete?: never;
+        /**
+         * Deregister mobile device
+         * @description Removes a registered device from receiving push notifications.
+         *
+         */
+        delete: operations["mobileDeregister"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1316,6 +1321,52 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/learning/assessments/{assessmentId}/{studentId}/feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create feedback for due work
+         * @description Add marks and comments to an assessment. Can be draft or published based on the publish flag.
+         *     Use the responseId to indicate the feedback is in relation to a student submission, this field is optional.
+         *
+         */
+        post: operations["assessment.postFeedback"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/learning/assessments/{assessmentId}/{studentId}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create due work submission
+         * @description Allow the uploading of a student submission to an assessment item for a particular student.
+         *     If submitted by a user other than the student it will appear as submitted on behalf of.
+         *     When attaching files they should first be uploaded, using the file upload endpoint, then the reference can be used in this payload.
+         *     All fields are optional, but at least one field must be supplied.
+         *
+         */
+        post: operations["assessment.postSubmission"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/user/{id}/notify": {
         parameters: {
             query?: never;
@@ -1454,6 +1505,36 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/pastoral/record/{id}/update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Partially update a pastoral record
+         * @description Updates an existing pastoral record with a partial set of changes for brevity, such as updating a heading without needing to specify everything about the pastoral record explicitly.
+         *     Only some fields are supported by this endpoint, described below. Any fields outside of this set are disregarded.
+         *     Any fields omitted remain unchanged. Note that for updating Pastoral Actions you need to enable the config setting in admin.
+         *
+         *     #### Availability
+         *     This is accessible only when Pastoral module is enabled.
+         *     #### Permission
+         *     This endpoint is available for:
+         *     * Users with Pastoral Moderator service permission
+         *     * Users with a role of Staff role type with Access Pastoral Care permission
+         *
+         */
+        patch: operations["pastoral.patchRecordUpdate"];
         trace?: never;
     };
     "/api/curriculum/usage/{id}": {
@@ -3982,7 +4063,156 @@ export interface components {
              * Format: date-time
              * @description The date on which this is occurred as a RFC3339 string.
              */
-            occuredOn?: string;
+            occurredOn?: string;
+            /** @description Points of this pastoral record. */
+            points?: number | null;
+            /** @description List of tag names. */
+            tags?: {
+                /** @description The ID of the pastoral tag. */
+                id?: number;
+                /** @description The name of the pastoral tag. */
+                name?: string;
+            }[];
+            /** @description General content of this pastoral record in raw HTML.
+             *      */
+            bodyPublic?: string;
+            /** @description Confidential content of this pastoral record in raw HTML.
+             *      */
+            bodyPrivate?: string;
+            /** @description Files attached to General content.
+             *      */
+            attachmentsPublic?: components["schemas"]["file"][];
+            /** @description Files attached to Confidential content.
+             *      */
+            attachmentsPrivate?: components["schemas"]["file"][];
+            /** @description General comments.
+             *      */
+            commentsPublic?: components["schemas"]["discussionComment-read"][];
+            /** @description Confidential comments
+             *      */
+            commentsPrivate?: components["schemas"]["discussionComment-read"][];
+            /** @description An array of pastoral actions. */
+            recordActions?: {
+                /** @description The ID of the pastoral action. */
+                id?: number;
+                /** @description The name of the pastoral action. */
+                name?: string;
+                /** @description Whether the action is completed. */
+                completed?: boolean;
+                /**
+                 * Format: date-time
+                 * @description The last modified date of the action as a RFC3339 string.
+                 */
+                updatedAt?: string;
+                updatedBy?: components["schemas"]["userAuthor"];
+            }[] | null;
+            createdBy?: components["schemas"]["userAuthor"];
+            /**
+             * Format: date-time
+             * @description The date as a RFC3339 string.
+             *
+             */
+            createdAt?: string;
+            updatedBy?: components["schemas"]["userAuthor"];
+            /**
+             * Format: date-time
+             * @description The date as a RFC3339 string.
+             *
+             */
+            updatedAt?: string;
+            _links?: Record<string, never>;
+        }[];
+        /**
+         * a partial Pastoral Record
+         * @description A partial pastoral record.
+         */
+        "pastoral-partial-item": {
+            id?: components["schemas"]["id"];
+            /** @description The ID of SIS data corresponding to this pastoral record, if External Pastoral Synchronisation is ON. */
+            externalId?: string | null;
+            /**
+             * User
+             * @description Short fields for users
+             */
+            student?: {
+                id?: components["schemas"]["id"];
+                externalId?: components["schemas"]["externalId"];
+                /**
+                 * @description The user's title (Mr., Ms., etc.).
+                 * @example Ms
+                 */
+                title?: string | null;
+                /**
+                 * @description The user's first name.
+                 *
+                 *     Schoolbox doesn't distinguish between a person's actual first name
+                 *     and any other names, and in any case is not the definitive source of
+                 *     naming information; therefore in practice this will usually be the
+                 *     user's given name.
+                 *
+                 * @example Rebecca
+                 */
+                firstName?: string | null;
+                /**
+                 * @description The user's surname.
+                 * @example White
+                 */
+                lastName?: string | null;
+                /** @description The user's preferred name. */
+                preferredName?: string | null;
+                _links?: {
+                    /** Format: uri-reference */
+                    profile?: string;
+                    /** Format: uri-reference */
+                    avatar?: string | null;
+                };
+            };
+            /** @description Heading of the pastoral record. */
+            heading?: string;
+            /** @description Type of the pastoral record. */
+            type?: {
+                /** @description The ID of the pastoral type associated to this pastoral record. */
+                id?: number;
+                /** @description The name of the pastoral type. */
+                name?: string;
+                /** @description The name of the icon associated to the pastoral type. */
+                icon?: string;
+                /** @description The colour of the icon associated to the pastoral type. */
+                colour?: string;
+                sentiment?: string;
+                /** @description The order in which this pastoral type will display in a pastoral type list. */
+                sequence?: number;
+            };
+            /** @description Sub-type of the pastoral record. */
+            subType?: {
+                /** @description The ID of the pastoral sub-type associated to this pastoral record. */
+                id?: number;
+                /** @description The name of the pastoral sub-type. */
+                name?: string;
+                /** @description The name of the icon associated to the pastoral sub-type. */
+                icon?: string;
+                /** @description The colour of the icon associated to the pastoral sub-type. */
+                colour?: string;
+                sentiment?: string;
+                /** @description The order in which this pastoral sub-type will display in a pastoral sub-type list. */
+                sequence?: number;
+            };
+            /** @description Severity of the pastoral record. */
+            severity?: {
+                /** @description The ID of the pastoral severity of this pastoral record. */
+                id?: number;
+                /** @description The name of the pastoral severity. */
+                name?: string;
+                /** @description The colour associated to the pastoral severity. */
+                color?: string;
+                /** @description The order in which this pastoral severity will display in a pastoral severity list. */
+                sequence?: number;
+            };
+            /**
+             * Format: date-time
+             * @description The date on which this is occurred as a RFC3339 string.
+             */
+            occurredOn?: string;
             /** @description Points of this pastoral record. */
             points?: number | null;
             /** @description List of tag names. */
@@ -5332,6 +5562,20 @@ export interface components {
                 "application/x-www-form-urlencoded": components["schemas"]["registration-usernamePassword"] | components["schemas"]["registration-jwt"];
             };
         };
+        /** @description Request body for deregistering a device from receiving push notifications.
+         *
+         *     Requires JSON content type.
+         *      */
+        "mobile-deregistration": {
+            content: {
+                "application/json": {
+                    /** @description The device token to deregister */
+                    token: string;
+                    /** @description The app identifier */
+                    appId: string;
+                };
+            };
+        };
         /** @description News article information.
          *      */
         newsItem: {
@@ -5618,6 +5862,93 @@ export interface components {
                      *     See the [Upload a file](#post-/storage/asyncUpload.php) endpoint for details on how to upload a file, and receive a file pointer from that upload.
                      *      */
                     "private_attachments[]"?: unknown[] | null;
+                    /** @description An array of IDs of pastoral action.\
+                     *     Available only if Enable Pastoral Actions config is ON.
+                     *      */
+                    "actions[]"?: number[] | null;
+                    /** @description Comma separated IDs of existing Pastoral Record Tags.\
+                     *     If non numerical string is provided, it'll be silently discarded.\
+                     *     To provide a name to create a new tag, use tagNames instead.
+                     *      */
+                    tags?: string | null;
+                    /** @description Comma separated names of Pastoral Record Tags.\
+                     *     If Allow Staff to Create Pastoral Care Tags config is ON, attempts to create a new tag, if not alraeady exists.\
+                     *     The max length of a tag name is 255 chars.
+                     *      */
+                    tagNames?: string | null;
+                    /**
+                     * Format: float
+                     * @description Points of this pastoral record.
+                     */
+                    points?: number | null;
+                    /** @description An array of pairs of a role and its access level to this pastoral record in the format of:\
+                     *     `$roleId => $accessLevel`
+                     *     * `$roleId` is one of the following:
+                     *       * The ID of a role of Staff Role Type with Access Pastoral Care permission
+                     *       * 'role-type-parent' (requires Allow Parent Pastoral Access config enabled)
+                     *       * 'role-type-student' (requires Allow Student Pastoral Access config enabled)
+                     *     * `$accessLevel` is an integer representation of access level of the $roleId
+                     *       * 0 - Deny
+                     *       * 1 - General
+                     *       * 2 - General + Confidential
+                     *      */
+                    role?: unknown[] | null;
+                    /** @description An array of pairs of a pastoral group and its access level to this pastoral record in the format of:\
+                     *     `$pastoralGroupId => $accessLevel`
+                     *     * `$pastoralGroupId` is the ID of a pastoral group to set access level to
+                     *     * `$accessLevel` is an integer representation of access level of the $roleId
+                     *       * 0 - Deny
+                     *       * 1 - General
+                     *       * 2 - General + Confidential
+                     *      */
+                    group?: unknown[] | null;
+                    /** @description An array of pairs of a user and its access level to this pastoral record in the format of:\
+                     *     `$userId => $accessLevel`
+                     *     * `$userId` is ID of a user to set access level to. The user must be one of:
+                     *       * a staff with pastoral access
+                     *       * a parent of the student (requires Allow Parent Pastoral Access enabled)
+                     *     * `$accessLevel` is an integer representation of access level of the $roleId
+                     *       * 0 - Deny
+                     *       * 1 - General
+                     *       * 2 - General + Confidential
+                     *      */
+                    user?: unknown[] | null;
+                };
+            };
+        };
+        /** @description Pastoral record
+         *      */
+        "pastoral-partial-item": {
+            content: {
+                "application/json": {
+                    /** @description Pastoral record title. */
+                    heading?: string;
+                    /**
+                     * Format: date
+                     * @description The date on which this is occurred in the format configured in your Admin area. This also accepts RFC3339 format such as 2021-06-22T01:23:45+10:00
+                     * @example 2021-06-22T01:23:45+10:00
+                     */
+                    occurredOn?: string | null;
+                    /** @description The ID of a pastoral type to associate with this pastoral record. */
+                    typeId?: number;
+                    /** @description The ID of a pastoral sub-type to associate to this pastoral record.\
+                     *     The sub-type must already be associated with the type provided as typeId.\
+                     *     This can be null, if the pastoral type does not have any sub-type.\
+                     *     This cannot be null, if the pastoral type has sub-type(s).
+                     *      */
+                    subtypeId?: number | null;
+                    /** @description The ID of a pastoral severity to associate with this pastoral record.\
+                     *     Required only if Allow specification of severity on pastoral records config is ON.
+                     *      */
+                    severityId?: number | null;
+                    /** @description General content of this pastoral record in raw HTML.\
+                     *     The following tokens will be substituted with the students details on creation: [firstname], [preferredname], [surname], [fullname], [year], [house].
+                     *      */
+                    body_public?: string | null;
+                    /** @description Confidential content of this pastoral record in raw HTML.\
+                     *     The following tokens will be substituted with the students details on creation: [firstname], [preferredname], [surname], [fullname], [year], [house].
+                     *      */
+                    body_private?: string | null;
                     /** @description An array of IDs of pastoral action.\
                      *     Available only if Enable Pastoral Actions config is ON.
                      *      */
@@ -6447,23 +6778,76 @@ export interface operations {
             header?: never;
             path: {
                 /**
-                 * @description The type of device that is connecting to the service.
+                 * @description The provider that will handle the sending of push notifications to the device.
                  *
-                 *     As of this version, this is expected to always be "Digistorm". Apple
-                 *     (APNS) or Google Android (GCM) are still supported, but deprecated: the
-                 *     Digistorm provider will handle the sending of notifications via APNS or
-                 *     GCM internally.
+                 *     While Apple (APNS) and Google Android (GCM) are still supported, they are deprecated.
                  *
-                 * @example Digistorm
+                 * @example Firebase
                  */
-                provider: "GCM" | "APNS" | "Digistorm";
+                provider: "GCM" | "APNS" | "Firebase" | "Digistorm";
             };
             cookie?: never;
         };
         requestBody?: components["requestBodies"]["registration"];
         responses: {
             201: components["responses"]["authentication-successUser"];
+            /** @description This error occurs when the registration request cannot be processed due to a missing or invalid parameter.
+             *      */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": string;
+                    "application/json": {
+                        /** @description Error message indicating required fields */
+                        required?: string;
+                    };
+                };
+            };
             401: components["responses"]["authentication-failed"];
+            default: components["responses"]["problem"];
+        };
+    };
+    mobileDeregister: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description The type of device that is connecting to the service.
+                 *
+                 *     Only "Firebase" is currently supported for deregistration.
+                 *
+                 * @example Firebase
+                 */
+                provider: "GCM" | "APNS" | "Firebase" | "Digistorm";
+            };
+            cookie?: never;
+        };
+        requestBody?: components["requestBodies"]["mobile-deregistration"];
+        responses: {
+            /** @description Device successfully deregistered */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": string;
+                };
+            };
+            /** @description This error occurs when the deregistration request cannot be processed. Common causes include:
+             *     - An unsupported provider specified in the path parameter
+             *     - No matching registration found for the provided device token and app ID combination
+             *      */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": string;
+                };
+            };
             default: components["responses"]["problem"];
         };
     };
@@ -7443,6 +7827,119 @@ export interface operations {
             default: components["responses"]["problem"];
         };
     };
+    "assessment.postFeedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The ID of the assessment */
+                assessmentId: number;
+                /** @description The ID of the student */
+                studentId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /**
+                     * @description The ID of the student submission this feedback relates to (optional)
+                     * @example 12345
+                     */
+                    responseId?: number;
+                    /**
+                     * @description The mark/grade to assign (can be numeric or string format).
+                     *     Valid formats include:
+                     *     - Letter grades: "A+", "B-", "C"
+                     *     - Status indicators: "Absent", "Incomplete"
+                     *     - Numeric values: 95, 87.5
+                     *     - Percentage strings: "67 %", "85%"
+                     *     - Fraction strings: "5/10", "18/20"
+                     *
+                     * @example A+
+                     */
+                    mark?: number | string;
+                    /**
+                     * @description Feedback comment
+                     * @example Excellent work! Your analysis was thorough and well-structured.
+                     */
+                    comment?: string;
+                    /**
+                     * @description Whether to publish the feedback (1) or keep as draft (0)
+                     * @example 1
+                     * @enum {integer}
+                     */
+                    publish?: 0 | 1;
+                };
+            };
+        };
+        responses: {
+            /** @description Successfully created feedback for the assessment. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example true */
+                        success?: boolean;
+                        /** @example OK */
+                        message?: string;
+                        id?: number;
+                    };
+                };
+            };
+            default: components["responses"]["problem"];
+        };
+    };
+    "assessment.postSubmission": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The ID of the assessment */
+                assessmentId: number;
+                /** @description The ID of the student */
+                studentId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /**
+                     * @description HTML content of the submission
+                     * @example <p>This is my submission for the assessment.</p>
+                     */
+                    body?: string;
+                    /** @description Array of file references that were previously uploaded */
+                    attachment?: string[];
+                };
+            };
+        };
+        responses: {
+            /** @description Successfully created submission for the assessment. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example true */
+                        success?: boolean;
+                        /** @example OK */
+                        message?: string;
+                        /**
+                         * @description The ID of the created submission
+                         * @example 102
+                         */
+                        id?: number;
+                    };
+                };
+            };
+            default: components["responses"]["problem"];
+        };
+    };
     "apiusernotify.apiUserNotify": {
         parameters: {
             query?: never;
@@ -7617,6 +8114,34 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["pastoral-item"];
+                };
+            };
+            default: components["responses"]["problem"];
+        };
+    };
+    "pastoral.patchRecordUpdate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The ID of an item to act upon.
+                 *
+                 *     The type of item that is acted upon is dependent on the endpoint in which
+                 *     it is included.
+                 *      */
+                id: components["parameters"]["id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: components["requestBodies"]["pastoral-partial-item"];
+        responses: {
+            /** @description Successfully updated a pastoral record */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["pastoral-partial-item"];
                 };
             };
             default: components["responses"]["problem"];
