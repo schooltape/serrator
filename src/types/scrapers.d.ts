@@ -47,7 +47,7 @@ export interface SchoolboxHomepage {
 export interface SchoolboxCard {
   // in the format /homepage/{id}
   url: string;
-  id: string; // [TODO] make this a number
+  id: string;
   name: string;
   imageUrl: string;
 }
@@ -69,4 +69,22 @@ export interface NavLink {
   description: string;
   link: string;
   iconId: string;
+}
+
+namespace SchoolboxTimetable {
+  export type Header = {
+    // e.g. Period 1
+    name: string;
+    startTime: string;
+    endTime: string;
+  };
+  export type Class = {
+    // e.g. Physics
+    name: string;
+    location: string;
+    code: string;
+    date: string;
+    startTime: string;
+    endTIme: string;
+  }
 }
