@@ -1,4 +1,4 @@
-import type { NavLink, SchoolboxDashboard, SchoolboxUser } from "@/types";
+import type { NavLink, SchoolboxDashboard } from "@/types";
 import { getTileGroups } from "../utils";
 
 /**
@@ -18,13 +18,8 @@ export function getDashboard(document: Document): SchoolboxDashboard {
     };
   });
 
-  const user: SchoolboxUser = JSON.parse(
-    document.head.innerHTML.match(/window\.schoolboxUser\s*=\s*({.*?});/)![1]!,
-  );
-
   return {
     navLinks,
     tiles: getTileGroups(document),
-    user,
   };
 }

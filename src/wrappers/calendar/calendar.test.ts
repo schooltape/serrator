@@ -1,24 +1,26 @@
-import { BASE_URL } from "@/env";
-import { getDashboard } from "@/scrapers";
-import type { SchoolboxUser } from "@/types";
-import { authFetchParse, authFetchParams } from "@/utils";
+import { authFetchParams as authFetchParams } from "@/utils";
 import { describe, it, expect, beforeAll } from "bun:test";
 import { endOfWeek, startOfWeek } from "date-fns";
 import { getCalendar } from ".";
+import { registerMobile } from "../registerMobile";
+import { BASE_URL } from "@/env";
 
 describe("getCalendar", () => {
-  let user: SchoolboxUser;
+  let userId: number;
 
   var date = new Date();
 
   beforeAll(async () => {
-    user = (await authFetchParse(`${BASE_URL}/`, getDashboard)).user;
+    const result = await registerMobile(BASE_URL, authFetchParams);
+    // console.log(result);
+    if (result.id === undefined) throw new Error("user id is undefined");
+    userId = result.id;
   });
 
   it("can fetch calendar events", async () => {
     const result = await getCalendar(
       authFetchParams,
-      user.id,
+      userId,
       startOfWeek(date),
       endOfWeek(date),
       false,
@@ -42,7 +44,7 @@ describe("getCalendar", () => {
   it("can fetch timetable calendar events", async () => {
     const result = await getCalendar(
       authFetchParams,
-      user.id,
+      userId,
       startOfWeek(date),
       endOfWeek(date),
       true,

@@ -1,19 +1,11 @@
+import { components } from "./api";
+
 export interface SchoolboxDashboard {
   tiles: TileGroup[];
   navLinks: NavLink[];
-  user: SchoolboxUser;
 }
 
-export interface SchoolboxUser {
-  id: number;
-  externalId: string;
-  title: string;
-  firstname: string;
-  preferredName: string;
-  givenName: string;
-  lastname: string;
-  fullName: string;
-}
+export type SchoolboxUser = components["schemas"]["userShort"];
 
 export interface SchoolboxGroup {
   id: number;
@@ -86,5 +78,5 @@ namespace SchoolboxTimetable {
     date: string;
     startTime: string;
     endTIme: string;
-  }
+  };
 }

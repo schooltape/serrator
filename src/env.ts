@@ -2,11 +2,13 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-export const { BASE_URL, JWT } = process.env;
-if (!BASE_URL || !JWT) {
-  throw new Error(
-    !BASE_URL
-      ? "BASE_URL is not defined in the environment variables"
-      : "JWT is not defined in the environment variables",
-  );
+function getEnv(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`${name} is not defined in the environment variables`);
+  }
+  return value;
 }
+
+export const BASE_URL = getEnv("BASE_URL");
+export const JWT = getEnv("JWT");

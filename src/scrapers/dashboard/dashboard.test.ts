@@ -16,26 +16,6 @@ describe("getDashboard", () => {
 
     expect(result).toBeDefined();
 
-    const user = result.user;
-    expect(user).toBeDefined();
-    // console.log(user);
-    expect(user).toHaveProperty("id");
-    expect(user.id).toBeNumber();
-    expect(user).toHaveProperty("externalId");
-    expect(user.externalId).toBeString();
-    expect(user).toHaveProperty("title");
-    expect(user.title).toBeString();
-    expect(user).toHaveProperty("firstname");
-    expect(user.firstname).toBeString();
-    expect(user).toHaveProperty("preferredName");
-    expect(user.preferredName).toBeString();
-    expect(user).toHaveProperty("givenName");
-    expect(user.givenName).toBeString();
-    expect(user).toHaveProperty("lastname");
-    expect(user.lastname).toBeString();
-    expect(user).toHaveProperty("fullName");
-    expect(user.fullName).toBeString();
-
     const tiles = result.tiles;
     expect(tiles).toBeArray();
     tiles.forEach((tileGroup) => {

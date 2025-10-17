@@ -1,20 +1,19 @@
-import { BASE_URL, JWT } from "./env";
+import { JWT } from "./env";
 import { JSDOM } from "jsdom";
 
-export function authFetchParams(
-  pathname: string,
-  params?: URLSearchParams,
+export async function authFetchParams(
+  input: RequestInfo | URL,
+  init?: RequestInit,
 ): Promise<Response> {
-  return fetch(
-    `${BASE_URL}${pathname}${params ? `?${params.toString()}` : ""}`,
-    {
-      headers: {
-        Authorization: `Bearer ${JWT}`,
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+  return fetch(input, {
+    ...init,
+    headers: {
+      Authorization: `Bearer ${JWT}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      ...(init?.headers || {}),
     },
-  );
+  });
 }
 
 export async function authFetchParse<T>(

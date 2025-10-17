@@ -1,3 +1,4 @@
+import { BASE_URL } from "@/env";
 import type { SchoolboxEvent, operations } from "@/types";
 import { getUnixTime, parseISO } from "date-fns";
 
@@ -5,7 +6,7 @@ import { getUnixTime, parseISO } from "date-fns";
  * route: /calendar/ajax/full
  */
 export async function getCalendar(
-  fetch: (pathname: string, params: URLSearchParams) => Promise<Response>,
+  fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>,
   userId: number,
   start: Date,
   end: Date,
@@ -20,10 +21,8 @@ export async function getCalendar(
     params.timetableCalendar = "true";
   }
 
-  const response = await fetch(
-    "/calendar/ajax/full",
-    new URLSearchParams(params),
-  );
+  const url = `${BASE_URL}/calendar/ajax/full${params ? `?${new URLSearchParams(params).toString()}` : ""}`;
+  const response = await fetch(url);
 
   // console.log(response.status); // e.g. 200
   // console.log(response.statusText); // e.g. "OK"
