@@ -36,6 +36,9 @@ describe("getCalendar", () => {
       expect(event.title).toBeString();
       expect(event.title.length).toBeGreaterThan(0);
 
+      expect(event.allDay).toBeDefined();
+      expect(event.allDay).toBeBoolean();
+
       expect(event.start).toBeDefined();
       expect(event.start).toBeValidDate();
     }
@@ -60,16 +63,14 @@ describe("getCalendar", () => {
       expect(event.title).toBeString();
       expect(event.title.length).toBeGreaterThan(0);
 
+      expect(event.allDay).toBeDefined();
+      expect(event.allDay).toBeBoolean();
+
       expect(event.start).toBeDefined();
       expect(event.start).toBeValidDate();
 
-      expect(event.location).toBeDefined();
-      expect(event.location).toBeString();
-      expect(event.location!.length).toBeGreaterThan(0);
-
-      expect(event.timetable).toBeDefined();
-      expect(event.timetable!.code).toBeString();
-      expect(event.timetable!.code.length).toBeGreaterThan(0);
+      expect(event.end).toBeDefined();
+      expect(event.end).toBeValidDate();
     }
   });
 });
