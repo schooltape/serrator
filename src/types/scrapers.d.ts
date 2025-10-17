@@ -64,12 +64,6 @@ export interface NavLink {
 }
 
 namespace SchoolboxTimetable {
-  export type Header = {
-    // e.g. Period 1
-    name: string;
-    startTime: string;
-    endTime: string;
-  };
   export type Event = {
     // e.g. Physics
     name: string;
