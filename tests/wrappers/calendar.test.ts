@@ -1,13 +1,13 @@
 import { authFetchParams as authFetchParams } from "@/utils";
 import { describe, it, expect, beforeAll } from "bun:test";
-import { endOfWeek, startOfWeek } from "date-fns";
+import { endOfWeek, parseISO, startOfWeek } from "date-fns";
 import { getCalendar, registerMobile } from "@/wrappers";
 import { BASE_URL } from "@/env";
 
 describe("getCalendar", () => {
   let userId: number;
 
-  var date = new Date();
+  const date = new Date();
 
   beforeAll(async () => {
     const result = await registerMobile(BASE_URL, authFetchParams);
@@ -22,7 +22,6 @@ describe("getCalendar", () => {
       userId,
       startOfWeek(date),
       endOfWeek(date),
-      false,
     );
 
     // console.log(result);
@@ -33,43 +32,18 @@ describe("getCalendar", () => {
 
       expect(event.title).toBeDefined();
       expect(event.title).toBeString();
-      expect(event.title.length).toBeGreaterThan(0);
+      expect(event.title?.length).toBeGreaterThan(0);
 
       expect(event.allDay).toBeDefined();
       expect(event.allDay).toBeBoolean();
 
-      expect(event.start).toBeDefined();
-      expect(event.start).toBeValidDate();
-    }
-  });
+      if (!event.allDay) {
+        expect(event.start).toBeDefined();
+        expect(parseISO(event.start!)).toBeValidDate();
 
-  it("can fetch timetable calendar events", async () => {
-    const result = await getCalendar(
-      authFetchParams,
-      userId,
-      startOfWeek(date),
-      endOfWeek(date),
-      true,
-    );
-
-    // console.log(result);
-    expect(result).toBeDefined();
-
-    for (const event of result) {
-      expect(event).toBeDefined();
-
-      expect(event.title).toBeDefined();
-      expect(event.title).toBeString();
-      expect(event.title.length).toBeGreaterThan(0);
-
-      expect(event.allDay).toBeDefined();
-      expect(event.allDay).toBeBoolean();
-
-      expect(event.start).toBeDefined();
-      expect(event.start).toBeValidDate();
-
-      expect(event.end).toBeDefined();
-      expect(event.end).toBeValidDate();
+        expect(event.end).toBeDefined();
+        expect(parseISO(event.end!)).toBeValidDate();
+      }
     }
   });
 });

@@ -1,15 +1,10 @@
-// the Schoolbox API is documented in api.d.ts, these wrappers are simple abstractions over the Schoolbox API
-export interface SchoolboxEvent {
+export interface SchoolboxTimetableEvent {
   title: string;
   start: Date;
-  end?: Date;
+  end: Date;
   allDay: boolean;
-  location?: string;
-  timetable?: SchoolboxEventTimetable;
-}
 
-interface SchoolboxEventTimetable {
+  // location and code are derived from the title
+  location: string;
   code: string;
-  // array of staff IDs with their associated names
-  staff: Record<number, string>;
 }
