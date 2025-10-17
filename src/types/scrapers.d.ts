@@ -38,8 +38,8 @@ export interface SchoolboxHomepage {
 
 export interface SchoolboxCard {
   // in the format /homepage/{id}
-  url: string;
-  id: string;
+  url?: string;
+  code: string;
   name: string;
   imageUrl: string;
 }
@@ -52,7 +52,7 @@ export interface SchoolboxClass extends SchoolboxCard {
 export interface Tile {
   title: string;
   link: string;
-  imageUrl: string;
+  imageUrl?: string;
 }
 export type TileGroup = Tile[];
 

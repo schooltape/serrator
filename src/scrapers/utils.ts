@@ -9,14 +9,12 @@ export function getTileGroups(document: Document): TileGroup[] {
     const tiles: Tile[] = Array.from(
       tileGroup.querySelectorAll<HTMLLIElement>("li.tile"),
     ).map((tile) => {
+      const imageAttr =
+        document.defaultView?.getComputedStyle(tile).backgroundImage;
       return {
         title: tile.querySelector(".title")?.textContent?.trim() || "",
         link: tile.querySelector("a")?.getAttribute("href") || "",
-        imageUrl: getUrlFromCss(
-          document.defaultView
-            ? document.defaultView.getComputedStyle(tile).backgroundImage
-            : "",
-        ),
+        imageUrl: imageAttr ? getUrlFromCss(imageAttr) : undefined,
       };
     });
     return tiles;
@@ -25,14 +23,17 @@ export function getTileGroups(document: Document): TileGroup[] {
 
 export function getCard(el: Element): SchoolboxCard {
   const url =
-    (
-      el.querySelector(".card-content > div > h3 > a") as HTMLElement
-    ).getAttribute("href") ?? "";
+    el.querySelector(".card-content > div > h3 > a")?.getAttribute("href") ||
+    undefined;
 
-  const id = url.split("/").pop() as string;
+  const code = el
+    .querySelector(".card-content > div > p.meta")
+    ?.textContent?.trim();
+
+  if (!code) throw new Error("card code expected");
 
   const name = (
-    el.querySelector(".card-content > div > h3 > a") as HTMLElement
+    el.querySelector(".card-content > div > h3") as HTMLElement
   ).textContent.trim();
 
   const imageUrl = getUrlFromCss(
@@ -42,7 +43,7 @@ export function getCard(el: Element): SchoolboxCard {
 
   return {
     url,
-    id,
+    code,
     name,
     imageUrl,
   };
