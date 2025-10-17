@@ -70,13 +70,15 @@ namespace SchoolboxTimetable {
     startTime: string;
     endTime: string;
   };
-  export type Class = {
+  export type Event = {
     // e.g. Physics
     name: string;
     location: string;
     code: string;
     date: string;
     startTime: string;
-    endTIme: string;
+    endTime: string;
+    date: Date;
+    period: string;
   };
 }

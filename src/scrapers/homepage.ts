@@ -1,5 +1,5 @@
 import type { SchoolboxHomepage } from "@/types";
-import { getTileGroups } from "../utils";
+import { getTileGroups } from "./utils";
 
 /**
  * route: /homepage/{id} or /homepage/code/{code}

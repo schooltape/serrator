@@ -1,8 +1,7 @@
 import { authFetchParams as authFetchParams } from "@/utils";
 import { describe, it, expect, beforeAll } from "bun:test";
 import { endOfWeek, startOfWeek } from "date-fns";
-import { getCalendar } from ".";
-import { registerMobile } from "../registerMobile";
+import { getCalendar, registerMobile } from "@/wrappers";
 import { BASE_URL } from "@/env";
 
 describe("getCalendar", () => {

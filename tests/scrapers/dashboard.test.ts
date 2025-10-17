@@ -1,28 +1,23 @@
-import { describe, it, expect, beforeAll } from "bun:test";
-import type { SchoolboxHomepage } from "@/types";
-import { authFetchParse } from "@/utils";
 import { BASE_URL } from "@/env";
-import { getHomepage } from ".";
+import type { SchoolboxDashboard } from "@/types";
+import { authFetchParse } from "@/utils";
+import { describe, it, expect, beforeAll } from "bun:test";
+import { getDashboard } from "@/scrapers";
 
-describe("getHomepage", () => {
-  let result: SchoolboxHomepage;
+describe("getDashboard", () => {
+  let result: SchoolboxDashboard;
 
   beforeAll(async () => {
-    result = await authFetchParse(
-      // TODO)) implement
-      `${BASE_URL}/`,
-      getHomepage,
-    );
+    result = await authFetchParse(`${BASE_URL}/`, getDashboard);
   });
 
-  it("can extract homepage data from /", () => {
+  it("can extract dashboard from /", () => {
     // console.log(result);
 
     expect(result).toBeDefined();
-    expect(result.title).toBeString();
+
     const tiles = result.tiles;
     expect(tiles).toBeArray();
-
     tiles.forEach((tileGroup) => {
       // console.log(tileGroup);
       expect(tileGroup).toBeArray();

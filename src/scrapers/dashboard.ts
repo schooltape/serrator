@@ -1,5 +1,5 @@
 import type { NavLink, SchoolboxDashboard } from "@/types";
-import { getTileGroups } from "../utils";
+import { getTileGroups } from "./utils";
 
 /**
  * route: /

@@ -1,5 +1,5 @@
 import type { SchoolboxClass } from "@/types";
-import { getCard } from "../utils";
+import { getCard } from "./utils";
 
 /**
  * route: /learning/classes

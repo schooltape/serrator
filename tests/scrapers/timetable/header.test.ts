@@ -2,7 +2,7 @@ import { BASE_URL } from "@/env";
 import type { SchoolboxTimetable } from "@/types";
 import { authFetchParse } from "@/utils";
 import { describe, it, expect, beforeAll } from "bun:test";
-import { getTimetableHeader } from ".";
+import { getTimetableHeader } from "@/scrapers";
 
 describe("getTimetableHeader", () => {
   let result: SchoolboxTimetable.Header[];

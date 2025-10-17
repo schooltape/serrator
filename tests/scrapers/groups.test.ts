@@ -2,7 +2,7 @@ import { BASE_URL } from "@/env";
 import type { SchoolboxGroup } from "@/types";
 import { authFetchParse } from "@/utils";
 import { describe, it, expect, beforeAll } from "bun:test";
-import { getGroups } from ".";
+import { getGroups } from "@/scrapers";
 
 describe("getGroups", () => {
   let result: SchoolboxGroup[];
