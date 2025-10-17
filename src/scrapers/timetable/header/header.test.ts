@@ -12,7 +12,7 @@ describe("getTimetableHeader", () => {
   });
 
   it("can extract the timetable header from /", () => {
-    console.log(result);
+    // console.log(result);
     expect(result).toBeDefined();
     expect(result).toBeArray();
     expect(result.length).toBeGreaterThan(0);
