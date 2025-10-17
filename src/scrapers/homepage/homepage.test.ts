@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll } from "bun:test";
 import type { SchoolboxHomepage } from "@/types";
 import { authFetchParse } from "@/utils";
-import { BASE_URL, CLASS_CODE } from "@/env";
+import { BASE_URL } from "@/env";
 import { getHomepage } from ".";
 
 describe("getHomepage", () => {
@@ -9,12 +9,13 @@ describe("getHomepage", () => {
 
   beforeAll(async () => {
     result = await authFetchParse(
-      `${BASE_URL}/homepage/code/${CLASS_CODE}`,
+      // TODO)) implement
+      `${BASE_URL}/`,
       getHomepage,
     );
   });
 
-  it("can extract homepage from /homepage/code/{CLASS_CODE}", () => {
+  it("can extract homepage data from /", () => {
     // console.log(result);
 
     expect(result).toBeDefined();
