@@ -9,8 +9,6 @@ describe("getTimetable", () => {
   let userId: number;
   let result: SchoolboxTimetableEvent[];
 
-  const date = new Date();
-
   beforeAll(async () => {
     await registerMobile(BASE_URL, authFetchParams).then((result) => {
       if (result.id === undefined) throw new Error("user id is undefined");
