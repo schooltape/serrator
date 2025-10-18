@@ -1,12 +1,12 @@
-import type { SchoolboxCard, Tile, TileGroup } from "@/types";
+import type { SchoolboxCard, SchoolboxTile, SchoolboxTileGroup } from "@/types";
 
 export function getUrlFromCss(css: string) {
   return css.match(/"(.*?)"/)?.[1] ?? "";
 }
 
-export function getTileGroups(document: Document): TileGroup[] {
+export function getTileGroups(document: Document): SchoolboxTileGroup[] {
   return Array.from(document.querySelectorAll(".tileList")).map((tileGroup) => {
-    const tiles: Tile[] = Array.from(
+    const tiles: SchoolboxTile[] = Array.from(
       tileGroup.querySelectorAll<HTMLLIElement>("li.tile"),
     ).map((tile) => {
       const imageAttr =

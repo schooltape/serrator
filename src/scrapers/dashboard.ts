@@ -1,4 +1,4 @@
-import type { NavLink, SchoolboxDashboard } from "@/types";
+import type { SchoolboxNavLink, SchoolboxDashboard } from "@/types";
 import { getTileGroups } from "./utils";
 
 /**
@@ -6,7 +6,7 @@ import { getTileGroups } from "./utils";
  */
 export function getDashboard(document: Document): SchoolboxDashboard {
   // get navigation links
-  const navLinks: NavLink[] = Array.from(
+  const navLinks: SchoolboxNavLink[] = Array.from(
     document.querySelectorAll<HTMLLIElement>("#overflow-nav li[data-id]"),
   ).map((li) => {
     const anchor = li.querySelector("a");

@@ -1,8 +1,8 @@
 import { components } from "./api";
 
 export interface SchoolboxDashboard {
-  tiles: TileGroup[];
-  navLinks: NavLink[];
+  tiles: SchoolboxTileGroup[];
+  navLinks: SchoolboxNavLink[];
 }
 
 export type SchoolboxUser = components["schemas"]["userShort"];
@@ -28,7 +28,7 @@ export interface SchoolboxGroup {
 }
 export interface SchoolboxHomepage {
   title: string;
-  tiles: TileGroup[];
+  tiles: SchoolboxTileGroup[];
   // teachers: User[];
   // students: User[];
   // socialStream: string;
@@ -49,12 +49,12 @@ export interface SchoolboxClass extends SchoolboxCard {
   code: string;
 }
 
-export interface Tile {
+export interface SchoolboxTile {
   title: string;
   link: string;
   imageUrl?: string;
 }
-export type TileGroup = Tile[];
+export type SchoolboxTileGroup = SchoolboxTile[];
 
 export interface NavLink {
   name: string;
