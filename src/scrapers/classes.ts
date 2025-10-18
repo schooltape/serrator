@@ -8,14 +8,7 @@ export function getClasses(document: Document): SchoolboxClass[] {
   const classes: SchoolboxClass[] = [];
 
   document.querySelectorAll(".v-card:has(.classes)").forEach((el) => {
-    const code = (el.querySelector(".card-content > div > p") as HTMLElement)
-      .textContent;
-    const cardInfo = getCard(el);
-
-    classes.push({
-      ...cardInfo,
-      code,
-    });
+    classes.push(getCard(el));
   });
 
   return classes;
