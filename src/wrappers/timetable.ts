@@ -26,6 +26,7 @@ export async function getTimetable(
 
   const data: operations["getCalendarAjaxFull"]["responses"]["200"]["content"]["application/json"] =
     await response.json();
+  // console.log(data);
 
   const events: SchoolboxTimetableEvent[] = [];
   for (const event of data) {
@@ -39,6 +40,9 @@ export async function getTimetable(
         `missing required fields in event: ${JSON.stringify(event)}`,
       );
     }
+
+    // skip over all-day events such as day markers
+    if (event.allDay) continue;
 
     const code = event.data?.timetable?.code
       ? event.data.timetable.code
