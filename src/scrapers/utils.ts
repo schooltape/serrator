@@ -26,9 +26,12 @@ export function getCard(el: Element): SchoolboxCard {
     el.querySelector(".card-content > div > h3 > a")?.getAttribute("href") ||
     undefined;
 
-  const code = el
-    .querySelector(".card-content > div > p.meta")
-    ?.textContent?.trim();
+  // get first text node of meta element
+  const meta = el.querySelector(".card-content > div > p.meta");
+  const code =
+    meta?.childNodes[0]?.nodeType === 3
+      ? meta.childNodes[0].textContent?.trim()
+      : undefined;
 
   if (!code) throw new Error("card code expected");
 
