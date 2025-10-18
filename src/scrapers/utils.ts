@@ -38,7 +38,7 @@ export function getCard(el: Element): SchoolboxCard {
 
   const backgroundImage =
     (el.querySelector(".card-content > div > div.card-image") as HTMLElement)
-      .style.backgroundImage || undefined;
+      ?.style.backgroundImage || undefined;
 
   const imageUrl = backgroundImage ? getUrlFromCss(backgroundImage) : undefined;
 

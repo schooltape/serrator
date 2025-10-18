@@ -25,10 +25,6 @@ describe("getClasses", () => {
       expect(cls).toHaveProperty("name");
       expect(cls.name).toBeDefined();
       expect(typeof cls.name).toBe("string");
-
-      expect(cls).toHaveProperty("imageUrl");
-      expect(cls.imageUrl).toBeDefined();
-      expect(typeof cls.imageUrl).toBe("string");
     });
   });
 });
