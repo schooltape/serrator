@@ -41,7 +41,7 @@ export interface SchoolboxCard {
   url?: string;
   code: string;
   name: string;
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 export interface SchoolboxClass extends SchoolboxCard {

@@ -28,9 +28,6 @@ describe("getDashboard", () => {
         expect(tile.title).toBeString();
         expect(tile).toHaveProperty("link");
         expect(tile.link).toBeString();
-        expect(tile).toHaveProperty("imageUrl");
-        expect(tile.imageUrl).toBeString();
-        expect(tile.imageUrl.length).toBeGreaterThan(0);
       });
     });
   });

@@ -36,10 +36,11 @@ export function getCard(el: Element): SchoolboxCard {
     el.querySelector(".card-content > div > h3") as HTMLElement
   ).textContent.trim();
 
-  const imageUrl = getUrlFromCss(
-    (el.querySelector("a > div.card-class-image") as HTMLElement)?.style
-      .backgroundImage,
-  );
+  const backgroundImage =
+    (el.querySelector(".card-content > div > div.card-image") as HTMLElement)
+      .style.backgroundImage || undefined;
+
+  const imageUrl = backgroundImage ? getUrlFromCss(backgroundImage) : undefined;
 
   return {
     url,
