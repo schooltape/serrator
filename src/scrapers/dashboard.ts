@@ -10,11 +10,20 @@ export function getDashboard(document: Document): SchoolboxDashboard {
     document.querySelectorAll<HTMLLIElement>("#overflow-nav li[data-id]"),
   ).map((li) => {
     const anchor = li.querySelector("a");
+
+    const name = anchor?.querySelector("span")?.textContent?.trim();
+    const description = anchor?.getAttribute("title")?.trim() || undefined;
+    const link = anchor?.getAttribute("href");
+    const iconId = anchor?.className?.replace("icon-", "").trim();
+
+    if (!name || !link || !iconId)
+      throw new Error("missing required fields on nav link");
+
     return {
-      name: anchor?.getAttribute("title")?.trim() ?? "",
-      description: anchor?.querySelector("span")?.textContent?.trim() ?? "",
-      link: anchor?.getAttribute("href") || "",
-      iconId: anchor?.className?.replace("icon-", "").trim() ?? "",
+      name,
+      description,
+      link,
+      iconId,
     };
   });
 

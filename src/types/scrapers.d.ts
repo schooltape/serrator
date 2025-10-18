@@ -56,9 +56,9 @@ export interface SchoolboxTile {
 }
 export type SchoolboxTileGroup = SchoolboxTile[];
 
-export interface NavLink {
+export interface SchoolboxNavLink {
   name: string;
-  description: string;
+  description?: string;
   link: string;
   iconId: string;
 }

@@ -12,9 +12,20 @@ describe("getDashboard", () => {
   });
 
   it("can extract dashboard from /", () => {
-    // console.log(result);
+    console.log(result);
 
     expect(result).toBeDefined();
+
+    expect(result.navLinks).toBeDefined();
+    expect(result.navLinks).toBeArray();
+    for (const navLink of result.navLinks) {
+      expect(navLink).toHaveProperty("name");
+      expect(navLink.name).toBeString();
+      expect(navLink).toHaveProperty("link");
+      expect(navLink.link).toBeString();
+      expect(navLink).toHaveProperty("iconId");
+      expect(navLink.iconId).toBeString();
+    }
 
     const tiles = result.tiles;
     expect(tiles).toBeArray();
