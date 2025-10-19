@@ -38,11 +38,9 @@ describe("getCalendar", () => {
       expect(event.allDay).toBeBoolean();
 
       if (!event.allDay) {
+        // event end might not be defined if event is an assessment task
         expect(event.start).toBeDefined();
         expect(parseISO(event.start!)).toBeValidDate();
-
-        expect(event.end).toBeDefined();
-        expect(parseISO(event.end!)).toBeValidDate();
       }
     }
   });
