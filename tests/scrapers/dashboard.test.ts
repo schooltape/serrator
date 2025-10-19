@@ -12,7 +12,7 @@ describe("getDashboard", () => {
   });
 
   it("can extract dashboard from /", () => {
-    console.log(result);
+    // console.log(result);
 
     expect(result).toBeDefined();
 
