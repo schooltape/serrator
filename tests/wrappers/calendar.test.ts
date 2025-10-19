@@ -1,4 +1,4 @@
-import { authFetchParams as authFetchParams } from "@/utils";
+import { authFetchParams } from "@/utils";
 import { describe, it, expect, beforeAll } from "bun:test";
 import { endOfWeek, parseISO, startOfWeek } from "date-fns";
 import { getCalendar, registerMobile } from "@/wrappers";

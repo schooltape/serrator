@@ -1,4 +1,4 @@
-import { authFetchParams as authFetchParams, authFetchParse } from "@/utils";
+import { authFetchParams, authFetchParse } from "@/utils";
 import { describe, it, expect, beforeAll } from "bun:test";
 import { getTimetable, registerMobile } from "@/wrappers";
 import { BASE_URL } from "@/env";
