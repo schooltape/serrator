@@ -17,8 +17,10 @@ export async function authSession(
 
   // console.log(response.status);
 
-  const setCookie = response.headers.getSetCookie();
+  const cookie = response.headers.getSetCookie()?.[0];
   const data: SchoolboxResponse = await response.json();
 
-  return { data, setCookie };
+  if (!cookie) throw new Error("no Set-Cookie header in response");
+
+  return { data, cookie };
 }
