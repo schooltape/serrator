@@ -8,7 +8,10 @@ describe("getClasses", () => {
   let result: SchoolboxClass[];
 
   beforeAll(async () => {
-    result = await authFetchParse(`${BASE_URL}/learning/classes`, getClasses);
+    result = await authFetchParse(
+      `https://${BASE_URL}/learning/classes`,
+      getClasses,
+    );
   });
 
   it("can extract classes from /learning/classes", () => {

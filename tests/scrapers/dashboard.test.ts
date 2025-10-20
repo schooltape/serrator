@@ -8,7 +8,7 @@ describe("getDashboard", () => {
   let result: SchoolboxDashboard;
 
   beforeAll(async () => {
-    result = await authFetchParse(`${BASE_URL}/`, getDashboard);
+    result = await authFetchParse(`https://${BASE_URL}/`, getDashboard);
   });
 
   it("can extract dashboard from /", () => {

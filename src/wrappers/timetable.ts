@@ -16,7 +16,7 @@ export async function getTimetable(
     end: getUnixTime(endOfWeek(date)).toString(),
     timetableCalendar: "true",
   };
-  const url = `${BASE_URL}/calendar/ajax/full${params ? `?${new URLSearchParams(params).toString()}` : ""}`;
+  const url = `https://${BASE_URL}/calendar/ajax/full${params ? `?${new URLSearchParams(params).toString()}` : ""}`;
   const response = await fetch(url);
 
   if (!response.ok)

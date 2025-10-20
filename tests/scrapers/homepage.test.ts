@@ -10,7 +10,7 @@ describe("getHomepage", () => {
   beforeAll(async () => {
     result = await authFetchParse(
       // TODO)) implement
-      `${BASE_URL}/`,
+      `https://${BASE_URL}/`,
       getHomepage,
     );
   });

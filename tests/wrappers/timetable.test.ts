@@ -52,7 +52,7 @@ describe("getTimetable", () => {
 
   it("can find associated class names of timetable events", async () => {
     const classes = await authFetchParse(
-      `${BASE_URL}/learning/classes`,
+      `https://${BASE_URL}/learning/classes`,
       getClasses,
     );
 

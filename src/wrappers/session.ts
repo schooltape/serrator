@@ -9,7 +9,7 @@ export async function authSession(
   jwt: string,
 ) {
   const response = await fetch(
-    `${baseUrl}/api/session?jwt=${encodeURIComponent(jwt)}`,
+    `https://${baseUrl}/api/session?jwt=${encodeURIComponent(jwt)}`,
     {
       method: "GET",
     },

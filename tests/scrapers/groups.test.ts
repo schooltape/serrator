@@ -8,7 +8,10 @@ describe("getGroups", () => {
   let result: SchoolboxGroup[];
 
   beforeAll(async () => {
-    result = await authFetchParse(`${BASE_URL}/groups#all-groups`, getGroups);
+    result = await authFetchParse(
+      `https://${BASE_URL}/groups#all-groups`,
+      getGroups,
+    );
   });
 
   it("can extract groups from /groups", () => {

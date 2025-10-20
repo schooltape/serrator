@@ -20,7 +20,7 @@ export async function getCalendar(
     end: getUnixTime(end).toString(),
   };
 
-  const url = `${BASE_URL}/calendar/ajax/full${params ? `?${new URLSearchParams(params).toString()}` : ""}`;
+  const url = `https://${BASE_URL}/calendar/ajax/full${params ? `?${new URLSearchParams(params).toString()}` : ""}`;
   const response = await fetch(url);
 
   if (!response.ok)
