@@ -12,6 +12,9 @@ export async function authSession(
     `https://${baseUrl}/api/session?jwt=${encodeURIComponent(jwt)}`,
     {
       method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     },
   );
 

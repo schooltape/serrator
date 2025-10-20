@@ -12,4 +12,3 @@ function getEnv(name: string): string {
 
 export const BASE_URL = getEnv("BASE_URL");
 export const JWT = getEnv("JWT");
-export const PHPSESSID = getEnv("PHPSESSID");

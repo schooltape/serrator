@@ -5,7 +5,7 @@ import { BASE_URL, JWT } from "@/env";
 
 describe("authSession", () => {
   it("can authenticate a session from JWT", async () => {
-    const result = await authSession(authFetchParams, BASE_URL, JWT);
+    const result = await authSession(fetch, BASE_URL, JWT);
     // console.log(result);
 
     expect(result).toBeDefined();
