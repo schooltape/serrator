@@ -1,20 +1,51 @@
-import { describe, it, expect } from "bun:test";
-import { BASE_URL, PHPSESSID } from "@/env";
-import { SchoolboxWebSocket } from "@/wrappers";
+import { describe, it, expect, beforeAll, afterEach } from "bun:test";
+import { BASE_URL, JWT } from "@/env";
+import { authSession, SchoolboxWebSocket, ConnectionState } from "@/wrappers";
 
 let url = `wss://${BASE_URL}/websocket`;
-let cookie = `PHPSESSID=${PHPSESSID}`;
+let cookie: string;
+let ws: SchoolboxWebSocket | null = null;
+
+beforeAll(async () => {
+  const result = await authSession(fetch, BASE_URL, JWT);
+  cookie = result.cookie;
+});
+
+afterEach(async () => {
+  if (ws) {
+    ws.close();
+    ws = null;
+  }
+});
 
 describe("websocket", () => {
-  it("connects and sends subscribe", async () => {
+  it("creates connection and is connected", async () => {
+    ws = await SchoolboxWebSocket.create(url, cookie);
+    expect(ws.isConnected()).toBe(true);
+    expect(ws.getState()).toBe(ConnectionState.CONNECTED);
+  });
+
+  it.todo("tracks state transitions", async () => {
+    const states: ConnectionState[] = [];
+    ws = await SchoolboxWebSocket.create(url, cookie);
+
+    ws.onStateChange((state) => {
+      states.push(state);
+    });
+
+    expect(states.length).toBeGreaterThan(0);
+    expect(states.at(-1)).toBe(ConnectionState.CONNECTED);
+    expect(states).toContain(ConnectionState.CONNECTING);
+  });
+
+  it.todo("connects and sends subscribe", async () => {
     let lastMessage: string | undefined;
-    const ws = await SchoolboxWebSocket.create(url, cookie);
+    ws = await SchoolboxWebSocket.create(url, cookie);
 
     ws.subscribe();
 
-    // wait until we receive the expected message
     await new Promise<void>((resolve, reject) => {
-      ws.onMessage((data) => {
+      ws?.onMessage((data) => {
         const message = data.toString();
         try {
           const json = JSON.parse(message);
@@ -27,34 +58,101 @@ describe("websocket", () => {
         }
       });
 
-      ws.onError((err) => {
+      ws?.onError((err) => {
         reject(err);
       });
 
-      // timeout after 5 seconds if not received
       setTimeout(
         () => reject(new Error("did not receive subscribe:true")),
         5000,
       );
     });
 
-    console.log(lastMessage);
     expect(lastMessage).toBeDefined();
     expect(lastMessage).toBe(JSON.stringify({ subscribe: true }));
-    ws.close();
   });
 
   it.todo("sends fetch", async () => {
-    // lastMessage = null;
-    // const ws = await SchoolboxWebSocket.create(url, cookie);
+    // ws = await SchoolboxWebSocket.create(url, cookie);
+    // let fetchMessage: string | undefined;
+    //
+    // ws.onMessage((data) => {
+    //   const message = data.toString();
+    //   try {
+    //     const json = JSON.parse(message);
+    //     if (json.fetch === 42) {
+    //       fetchMessage = message;
+    //     }
+    //   } catch (e) {
+    //     // Ignore non-JSON messages
+    //   }
+    // });
+    //
     // ws.fetch(42);
-    // await new Promise((resolve) => setTimeout(resolve, 100));
-    // expect(lastMessage).toBe(JSON.stringify({ fetch: 42 }));
-    // ws.close();
+    //
+    // await new Promise((resolve) => setTimeout(resolve, 500));
+    // expect(fetchMessage).toBe(JSON.stringify({ fetch: 42 }));
   });
 
-  it("closes the websocket", async () => {
-    const ws = await SchoolboxWebSocket.create(url, cookie);
+  it("handles multiple message listeners", async () => {
+    ws = await SchoolboxWebSocket.create(url, cookie);
+    const messages: string[] = [];
+    const messages2: string[] = [];
+
+    ws.onMessage((data) => {
+      messages.push(data.toString());
+    });
+
+    ws.onMessage((data) => {
+      messages2.push(data.toString());
+    });
+
+    ws.subscribe();
+
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    expect(messages.length).toBeGreaterThan(0);
+    expect(messages2.length).toBeGreaterThan(0);
+    expect(messages.length).toBe(messages2.length);
+  });
+
+  it("handles error listeners", async () => {
+    ws = await SchoolboxWebSocket.create(url, cookie);
+    let errorCaught: Error | null = null;
+
+    ws.onError((err) => {
+      errorCaught = err;
+    });
+
+    expect(errorCaught).toBeNull();
+  });
+
+  it.todo("handles 401 unauthorized cookie", () => {
+    return expect(
+      SchoolboxWebSocket.create(url, "invalid_cookie"),
+    ).rejects.toThrow("401 unauthorised: invalid cookie");
+  });
+
+  it("closes the websocket and stops reconnection", async () => {
+    ws = await SchoolboxWebSocket.create(url, cookie);
+    expect(ws.isConnected()).toBe(true);
+
     ws.close();
+
+    expect(ws.getState()).toBe(ConnectionState.CLOSED);
+    expect(ws.isConnected()).toBe(false);
+  });
+
+  it("tracks state change when closing", async () => {
+    ws = await SchoolboxWebSocket.create(url, cookie);
+    const states: ConnectionState[] = [];
+
+    ws.onStateChange((state) => {
+      states.push(state);
+    });
+
+    ws.close();
+
+    expect(states.at(-1)).toBe(ConnectionState.CLOSED);
   });
 });

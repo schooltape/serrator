@@ -1,76 +1,195 @@
 import WebSocket from "ws";
 
+export enum ConnectionState {
+  CONNECTING = "CONNECTING",
+  CONNECTED = "CONNECTED",
+  RECONNECTING = "RECONNECTING",
+  CLOSED = "CLOSED",
+  FAILED = "FAILED",
+}
+
 export class SchoolboxWebSocket {
-  private ws: WebSocket | null = null;
-  private url: string;
-  private cookie: string;
-  private reconnectAttempts = 0;
-  private maxReconnectAttempts = 10;
-  private reconnectDelay = 2000; // 2 seconds
-  private shouldReconnect = true;
-  private errorListener: ((err: Error) => void) | null = null;
+  #ws: WebSocket | null = null;
+  #url: string;
+  #cookie: string;
+  #reconnectAttempts = 0;
+  #maxReconnectAttempts = 4;
+  #reconnectDelay = 2000;
+  #shouldReconnect = false;
+  #state: ConnectionState = ConnectionState.CONNECTING;
+  #messageListeners: Array<(data: WebSocket.Data) => void> = [];
+  #errorListeners: Array<(err: Error) => void> = [];
+  #stateChangeListeners: Array<(state: ConnectionState) => void> = [];
 
   private constructor(url: string, cookie: string) {
-    this.url = url;
-    this.cookie = cookie;
+    this.#url = url;
+    this.#cookie = cookie;
   }
-  
-  static async create(url: string, cookie: string): Promise<SchoolboxWebSocket> {
-    if (!cookie)
-      throw new Error("cookie is required for WebSocket connection");
-    
+
+  static async create(
+    url: string,
+    cookie: string,
+  ): Promise<SchoolboxWebSocket> {
+    if (!cookie) throw new Error("cookie is required for WebSocket connection");
+
     const instance = new SchoolboxWebSocket(url, cookie);
     await instance.#connect();
     return instance;
   }
 
-  #connect(): Promise<WebSocket> {
+  #connect(): Promise<void> {
     return new Promise((resolve, reject) => {
-      console.log("connecting to the websocket...");
-      this.ws = new WebSocket(this.url, {
+      this.#cleanup();
+      this.#setState(
+        this.#reconnectAttempts === 0
+          ? ConnectionState.CONNECTING
+          : ConnectionState.RECONNECTING,
+      );
+
+      console.log(
+        `${this.#reconnectAttempts === 0 ? "connecting" : "reconnecting"} to websocket...`,
+      );
+
+      this.#ws = new WebSocket(this.#url, {
         headers: {
-          Cookie: this.cookie,
+          Cookie: this.#cookie,
         },
       });
 
-      // 401 unauthorised error handler
-      this.ws.on("message", (data) => {
-        if (JSON.parse(data.toString())?.code === 401) {
-          const err = new Error("401 unauthorised: invalid cookie");
-          console.error(err);
-          this.shouldReconnect = false;
-          this.ws?.close();
-          if (this.errorListener) this.errorListener(err);
-          reject(err);
-        }
-      });
-      this.ws.on("open", () => {
-        console.log("successfully connected!");
-        this.reconnectAttempts = 0;
-        resolve(this.ws!);
-      });
-      this.ws.on("error", (err: any) => {
-        console.error("error:", err);
-        if (this.errorListener) this.errorListener(err);
+      const handleOpen = () => {
+        console.log("connected to websocket :3");
+        this.#ws?.send(JSON.stringify({ subscribe: true }));
+
+        this.#ws?.once("message", (data) => {
+          try {
+            const parsed = JSON.parse(data.toString());
+            if (parsed?.error) {
+              this.#ws?.close();
+              reject(new Error(`error ${parsed.code}: ${parsed.error}`));
+            } else if (parsed?.subscribe === true) {
+              this.#shouldReconnect = true;
+              this.#setState(ConnectionState.CONNECTED);
+
+              // attach listeners
+              for (const listener of this.#messageListeners) {
+                this.#ws?.on("message", listener);
+              }
+              for (const listener of this.#errorListeners) {
+                this.#ws?.on("error", listener);
+              }
+
+              resolve();
+            } else {
+              reject(new Error("unexpected response while opening websocket"));
+            }
+          } catch (err) {
+            reject(err);
+          }
+        });
+      };
+
+      const handleError = (err: Error) => {
+        console.error("websocket error:", err);
+        this.#emitError(err);
+      };
+
+      const handleClose = () => {
+        if (this.#state === ConnectionState.CLOSED) return;
+        this.#handleReconnect();
+      };
+
+      const handleMessage = (data: WebSocket.Data) => {
+        this.#emitMessage(data);
+      };
+
+      this.#ws.once("open", handleOpen);
+      this.#ws.once("error", (err) => {
+        handleError(err);
         reject(err);
       });
-      this.ws.on("close", () => this.#handleReconnect());
+      this.#ws.on("close", handleClose);
+      this.#ws.on("message", handleMessage);
+      this.#ws.on("error", handleError);
     });
   }
 
   #handleReconnect() {
-    if (!this.shouldReconnect) {
+    if (!this.#shouldReconnect) {
       console.warn("not attempting to reconnect");
+      this.#setState(ConnectionState.CLOSED);
       return;
     }
-    if (this.reconnectAttempts < this.maxReconnectAttempts) {
+
+    if (this.#reconnectAttempts < this.#maxReconnectAttempts) {
+      this.#reconnectAttempts++;
+      const delay = this.#reconnectDelay * 2 ** (this.#reconnectAttempts - 1);
+
+      console.log(
+        `reconnect attempt ${this.#reconnectAttempts}/${this.#maxReconnectAttempts} in ${delay}ms`,
+      );
+
       setTimeout(() => {
-        this.reconnectAttempts++;
-        console.log("attempting reconnect");
-        this.#connect();
-      }, this.reconnectDelay * this.reconnectAttempts); // exponential backoff
+        this.#connect().catch((err) => {
+          console.error("reconnect failed:", err);
+        });
+      }, delay);
     } else {
       console.error("max reconnect attempts reached");
+      this.#setState(ConnectionState.FAILED);
+      this.#emitError(new Error("max reconnection attempts reached"));
+    }
+  }
+
+  #cleanup() {
+    if (this.#ws) {
+      this.#ws.removeAllListeners();
+      if (
+        this.#ws.readyState === WebSocket.OPEN ||
+        this.#ws.readyState === WebSocket.CONNECTING
+      ) {
+        this.#ws.close();
+      }
+    }
+  }
+
+  #emitMessage(data: WebSocket.Data) {
+    for (const listener of this.#messageListeners) {
+      try {
+        listener(data);
+      } catch (err) {
+        console.error("error in message listener:", err);
+      }
+    }
+  }
+
+  #emitError(err: Error) {
+    for (const listener of this.#errorListeners) {
+      try {
+        listener(err);
+      } catch (listenerErr) {
+        console.error("error in error listener:", listenerErr);
+      }
+    }
+  }
+
+  #setState(state: ConnectionState) {
+    if (this.#state === state) return;
+    this.#state = state;
+
+    for (const listener of this.#stateChangeListeners) {
+      try {
+        listener(state);
+      } catch (err) {
+        console.error("error in state change listener:", err);
+      }
+    }
+  }
+
+  #send(data: string | Buffer) {
+    if (this.#ws && this.#ws.readyState === WebSocket.OPEN) {
+      this.#ws.send(data);
+    } else {
+      console.warn("cannot send: websocket not connected");
     }
   }
 
@@ -86,30 +205,31 @@ export class SchoolboxWebSocket {
     this.#send(JSON.stringify({ ack: ids }));
   }
 
-  #send(data: string | Buffer) {
-    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-      this.ws.send(data);
-    }
-  }
-
   close() {
-    console.log("closed the websocket")
-    this.shouldReconnect = false;
-    this.ws?.close();
+    console.log("closing websocket");
+    this.#shouldReconnect = false;
+    this.#setState(ConnectionState.CLOSED);
+    this.#cleanup();
   }
 
   onMessage(listener: (data: WebSocket.Data) => void) {
-    if (this.ws) {
-      this.ws.on("message", listener);
-    } else {
-      throw new Error("WebSocket not connected yet");
-    }
+    this.#messageListeners.push(listener);
   }
 
   onError(listener: (err: Error) => void) {
-    this.errorListener = listener;
-    if (this.ws) {
-      this.ws.on("error", listener);
-    }
+    this.#errorListeners.push(listener);
+  }
+
+  onStateChange(listener: (state: ConnectionState) => void) {
+    this.#stateChangeListeners.push(listener);
+    listener(this.#state);
+  }
+
+  getState(): ConnectionState {
+    return this.#state;
+  }
+
+  isConnected(): boolean {
+    return this.#state === ConnectionState.CONNECTED;
   }
 }
