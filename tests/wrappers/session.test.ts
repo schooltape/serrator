@@ -1,4 +1,3 @@
-import { authFetchParams } from "@/utils";
 import { describe, it, expect } from "bun:test";
 import { authSession } from "@/wrappers";
 import { BASE_URL, JWT } from "@/env";
