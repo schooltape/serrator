@@ -25,26 +25,19 @@ describe("getTimetable", () => {
     for (const event of result) {
       expect(event).toBeDefined();
 
-      expect(event.title).toBeDefined();
       expect(event.title).toBeString();
       expect(event.title?.length).toBeGreaterThan(0);
 
-      expect(event.allDay).toBeDefined();
       expect(event.allDay).toBeBoolean();
 
       if (!event.allDay) {
-        expect(event.start).toBeDefined();
         expect(event.start).toBeValidDate();
-
-        expect(event.end).toBeDefined();
         expect(event.end).toBeValidDate();
       }
 
-      expect(event.location).toBeDefined();
       expect(event.location).toBeString();
       expect(event.location?.length).toBeGreaterThan(0);
 
-      expect(event.code).toBeDefined();
       expect(event.code).toBeString();
       expect(event.code?.length).toBeGreaterThan(0);
     }

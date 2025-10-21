@@ -21,13 +21,8 @@ describe("getClasses", () => {
     expect(result.length).toBeGreaterThan(0);
 
     result.forEach((cls) => {
-      expect(cls).toHaveProperty("code");
-      expect(cls.code).toBeDefined();
-      expect(typeof cls.code).toBe("string");
-
-      expect(cls).toHaveProperty("name");
-      expect(cls.name).toBeDefined();
-      expect(typeof cls.name).toBe("string");
+      expect(cls.code).toBeString();
+      expect(cls.name).toBeString();
     });
   });
 });

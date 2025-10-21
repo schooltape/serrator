@@ -16,14 +16,10 @@ describe("getDashboard", () => {
 
     expect(result).toBeDefined();
 
-    expect(result.navLinks).toBeDefined();
     expect(result.navLinks).toBeArray();
     for (const navLink of result.navLinks) {
-      expect(navLink).toHaveProperty("name");
       expect(navLink.name).toBeString();
-      expect(navLink).toHaveProperty("link");
       expect(navLink.link).toBeString();
-      expect(navLink).toHaveProperty("iconId");
       expect(navLink.iconId).toBeString();
     }
 
@@ -35,9 +31,7 @@ describe("getDashboard", () => {
       expect(tileGroup.length).toBeGreaterThan(0);
 
       tileGroup.forEach((tile) => {
-        expect(tile).toHaveProperty("title");
         expect(tile.title).toBeString();
-        expect(tile).toHaveProperty("link");
         expect(tile.link).toBeString();
       });
     });

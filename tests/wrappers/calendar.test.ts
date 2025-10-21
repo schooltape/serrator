@@ -30,16 +30,13 @@ describe("getCalendar", () => {
     for (const event of result) {
       expect(event).toBeDefined();
 
-      expect(event.title).toBeDefined();
       expect(event.title).toBeString();
       expect(event.title?.length).toBeGreaterThan(0);
 
-      expect(event.allDay).toBeDefined();
       expect(event.allDay).toBeBoolean();
 
       if (!event.allDay) {
         // event end might not be defined if event is an assessment task
-        expect(event.start).toBeDefined();
         expect(parseISO(event.start!)).toBeValidDate();
       }
     }

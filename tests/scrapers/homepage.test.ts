@@ -29,9 +29,7 @@ describe("getHomepage", () => {
       expect(tileGroup.length).toBeGreaterThan(0);
 
       tileGroup.forEach((tile) => {
-        expect(tile).toHaveProperty("title");
         expect(tile.title).toBeString();
-        expect(tile).toHaveProperty("link");
         expect(tile.link).toBeString();
       });
     });

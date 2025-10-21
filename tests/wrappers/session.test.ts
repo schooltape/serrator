@@ -9,7 +9,6 @@ describe("authSession", () => {
 
     expect(result).toBeDefined();
     expect(result.data).toBeDefined();
-    expect(result.cookie).toBeDefined();
     expect(result.cookie).toBeString();
   });
 });
