@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeAll, afterEach } from "bun:test";
 import { BASE_URL, JWT } from "@/env";
 import { authSession, SchoolboxWebSocket, ConnectionState } from "@/wrappers";
+import type { WebsocketMessage } from "@/types";
 
 let url = `wss://${BASE_URL}/websocket`;
 let cookie: string;
@@ -68,7 +69,6 @@ describe("websocket", () => {
       );
     });
 
-    expect(lastMessage).toBeDefined();
     expect(lastMessage).toBe(JSON.stringify({ subscribe: true }));
   });
 
@@ -154,5 +154,41 @@ describe("websocket", () => {
     ws.close();
 
     expect(states.at(-1)).toBe(ConnectionState.CLOSED);
+  });
+
+  it("fetches user notifications", async () => {
+    ws = await SchoolboxWebSocket.create(url, cookie);
+    let lastMessage: WebsocketMessage | undefined;
+
+    ws.onMessage((msg) => {
+      lastMessage = msg;
+    });
+
+    ws.fetch(1);
+    await new Promise((resolve) => {
+      ws?.onMessage(resolve);
+      setTimeout(resolve, 1000);
+    });
+
+    // console.log(lastMessage);
+
+    expect(lastMessage).toHaveProperty("fetch");
+    if (lastMessage && "fetch" in lastMessage) {
+      for (const [key, value] of Object.entries(lastMessage!.fetch)) {
+        expect(key).toBeString();
+        expect(key.length).toBeGreaterThan(0);
+        expect(value).toBeObject();
+        expect(value.id).toBeString();
+        expect(value.body).toBeString();
+        expect(value.icon).toBeString();
+        expect(value.href).toBeString();
+        expect(value.params).toBeObject();
+        expect(value.meta).toBeObject();
+        expect(value.timestamp).toBeNumber();
+        expect(value.status).toBeString();
+      }
+    } else {
+      throw new Error("no fetch data received");
+    }
   });
 });

@@ -1,4 +1,5 @@
 import WebSocket from "ws";
+import type { WebsocketMessage } from "@/types";
 
 export enum ConnectionState {
   CONNECTING = "CONNECTING",
@@ -17,7 +18,7 @@ export class SchoolboxWebSocket {
   #reconnectDelay = 2000;
   #shouldReconnect = false;
   #state: ConnectionState = ConnectionState.CONNECTING;
-  #messageListeners: Array<(data: WebSocket.Data) => void> = [];
+  #messageListeners: Array<(data: WebsocketMessage) => void> = [];
   #errorListeners: Array<(err: Error) => void> = [];
   #stateChangeListeners: Array<(state: ConnectionState) => void> = [];
 
@@ -153,9 +154,16 @@ export class SchoolboxWebSocket {
   }
 
   #emitMessage(data: WebSocket.Data) {
+    let parsed: WebsocketMessage;
+    try {
+      parsed = this.#parseJSON(data);
+    } catch (err) {
+      console.error("error in message listener:", err);
+      return;
+    }
     for (const listener of this.#messageListeners) {
       try {
-        listener(data);
+        listener(parsed);
       } catch (err) {
         console.error("error in message listener:", err);
       }
@@ -193,6 +201,14 @@ export class SchoolboxWebSocket {
     }
   }
 
+  #parseJSON(data: WebSocket.Data): WebsocketMessage {
+    try {
+      return JSON.parse(data.toString());
+    } catch (e) {
+      throw new Error("failed to parse JSON from websocket message");
+    }
+  }
+
   subscribe() {
     this.#send(JSON.stringify({ subscribe: true }));
   }
@@ -212,7 +228,7 @@ export class SchoolboxWebSocket {
     this.#cleanup();
   }
 
-  onMessage(listener: (data: WebSocket.Data) => void) {
+  onMessage(listener: (data: WebsocketMessage) => void) {
     this.#messageListeners.push(listener);
   }
 
