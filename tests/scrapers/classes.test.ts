@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll } from "bun:test";
-import { BASE_URL } from "@/env";
+import { DOMAIN } from "@/env";
 import { type SchoolboxClass } from "@/types";
 import { authFetchParse } from "@/utils";
 import { getClasses } from "@/scrapers";
@@ -9,7 +9,7 @@ describe("getClasses", () => {
 
   beforeAll(async () => {
     result = await authFetchParse(
-      `https://${BASE_URL}/learning/classes`,
+      `https://${DOMAIN}/learning/classes`,
       getClasses,
     );
   });

@@ -1,7 +1,7 @@
 import { authFetchParams, authFetchParse } from "@/utils";
 import { describe, it, expect, beforeAll } from "bun:test";
 import { getTimetable, registerMobile } from "@/wrappers";
-import { BASE_URL } from "@/env";
+import { DOMAIN } from "@/env";
 import type { SchoolboxTimetableEvent } from "@/types";
 import { getClasses } from "@/scrapers";
 
@@ -10,12 +10,12 @@ describe("getTimetable", () => {
   let result: SchoolboxTimetableEvent[];
 
   beforeAll(async () => {
-    await registerMobile(BASE_URL, authFetchParams).then((result) => {
+    await registerMobile(DOMAIN, authFetchParams).then((result) => {
       if (result.id === undefined) throw new Error("user id is undefined");
       userId = result.id;
     });
 
-    result = await getTimetable(authFetchParams, BASE_URL, userId);
+    result = await getTimetable(authFetchParams, DOMAIN, userId);
     // console.log(result);
   });
 
@@ -45,7 +45,7 @@ describe("getTimetable", () => {
 
   it("can find associated class names of timetable events", async () => {
     const classes = await authFetchParse(
-      `https://${BASE_URL}/learning/classes`,
+      `https://${DOMAIN}/learning/classes`,
       getClasses,
     );
 

@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll } from "bun:test";
 import type { SchoolboxHomepage } from "@/types";
 import { authFetchParse } from "@/utils";
-import { BASE_URL } from "@/env";
+import { DOMAIN } from "@/env";
 import { getHomepage } from "@/scrapers";
 
 describe("getHomepage", () => {
@@ -10,7 +10,7 @@ describe("getHomepage", () => {
   beforeAll(async () => {
     result = await authFetchParse(
       // TODO)) implement
-      `https://${BASE_URL}/`,
+      `https://${DOMAIN}/`,
       getHomepage,
     );
   });

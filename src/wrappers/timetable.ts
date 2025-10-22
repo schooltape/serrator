@@ -6,7 +6,7 @@ import { endOfWeek, getUnixTime, parseISO, startOfWeek } from "date-fns";
  */
 export async function getTimetable(
   fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>,
-  baseUrl: string,
+  domain: string,
   userId: number,
 ): Promise<SchoolboxTimetableEvent[]> {
   const date = new Date();
@@ -16,7 +16,7 @@ export async function getTimetable(
     end: getUnixTime(endOfWeek(date)).toString(),
     timetableCalendar: "true",
   };
-  const url = `https://${baseUrl}/calendar/ajax/full${params ? `?${new URLSearchParams(params).toString()}` : ""}`;
+  const url = `https://${domain}/calendar/ajax/full${params ? `?${new URLSearchParams(params).toString()}` : ""}`;
   const response = await fetch(url);
 
   if (!response.ok)

@@ -4,10 +4,10 @@ type SchoolboxResponse =
   operations["mobileRegister"]["responses"]["201"]["content"]["application/json"];
 
 export async function registerMobile(
-  baseUrl: string,
+  domain: string,
   fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>,
 ): Promise<SchoolboxResponse> {
-  const response = await fetch(`https://${baseUrl}/api/register/Firebase`, {
+  const response = await fetch(`https://${domain}/api/register/Firebase`, {
     method: "POST",
   });
 

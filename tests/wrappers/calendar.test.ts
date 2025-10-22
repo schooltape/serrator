@@ -2,7 +2,7 @@ import { authFetchParams } from "@/utils";
 import { describe, it, expect, beforeAll } from "bun:test";
 import { endOfWeek, parseISO, startOfWeek } from "date-fns";
 import { getCalendar, registerMobile } from "@/wrappers";
-import { BASE_URL } from "@/env";
+import { DOMAIN } from "@/env";
 
 describe("getCalendar", () => {
   let userId: number;
@@ -10,7 +10,7 @@ describe("getCalendar", () => {
   const date = new Date();
 
   beforeAll(async () => {
-    const result = await registerMobile(BASE_URL, authFetchParams);
+    const result = await registerMobile(DOMAIN, authFetchParams);
     // console.log(result);
     if (result.id === undefined) throw new Error("user id is undefined");
     userId = result.id;
@@ -19,7 +19,7 @@ describe("getCalendar", () => {
   it("can fetch calendar events", async () => {
     const result = await getCalendar(
       authFetchParams,
-      BASE_URL,
+      DOMAIN,
       userId,
       startOfWeek(date),
       endOfWeek(date),

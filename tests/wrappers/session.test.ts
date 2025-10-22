@@ -1,10 +1,10 @@
 import { describe, it, expect } from "bun:test";
 import { authSession } from "@/wrappers";
-import { BASE_URL, JWT } from "@/env";
+import { DOMAIN, JWT } from "@/env";
 
 describe("authSession", () => {
   it("can authenticate a session from JWT", async () => {
-    const result = await authSession(fetch, BASE_URL, JWT);
+    const result = await authSession(fetch, DOMAIN, JWT);
     // console.log(result);
 
     expect(result).toBeDefined();

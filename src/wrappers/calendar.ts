@@ -9,7 +9,7 @@ type SchoolboxResponse =
  */
 export async function getCalendar(
   fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>,
-  baseUrl: string,
+  domain: string,
   userId: number,
   start: Date,
   end: Date,
@@ -20,7 +20,7 @@ export async function getCalendar(
     end: getUnixTime(end).toString(),
   };
 
-  const url = `https://${baseUrl}/calendar/ajax/full${params ? `?${new URLSearchParams(params).toString()}` : ""}`;
+  const url = `https://${domain}/calendar/ajax/full${params ? `?${new URLSearchParams(params).toString()}` : ""}`;
   const response = await fetch(url);
 
   if (!response.ok)

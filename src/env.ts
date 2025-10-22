@@ -10,5 +10,5 @@ function getEnv(name: string): string {
   return value;
 }
 
-export const BASE_URL = getEnv("BASE_URL");
+export const DOMAIN = getEnv("DOMAIN");
 export const JWT = getEnv("JWT");

@@ -1,14 +1,14 @@
 import { describe, it, expect, beforeAll, afterEach } from "bun:test";
-import { BASE_URL, JWT } from "@/env";
+import { DOMAIN, JWT } from "@/env";
 import { authSession, SchoolboxWebSocket, ConnectionState } from "@/wrappers";
 import type { WebsocketMessage } from "@/types";
 
-let url = `wss://${BASE_URL}/websocket`;
+let url = `wss://${DOMAIN}/websocket`;
 let cookie: string;
 let ws: SchoolboxWebSocket | null = null;
 
 beforeAll(async () => {
-  const result = await authSession(fetch, BASE_URL, JWT);
+  const result = await authSession(fetch, DOMAIN, JWT);
   cookie = result.cookie;
 });
 

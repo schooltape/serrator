@@ -1,4 +1,4 @@
-import { BASE_URL } from "@/env";
+import { DOMAIN } from "@/env";
 import type { SchoolboxGroup } from "@/types";
 import { authFetchParse } from "@/utils";
 import { describe, it, expect, beforeAll } from "bun:test";
@@ -9,7 +9,7 @@ describe("getGroups", () => {
 
   beforeAll(async () => {
     result = await authFetchParse(
-      `https://${BASE_URL}/groups#all-groups`,
+      `https://${DOMAIN}/groups#all-groups`,
       getGroups,
     );
   });

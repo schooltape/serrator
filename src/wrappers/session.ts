@@ -5,11 +5,11 @@ type SchoolboxResponse =
 
 export async function authSession(
   fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>,
-  baseUrl: string,
+  domain: string,
   jwt: string,
 ) {
   const response = await fetch(
-    `https://${baseUrl}/api/session?jwt=${encodeURIComponent(jwt)}`,
+    `https://${domain}/api/session?jwt=${encodeURIComponent(jwt)}`,
     {
       method: "GET",
       headers: {
