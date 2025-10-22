@@ -16,7 +16,6 @@ export interface paths {
          * @description This allows you to search for users and get details about the user. The search filter attributes are all optional.
          *     The number of users returned is 5 by default, if the limit query parameter is not provided.
          *     This endpoint is only available to superusers to avoid leaking information about users to other users.
-         *
          */
         get: operations["userSearch"];
         put?: never;
@@ -38,7 +37,6 @@ export interface paths {
          *     "firstName": "Rebecca"
          *     }
          *     ```
-         *
          */
         post: operations["userPost"];
         delete?: never;
@@ -62,7 +60,6 @@ export interface paths {
          *
          *     Only users which are authenticated as a superuser may request a token for
          *     another user.
-         *
          */
         post: operations["userGetTokenForUser"];
         delete?: never;
@@ -76,11 +73,12 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -88,20 +86,17 @@ export interface paths {
         /**
          * Get a user
          * @description Returns all the information about a specific user. The result from this API can be passed into the update user endpoint. This endpoint may only be used by the current user or superusers.
-         *
          */
         get: operations["userGet"];
         /**
          * Update a user
          * @description This allows a user to be updated by passing in a user object. When using this endpoint you must provide the entire user, we recommend you get the user first via the "get a user" endpoint. This endpoint may only be used by superusers.
-         *
          */
         put: operations["userPut"];
         post?: never;
         /**
          * Delete a user
          * @description This will soft-delete a user from the system.  A soft-deleted user will no longer be visible in the system, but the data will remain. This endpoint may only be used by superusers.
-         *
          */
         delete: operations["userDelete"];
         options?: never;
@@ -109,7 +104,6 @@ export interface paths {
         /**
          * Partially update a user
          * @description This allows you to update specific fields of a user without needing to provide all the fields. By providing a partial user object, only the fields provided will be updated. The remaining fields will be left as they were. This endpoint may only be used by superusers.
-         *
          */
         patch: operations["userPatch"];
         trace?: never;
@@ -119,11 +113,12 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -131,7 +126,6 @@ export interface paths {
         /**
          * Get a users groups
          * @description This will provide a list of the groups a user is a member of.  It will include information about the group membership status and settings.  The endpoint is only available to superusers.
-         *
          */
         get: operations["userGroupMembershipSearch"];
         put?: never;
@@ -147,11 +141,12 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
                 groupId: number;
             };
@@ -160,25 +155,21 @@ export interface paths {
         /**
          * Get a users settings for a group
          * @description This will provide you with the current enrolment settings the user has for a specific group. This endpoint is only available for superusers.
-         *
          */
         get: operations["userGroupMembershipGet"];
         /**
          * Update a user's settings for a group
          * @description This allows you to change the group access level, notification and favourite status of a group for a particular user. The group membership for the user must already exist. The endpoint is only available for superusers.
-         *
          */
         put: operations["userGroupMembershipPut"];
         /**
          * Add user to a group
          * @description This will add a user as a member into a group. This membership must not already exist. You will need to provide all the settings for the membership. This endpoint is only available for superusers.
-         *
          */
         post: operations["userGroupMembershipPost"];
         /**
          * Remove this user from a group
          * @description This will remove the relationship between a user and a group, it will also remove any settings related to that group membership. The endpoint is only available for superusers.
-         *
          */
         delete: operations["userGroupMembershipDelete"];
         options?: never;
@@ -186,7 +177,6 @@ export interface paths {
         /**
          * Partially update a user's group settings
          * @description This allows you to change only the group access level, notification and favourite status of a group for a particular user. You can use this endpoint to set one setting, leaving the other settings unchanged. The endpoint is only available for superusers.
-         *
          */
         patch: operations["userGroupMembershipPatch"];
         trace?: never;
@@ -209,7 +199,6 @@ export interface paths {
          *     This endpoint only makes sense for users authenticated with the "session"
          *     security scheme, as it returns a token which is used by the "bearerAuth"
          *     scheme.
-         *
          */
         get: operations["userGetTokenForSelf"];
         put?: never;
@@ -225,7 +214,8 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                /** @description The type of item that a thread is associated with.
+                /**
+                 * @description The type of item that a thread is associated with.
                  *
                  *     Used in conjunction with contextId to find the item with which a thread
                  *     is associated, and then to determine whether the authenticated user has
@@ -236,14 +226,15 @@ export interface paths {
                  *     * `evidence` (the internal name for learning moments: not yet documented)
                  *
                  *     It is intended that discussion threads will be introduced to more contexts.
-                 *      */
+                 */
                 contextType: components["parameters"]["discussion-contextType"];
-                /** @description The unique ID of the item that a thread is associated with.
+                /**
+                 * @description The unique ID of the item that a thread is associated with.
                  *
                  *     Used in conjunction with contextType to find the item with which a
                  *     thread is associated, and then to determine whether the authenticated
                  *     user has permission to perform the requested action.
-                 *      */
+                 */
                 contextId: components["parameters"]["discussion-contextId"];
             };
             cookie?: never;
@@ -263,7 +254,8 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                /** @description The type of item that a thread is associated with.
+                /**
+                 * @description The type of item that a thread is associated with.
                  *
                  *     Used in conjunction with contextId to find the item with which a thread
                  *     is associated, and then to determine whether the authenticated user has
@@ -274,20 +266,22 @@ export interface paths {
                  *     * `evidence` (the internal name for learning moments: not yet documented)
                  *
                  *     It is intended that discussion threads will be introduced to more contexts.
-                 *      */
+                 */
                 contextType: components["parameters"]["discussion-contextType"];
-                /** @description The unique ID of the item that a thread is associated with.
+                /**
+                 * @description The unique ID of the item that a thread is associated with.
                  *
                  *     Used in conjunction with contextType to find the item with which a
                  *     thread is associated, and then to determine whether the authenticated
                  *     user has permission to perform the requested action.
-                 *      */
+                 */
                 contextId: components["parameters"]["discussion-contextId"];
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -307,7 +301,8 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                /** @description The type of item that a thread is associated with.
+                /**
+                 * @description The type of item that a thread is associated with.
                  *
                  *     Used in conjunction with contextId to find the item with which a thread
                  *     is associated, and then to determine whether the authenticated user has
@@ -318,20 +313,22 @@ export interface paths {
                  *     * `evidence` (the internal name for learning moments: not yet documented)
                  *
                  *     It is intended that discussion threads will be introduced to more contexts.
-                 *      */
+                 */
                 contextType: components["parameters"]["discussion-contextType"];
-                /** @description The unique ID of the item that a thread is associated with.
+                /**
+                 * @description The unique ID of the item that a thread is associated with.
                  *
                  *     Used in conjunction with contextType to find the item with which a
                  *     thread is associated, and then to determine whether the authenticated
                  *     user has permission to perform the requested action.
-                 *      */
+                 */
                 contextId: components["parameters"]["discussion-contextId"];
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -351,7 +348,8 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                /** @description The type of item that a thread is associated with.
+                /**
+                 * @description The type of item that a thread is associated with.
                  *
                  *     Used in conjunction with contextId to find the item with which a thread
                  *     is associated, and then to determine whether the authenticated user has
@@ -362,20 +360,22 @@ export interface paths {
                  *     * `evidence` (the internal name for learning moments: not yet documented)
                  *
                  *     It is intended that discussion threads will be introduced to more contexts.
-                 *      */
+                 */
                 contextType: components["parameters"]["discussion-contextType"];
-                /** @description The unique ID of the item that a thread is associated with.
+                /**
+                 * @description The unique ID of the item that a thread is associated with.
                  *
                  *     Used in conjunction with contextType to find the item with which a
                  *     thread is associated, and then to determine whether the authenticated
                  *     user has permission to perform the requested action.
-                 *      */
+                 */
                 contextId: components["parameters"]["discussion-contextId"];
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -393,16 +393,18 @@ export interface paths {
     "/discussion/{contextType}/{contextId}/threads/{id}/comments": {
         parameters: {
             query?: {
-                /** @description A generated but decodable pointer to the first record to return.
+                /**
+                 * @description A generated but decodable pointer to the first record to return.
                  *
                  *     Each endpoint whose data accepts a cursor will return a cursor that
                  *     points to the next page of the result set.
-                 *      */
+                 */
                 cursor?: components["parameters"]["cursor"];
             };
             header?: never;
             path: {
-                /** @description The type of item that a thread is associated with.
+                /**
+                 * @description The type of item that a thread is associated with.
                  *
                  *     Used in conjunction with contextId to find the item with which a thread
                  *     is associated, and then to determine whether the authenticated user has
@@ -413,20 +415,22 @@ export interface paths {
                  *     * `evidence` (the internal name for learning moments: not yet documented)
                  *
                  *     It is intended that discussion threads will be introduced to more contexts.
-                 *      */
+                 */
                 contextType: components["parameters"]["discussion-contextType"];
-                /** @description The unique ID of the item that a thread is associated with.
+                /**
+                 * @description The unique ID of the item that a thread is associated with.
                  *
                  *     Used in conjunction with contextType to find the item with which a
                  *     thread is associated, and then to determine whether the authenticated
                  *     user has permission to perform the requested action.
-                 *      */
+                 */
                 contextId: components["parameters"]["discussion-contextId"];
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -447,7 +451,8 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                /** @description The type of item that a thread is associated with.
+                /**
+                 * @description The type of item that a thread is associated with.
                  *
                  *     Used in conjunction with contextId to find the item with which a thread
                  *     is associated, and then to determine whether the authenticated user has
@@ -458,20 +463,22 @@ export interface paths {
                  *     * `evidence` (the internal name for learning moments: not yet documented)
                  *
                  *     It is intended that discussion threads will be introduced to more contexts.
-                 *      */
+                 */
                 contextType: components["parameters"]["discussion-contextType"];
-                /** @description The unique ID of the item that a thread is associated with.
+                /**
+                 * @description The unique ID of the item that a thread is associated with.
                  *
                  *     Used in conjunction with contextType to find the item with which a
                  *     thread is associated, and then to determine whether the authenticated
                  *     user has permission to perform the requested action.
-                 *      */
+                 */
                 contextId: components["parameters"]["discussion-contextId"];
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -489,16 +496,18 @@ export interface paths {
     "/discussion/{contextType}/{contextId}/comments/{id}/comments": {
         parameters: {
             query?: {
-                /** @description A generated but decodable pointer to the first record to return.
+                /**
+                 * @description A generated but decodable pointer to the first record to return.
                  *
                  *     Each endpoint whose data accepts a cursor will return a cursor that
                  *     points to the next page of the result set.
-                 *      */
+                 */
                 cursor?: components["parameters"]["cursor"];
             };
             header?: never;
             path: {
-                /** @description The type of item that a thread is associated with.
+                /**
+                 * @description The type of item that a thread is associated with.
                  *
                  *     Used in conjunction with contextId to find the item with which a thread
                  *     is associated, and then to determine whether the authenticated user has
@@ -509,20 +518,22 @@ export interface paths {
                  *     * `evidence` (the internal name for learning moments: not yet documented)
                  *
                  *     It is intended that discussion threads will be introduced to more contexts.
-                 *      */
+                 */
                 contextType: components["parameters"]["discussion-contextType"];
-                /** @description The unique ID of the item that a thread is associated with.
+                /**
+                 * @description The unique ID of the item that a thread is associated with.
                  *
                  *     Used in conjunction with contextType to find the item with which a
                  *     thread is associated, and then to determine whether the authenticated
                  *     user has permission to perform the requested action.
-                 *      */
+                 */
                 contextId: components["parameters"]["discussion-contextId"];
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -547,7 +558,6 @@ export interface paths {
         /**
          * Login using JWT param
          * @description Attempt to authenticate a user based on a JWT passed in the query string. Then returns a response with a session cookie.  This can be used to start a user session when the user only has a JWT.  The JWT may be a QR code, oAuth token or a user generated API key.
-         *
          */
         get: operations["apiSessionGet"];
         put?: never;
@@ -555,7 +565,6 @@ export interface paths {
          * Login to system
          * @description Attempt to authenticate a user based on either a username/password pair, or
          *     a JWT passed in form data. This is used to login the user to the system so they can continue.  It will effectively create a session cookie for the user.
-         *
          */
         post: operations["apiSessionPost"];
         delete?: never;
@@ -581,7 +590,6 @@ export interface paths {
         /**
          * Deregister mobile device
          * @description Removes a registered device from receiving push notifications.
-         *
          */
         delete: operations["mobileDeregister"];
         options?: never;
@@ -604,7 +612,6 @@ export interface paths {
          *
          *     This file may then be referenced directly, or provided as an argument to
          *     another place which accepts file uploads.
-         *
          */
         post: operations["storageAsyncUpload"];
         delete?: never;
@@ -646,7 +653,6 @@ export interface paths {
          *
          *     The article is not necessarily published yet: this simply saves the article
          *     so that the user may refine it before publishing.
-         *
          */
         post: operations["commsNews.postCreate"];
         delete?: never;
@@ -665,7 +671,6 @@ export interface paths {
         /**
          * Get available news topics
          * @description Retrieve all available news topics, which may be attached to a news article.
-         *
          */
         get: operations["commsNews.getTopics"];
         put?: never;
@@ -692,7 +697,6 @@ export interface paths {
          *
          *     The article is not necessarily published yet: this simply saves the article
          *     so that the user may refine it before publishing.
-         *
          */
         post: operations["commsNews.postUpdate"];
         delete?: never;
@@ -713,7 +717,6 @@ export interface paths {
         /**
          * Delete a news article
          * @description Delete an existing news article.
-         *
          */
         post: operations["commsNews.postDelete"];
         delete?: never;
@@ -734,7 +737,6 @@ export interface paths {
         /**
          * Change the publication status of a news article
          * @description Change the publication status of a news article.
-         *
          */
         post: operations["commsNewsModeration.setStatus"];
         delete?: never;
@@ -753,7 +755,6 @@ export interface paths {
         /**
          * Get list of saved articles
          * @description Retrieve the IDs of all saved news articles for the authenticated user.
-         *
          */
         get: operations["commsNewsSaveForLater.getList"];
         put?: never;
@@ -780,7 +781,6 @@ export interface paths {
          *     This article will then be returned by the
          *     [Get list of saved articles](#get-/news/saved/)
          *     endpoint.
-         *
          */
         post: operations["commsNewsSaveForLater.postAdd"];
         delete?: never;
@@ -801,7 +801,6 @@ export interface paths {
         /**
          * Remove an article from the saved for later list
          * @description Remove an article from the authenticated user's saved articles.
-         *
          */
         post: operations["commsNewsSaveForLater.postRemove"];
         delete?: never;
@@ -820,7 +819,6 @@ export interface paths {
         /**
          * Get articles written by the authenticated user
          * @description Get the list of articles written by the currently authenticated user.
-         *
          */
         get: operations["commsNews.getAuthoredArticles"];
         put?: never;
@@ -841,7 +839,6 @@ export interface paths {
         /**
          * Get articles audienced to the authenticated user
          * @description Get the list of articles audienced to the currently authenticated user.
-         *
          */
         get: operations["commsNews.getListForIndex"];
         put?: never;
@@ -866,7 +863,6 @@ export interface paths {
          *
          *     This endpoint doesn't use the standard security schemes: instead, it relies
          *     upon the `$key` parameter remaining secret.
-         *
          */
         get: operations["commsNewsFeed.getFeedForUser"];
         put?: never;
@@ -887,7 +883,6 @@ export interface paths {
         /**
          * Get articles audienced to the given folder
          * @description Get the list of articles audienced to the given folder.
-         *
          */
         get: operations["commsNews.getListForHomepage"];
         put?: never;
@@ -908,7 +903,6 @@ export interface paths {
         /**
          * Get full calendar events for a given user
          * @description Returns a list of calendar events for the user, including classes, pastoral care, ensembles, activities, due work, excursions, assemblies, and other scheduled items.
-         *
          */
         get: operations["getCalendarAjaxFull"];
         put?: never;
@@ -931,7 +925,6 @@ export interface paths {
         /**
          * Create a calendar event
          * @description Creates a calendar event
-         *
          */
         post: operations["calendarEvent.postCreate"];
         delete?: never;
@@ -945,11 +938,12 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -959,7 +953,6 @@ export interface paths {
         /**
          * Modify a calendar event
          * @description Modifies a calendar event
-         *
          */
         post: operations["calendarEvent.postModify"];
         delete?: never;
@@ -973,11 +966,12 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -987,7 +981,6 @@ export interface paths {
         /**
          * Move a calendar event
          * @description Moves a calendar event
-         *
          */
         post: operations["calendarEvent.postMove"];
         delete?: never;
@@ -1001,11 +994,12 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -1015,7 +1009,6 @@ export interface paths {
         /**
          * Delete a calendar event
          * @description Deletes a calendar event
-         *
          */
         post: operations["calendarEvent.postDelete"];
         delete?: never;
@@ -1034,7 +1027,6 @@ export interface paths {
         /**
          * Get an event's attendees
          * @description This will return a list of people that have been invited or RSVP to an an event.  It will include the status of their invitation and if they have accepted the invitation.
-         *
          */
         get: operations["getCalendarEventAttendance"];
         put?: never;
@@ -1057,7 +1049,6 @@ export interface paths {
         /**
          * Invite attendees to an event
          * @description Create invitations to the given event, for the given set of users.
-         *
          */
         post: operations["postCalendarEventAttendanceCreate"];
         delete?: never;
@@ -1078,7 +1069,6 @@ export interface paths {
         /**
          * Accept event invitation
          * @description This allows a user to accept an invitation.  Note that not all events will allow the user to accept an invitation.  They must either have been invited, or have the ability to invite themselves.
-         *
          */
         post: operations["postCalendarEventAttendanceAccept"];
         delete?: never;
@@ -1100,7 +1090,6 @@ export interface paths {
          * Decline event invitation
          * @description As the authenticated user, declines the invitation to attend the given
          *     event.
-         *
          */
         post: operations["postCalendarEventAttendanceDecline"];
         delete?: never;
@@ -1121,7 +1110,6 @@ export interface paths {
         /**
          * Uninvite attendees from an event
          * @description Deletes invitations to the given event, for the given user.
-         *
          */
         post: operations["postCalendarEventAttendanceDelete"];
         delete?: never;
@@ -1133,7 +1121,8 @@ export interface paths {
     "/api/assessment": {
         parameters: {
             query: {
-                /** @description URL-encoded JSON object consisting of fields and values to filter assessments on.
+                /**
+                 * @description URL-encoded JSON object consisting of fields and values to filter assessments on.
                  *
                  *     Example 1:
                  *
@@ -1155,17 +1144,15 @@ export interface paths {
                  *
                  *     The full URL to use either of the above examples will look like this: \
                  *     `[base URL]/api/assessment?filter=[URL-encoded JSON filter]`
-                 *      */
+                 */
                 filter: {
                     /**
                      * @description The ID of the assessment to search.
-                     *
                      * @example 256
                      */
                     assessmentId?: number;
                     /**
                      * @description A part of title to filter assessments on.
-                     *
                      * @example English 3/4 [Final]
                      */
                     title?: string;
@@ -1197,12 +1184,10 @@ export interface paths {
                     subjectCode?: string[];
                     /**
                      * @description Limit assessments to only those that have a weight set.
-                     *
                      * @example false
                      */
                     weighted?: boolean;
-                    /** @description Select either one of the following fields to filter on:
-                     *      */
+                    /** @description Select either one of the following fields to filter on: */
                     workType?: {
                         /**
                          * @description The DB identifier of the worktype.
@@ -1219,20 +1204,17 @@ export interface paths {
                         /**
                          * Format: date-time
                          * @description An RFC3339 time string including timezone eg. 2017-10-12T14:20:50+10:00
-                         *
                          * @example 2017-10-12T14:20:50+10:00
                          */
                         from?: string;
                         /**
                          * Format: date-time
                          * @description An RFC3339 time string including timezone eg. 2017-10-12T14:20:50+10:00
-                         *
                          * @example 2019-10-12T14:20:50+10:00
                          */
                         to?: string;
                     };
-                    /** @description Select either one of the following fields to filter on year levels associated with folder:
-                     *      */
+                    /** @description Select either one of the following fields to filter on year levels associated with folder: */
                     yearLevel?: {
                         /**
                          * @description The db identifier of the yearlevel.
@@ -1253,20 +1235,22 @@ export interface paths {
                         id?: number;
                     };
                 };
-                /** @description A generated but decodable pointer to the first record to return.
+                /**
+                 * @description A generated but decodable pointer to the first record to return.
                  *
                  *     Each endpoint whose data accepts a cursor will return a cursor that
                  *     points to the next page of the result set.
-                 *      */
+                 */
                 cursor?: components["parameters"]["cursor"];
-                /** @description An option to limit the returned results.
+                /**
+                 * @description An option to limit the returned results.
                  *
                  *     Each endpoint whose data accepts a limit will limit
                  *     their results to that number.
                  *
                  *     Note a maximum limit may also apply, depending on the
                  *     specific type of request.
-                 *      */
+                 */
                 limit?: components["parameters"]["limit"];
             };
             header?: never;
@@ -1282,7 +1266,6 @@ export interface paths {
          *     For example a common request may be to get assessments of work type 'major' that are due in the current year.
          *
          *     The endpoint is only available to superusers.
-         *
          */
         get: operations["assessmentSearch"];
         put?: never;
@@ -1298,11 +1281,12 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -1310,7 +1294,6 @@ export interface paths {
         /**
          * Get an assessment
          * @description This will return all the information related to a specific assessment.  This will include the the assessment details and the results of all participants in that assessment.   The endpoint is only available to superusers.
-         *
          */
         get: operations["assessmentGet"];
         put?: never;
@@ -1334,7 +1317,6 @@ export interface paths {
          * Create feedback for due work
          * @description Add marks and comments to an assessment. Can be draft or published based on the publish flag.
          *     Use the responseId to indicate the feedback is in relation to a student submission, this field is optional.
-         *
          */
         post: operations["assessment.postFeedback"];
         delete?: never;
@@ -1358,7 +1340,6 @@ export interface paths {
          *     If submitted by a user other than the student it will appear as submitted on behalf of.
          *     When attaching files they should first be uploaded, using the file upload endpoint, then the reference can be used in this payload.
          *     All fields are optional, but at least one field must be supplied.
-         *
          */
         post: operations["assessment.postSubmission"];
         delete?: never;
@@ -1372,11 +1353,12 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -1386,9 +1368,129 @@ export interface paths {
         /**
          * Create a user notification
          * @description Send an instant notification to a selected user.  The endpoint is only available to superusers.
-         *
          */
         post: operations["apiusernotify.apiUserNotify"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/learning/evidence/bulk/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Publish multiple learning moments
+         * @description Publish multiple learning moments and optionally delete any comments before publishing.
+         */
+        put: operations["putEvidenceBulkPublish"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/learning/evidence/bulk/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Reject multiple learning moments
+         * @description Reject multiple learning moments (meaning refuse to publish them), and optionally supply a reason for the rejection.
+         *     Note the rejection reason will appear in a comment in the discussion thread of each rejected learning moment.
+         */
+        put: operations["putEvidenceBulkReject"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/learning/evidence/cohort/{id}/payload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get learning moments for a cohort
+         * @description Get all learning moments for users in a cohort defined by a folderId.
+         */
+        get: operations["evidenceCohortPayload"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/learning/evidence/user/{ids}/draft": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Draft a learning moment for multiple users
+         * @description Create a learning moment and leave it in a 'draft' state for multiple users.
+         */
+        post: operations["postEvidenceDraftMultiUser"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/learning/evidence/user/{ids}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Publish a learning moment for multiple users
+         * @description Create a learning moment and leave it in a 'published' state for multiple users.
+         */
+        post: operations["postEvidencePublishMultiUser"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/learning/evidence/user/{ids}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Submit a learning moment for multiple users
+         * @description Create a learning moment and leave it in a 'submitted' state for multiple users.
+         */
+        post: operations["postEvidenceSubmitMultiUser"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1405,9 +1507,10 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Create a Learning moment for users
-         * @description Share Learning Moment.
-         *
+         * Create a learning moment for users
+         * @deprecated
+         * @description Share a learning moment (Deprecated).
+         *     Use one of the 'Draft/Publish/Submit a learning moment for multiple users' POST endpoints instead.
          */
         post: operations["learningMomentEvidence.postMomentForUsers"];
         delete?: never;
@@ -1425,18 +1528,99 @@ export interface paths {
         };
         get?: never;
         /**
-         * Update Learning Moment
-         * @description Update Learning Moment
-         *
+         * Update learning moment
+         * @deprecated
+         * @description Update a learning moment (Deprecated).
+         *     Use one of the 'Draft/Publish/Submit a learning moment' PUT endpoints instead.
          */
         put: operations["putEvidence"];
         post?: never;
         /**
-         * Delete Learning Moment
-         * @description Delete Learning Moment
-         *
+         * Delete learning moment
+         * @description Delete learning moment
          */
-        delete: operations["deleteEvidence"];
+        delete: operations["deleteLearningMoment"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/learning/evidence/{id}/draft": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Draft a learning moment
+         * @description Update a learning moment and leave it in a 'draft' state.
+         */
+        put: operations["putEvidenceDraft"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/learning/evidence/{id}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Publish a learning moment
+         * @description Update a learning moment and leave it in a 'published' state.
+         */
+        put: operations["putEvidencePublish"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/learning/evidence/{id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Reject a learning moment
+         * @description Update a learning moment and leave it in a 'rejected' state, and optionally supply a reason for the rejection.
+         *     note the rejection reason will appear in a comment in the discussion thread of each rejected learning moment.
+         */
+        put: operations["putEvidenceReject"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/learning/evidence/{id}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Submit a learning moment
+         * @description Update a learning moment and leave it in a 'submitted' state.
+         */
+        put: operations["putEvidenceSubmit"];
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -1469,7 +1653,6 @@ export interface paths {
          *       * Requires View Student Grades role permission to see Due Work feedback
          *     * Students for their own
          *     * Parent for their own and their child's
-         *
          */
         get: operations["evidenceFeed"];
         put?: never;
@@ -1498,7 +1681,6 @@ export interface paths {
          *     This endpoint is available for:
          *     * Users with Pastoral Moderator service permission
          *     * Users with a role of Staff role type with Access Pastoral Care permission
-         *
          */
         post: operations["pastoral.postRecordInsert"];
         delete?: never;
@@ -1532,7 +1714,6 @@ export interface paths {
          *     This endpoint is available for:
          *     * Users with Pastoral Moderator service permission
          *     * Users with a role of Staff role type with Access Pastoral Care permission
-         *
          */
         patch: operations["pastoral.patchRecordUpdate"];
         trace?: never;
@@ -1540,29 +1721,32 @@ export interface paths {
     "/api/curriculum/usage/{id}": {
         parameters: {
             query?: {
-                /** @description A generated but decodable pointer to the first record to return.
+                /**
+                 * @description A generated but decodable pointer to the first record to return.
                  *
                  *     Each endpoint whose data accepts a cursor will return a cursor that
                  *     points to the next page of the result set.
-                 *      */
+                 */
                 cursor?: components["parameters"]["cursor"];
-                /** @description An option to limit the returned results.
+                /**
+                 * @description An option to limit the returned results.
                  *
                  *     Each endpoint whose data accepts a limit will limit
                  *     their results to that number.
                  *
                  *     Note a maximum limit may also apply, depending on the
                  *     specific type of request.
-                 *      */
+                 */
                 limit?: components["parameters"]["limit"];
             };
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -1570,7 +1754,6 @@ export interface paths {
         /**
          * Get curriculum node usage
          * @description Get curriculum node usage
-         *
          */
         get: operations["curriculumApiUsage.getNodeUsage"];
         put?: never;
@@ -1593,7 +1776,6 @@ export interface paths {
          * @description This allows you to search for courses get details about the course. The search filter attributes are all optional.
          *     You may only set either **query** or **folder** at **_one time_**. If the limit query parameter is not provided, the
          *     number of courses returned is defaulted to 100. This endpoint is only available to superusers and staff
-         *
          */
         get: operations["searchCourses"];
         put?: never;
@@ -1614,7 +1796,6 @@ export interface paths {
         /**
          * Search for content
          * @description Search for content
-         *
          */
         get: operations["apiSearchGet"];
         put?: never;
@@ -1635,7 +1816,6 @@ export interface paths {
         /**
          * Search for content within a folder
          * @description Search for content within a folder
-         *
          */
         get: operations["apiSearchFolderGet"];
         put?: never;
@@ -1646,16 +1826,69 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update multiple configuration values
+         * @description Updates multiple configuration settings in a single request. Each configuration is processed independently - some may succeed while others fail.
+         *
+         *     The response includes detailed results for each configuration update attempt, including which ones succeeded and which ones failed with their respective error messages.
+         */
+        patch: operations["configBulkPatch"];
+        trace?: never;
+    };
+    "/api/config/{configName}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description The unique name/key of the configuration setting
+                 * @example site_name
+                 */
+                configName: components["parameters"]["configName"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Get a configuration value
+         * @description Returns the value of a specific configuration setting. Only returns configurations that the authenticated user has permission to access.
+         */
+        get: operations["configGet"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update a configuration value
+         * @description Updates the value of a specific configuration setting. Only configurations that the authenticated user has permission to edit can be updated. The value will be validated according to the configuration's type and constraints.
+         */
+        patch: operations["configPatch"];
+        trace?: never;
+    };
     "/group/getData/{id}": {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -1663,7 +1896,6 @@ export interface paths {
         /**
          * Get all users belonging to a group
          * @description This will provide a list of the users that belong to the specified group.  This endpoint is only available to superusers.
-         *
          */
         get: operations["groupGetUsersInGroup"];
         put?: never;
@@ -1684,7 +1916,6 @@ export interface components {
          *
          *     Each endpoint whose data accepts a cursor will return a cursor that
          *     points to the next page of the result set.
-         *
          */
         cursor: string;
         /**
@@ -1728,7 +1959,6 @@ export interface components {
          *     * a teacher may have classes across multiple campuses
          *     * a student will generally only attend one campus
          *     * a parent may have children who belong to different campuses
-         *
          * @example {
          *       "id": 1,
          *       "name": "Secondary",
@@ -1740,8 +1970,7 @@ export interface components {
             id?: components["schemas"]["id"];
             /** @description The name of the campus. */
             name?: string;
-            /** @description The identifying code for the campus in the school's SIS.
-             *      */
+            /** @description The identifying code for the campus in the school's SIS. */
             code?: string;
             /** @description The number of days in a cycle for this campus' timetable. */
             days?: string;
@@ -1750,7 +1979,6 @@ export interface components {
          * Role
          * @description A type of user account at the school. Roles are generally used to group
          *     users by the type of position that they have at the school.
-         *
          * @example {
          *       "id": 4,
          *       "name": "Senior Students",
@@ -1764,7 +1992,6 @@ export interface components {
             /**
              * @description The type of this role. Different role types have different levels of
              *     access to different parts of Schoolbox.
-             *
              * @enum {string}
              */
             type?: "staff" | "student" | "parent" | "guest";
@@ -1772,7 +1999,6 @@ export interface components {
         /**
          * School House
          * @description A school house which a student may belong to.
-         *
          * @example {
          *       "id": 2,
          *       "name": "Prospect"
@@ -1792,14 +2018,12 @@ export interface components {
          *     * relationships with other users
          *     * class enrolments
          *     * timetabled classes
-         *
          * @example 501
          */
         externalId: string | null;
         /**
          * Year Level
          * @description A year level which a student may belong to.
-         *
          * @example {
          *       "id": 13,
          *       "name": "Year 12"
@@ -1829,7 +2053,6 @@ export interface components {
              *     and any other names, and in any case is not the definitive source of
              *     naming information; therefore in practice this will usually be the
              *     user's given name.
-             *
              * @example Rebecca
              */
             firstName?: string;
@@ -1853,14 +2076,12 @@ export interface components {
         /**
          * User
          * @description User with fields that are relevant when reading a user's value.
-         *
          */
         "user-readableFields": {
             id?: components["schemas"]["id"];
             campus?: components["schemas"]["campus"][];
             role?: components["schemas"]["role"];
-            /** @description This user's group memberships
-             *      */
+            /** @description This user's group memberships */
             groups?: {
                 /**
                  * ID
@@ -1871,7 +2092,6 @@ export interface components {
                  * @description The name of the group.
                  *
                  *     In this context, this is the name of the group's folder.
-                 *
                  * @example Basketball
                  */
                 name?: string;
@@ -1881,7 +2101,6 @@ export interface components {
                  *     * `private`: membership is by invitation only
                  *     * `moderated`: users may apply for membership, but must be approved
                  *     * `free`: users may join and leave at any time
-                 *
                  * @enum {string}
                  */
                 type?: "private" | "moderated" | "free";
@@ -1891,20 +2110,19 @@ export interface components {
                  *     * `false`: users may subscribe to this group's events
                  *     * `true`: users must subscribe to this group's events, and may not
                  *       unsubscribe
-                 *
                  * @example true
                  */
                 isForceFollow?: boolean;
-                /** @description Does the user have this group set as a favourite?
-                 *      */
+                /** @description Does the user have this group set as a favourite? */
                 isFavourite?: boolean;
-                /** @description Is this user subscribed to this group's events? If so, they will be
+                /**
+                 * @description Is this user subscribed to this group's events? If so, they will be
                  *     notified when an event occurs.
                  *
                  *     Note that the group administrator may:
                  *     * Force Follow, so that users may not opt out of notifications
                  *     * Disable Notifications, so that users never receive notifications
-                 *      */
+                 */
                 isNotificationsOn?: boolean;
                 /**
                  * @description The enrolment status of the user for this group.
@@ -1913,7 +2131,6 @@ export interface components {
                  *     * `notEnroled`: the user is not enroled in the group
                  *     * `pending`: the user has requested to join the group and is currently
                  *       awaiting approval by a group admin
-                 *
                  * @enum {string}
                  */
                 enrolmentStatus?: "enroled" | "notEnroled" | "pending";
@@ -1927,7 +2144,6 @@ export interface components {
                  *     * `read`: the user may view content within the group, and may be
                  *       notified of and may participate in group events
                  *     * `none`: the user is not a member of the group
-                 *
                  * @enum {string}
                  */
                 membership?: "admin" | "write" | "read" | "none";
@@ -1935,7 +2151,6 @@ export interface components {
                     /**
                      * Format: uri-reference
                      * @description Gives the homepage link to the group, or NULL if the group has no homepage.
-                     *
                      * @example /homepage/83
                      */
                     homepage?: string | null;
@@ -1950,7 +2165,6 @@ export interface components {
              *     is not always the child's parent (e.g. they may be a foster parent
              *     or other relative), and a parent is not always the child's guardian
              *     (e.g. the family might have separated).
-             *
              * @example [
              *       {
              *         "id": 25,
@@ -1973,7 +2187,6 @@ export interface components {
              *
              *     Generally, the guardian => student relation is symmetrical to the
              *     student => guardian relation.
-             *
              * @example []
              */
             students?: components["schemas"]["userShort"][] | null;
@@ -1982,7 +2195,6 @@ export interface components {
              *
              *     This relation is asymmetric: A may impersonate B, but that does not
              *     imply that B may impersonate A.
-             *
              * @example [
              *       {
              *         "id": 69,
@@ -2014,7 +2226,6 @@ export interface components {
              *     This may be derived from the user's username and the instance's
              *     hostname (see isEmailDerived); if not, it may be set via the
              *     altEmail field.
-             *
              */
             email?: string;
             _links?: {
@@ -2040,14 +2251,12 @@ export interface components {
             /**
              * @description The user's username. This will be used as the user's identification
              *     when they attempt to log into the Schoolbox instance.
-             *
              * @example rwhite
              */
             username?: string;
             /**
              * @description Does this user have superuser permissions over the Schoolbox
              *     instance?
-             *
              * @default false
              */
             superuser: boolean;
@@ -2068,7 +2277,6 @@ export interface components {
              *     and any other names, and in any case is not the definitive source of
              *     naming information; therefore in practice this will usually be the
              *     user's given name.
-             *
              * @example Rebecca
              */
             firstName?: string;
@@ -2079,25 +2287,27 @@ export interface components {
             lastName?: string | null;
             /** @description The user's preferred name. */
             preferredName?: string | null;
-            /** @description Is this user's email address derived directly from their username
+            /**
+             * @description Is this user's email address derived directly from their username
              *     and the host name of the Schoolbox instance?
-             *      */
+             */
             isEmailDerived?: boolean;
             /**
              * Format: email
              * @description The user's email address, if it is not derived from their username
              *     and hostname.
-             *
              * @example rwhite@example.com.au
              */
             altEmail?: string | null;
-            /** @description The user's job or position title within the school which owns the
+            /**
+             * @description The user's job or position title within the school which owns the
              *     Schoolbox instance.
-             *      */
+             */
             positionTitle?: string | null;
-            /** @description A set of flags which control the behavior of a user's Schoolbox
+            /**
+             * @description A set of flags which control the behavior of a user's Schoolbox
              *     session.
-             *      */
+             */
             flags?: {
                 /** @description Does this user's contacts get shown to other users? */
                 showContacts?: boolean;
@@ -2119,7 +2329,6 @@ export interface components {
                  *     email?
                  *
                  *     If false, they use webmail instead.
-                 *
                  * @default false
                  */
                 useInternalMail: boolean;
@@ -2149,7 +2358,6 @@ export interface components {
                  * @description If set, a cursor to the current page of results.
                  *     Seems redundant, but it does generate a cursor to a request
                  *     made without one.
-                 *
                  */
                 current: string | null;
                 /**
@@ -2174,7 +2382,6 @@ export interface components {
          *     Generally, this is used within request bodies for specifying that the
          *     item is to be related to another item, without implying that any
          *     properties of the related item are to be modified.
-         *
          */
         itemRelation: {
             id: components["schemas"]["id"];
@@ -2182,7 +2389,6 @@ export interface components {
         /**
          * Schoolbox User
          * @description Fields that are only relevant when writing a user's value.
-         *
          */
         "user-writableFields": {
             campus?: components["schemas"]["itemRelation"][];
@@ -2193,13 +2399,14 @@ export interface components {
         };
         "user-write": components["schemas"]["user-writableFields"] & components["schemas"]["user-fields"];
         userToken: {
-            /** @description A JSON Web Token (JWT) which authenticates the bearer as a particular
+            /**
+             * @description A JSON Web Token (JWT) which authenticates the bearer as a particular
              *     user, and allows the bearer to perform API calls within the context of
              *     that user.
              *
              *     This token is passed to the Schoolbox API according to the "BearerAuth"
              *     security scheme (i.e. in a HTTP header `Authorization: Bearer $token`).
-             *      */
+             */
             token?: string;
         };
         /** Writable Group Membership Fields */
@@ -2213,7 +2420,6 @@ export interface components {
              *     * Write: the user may create content within the group
              *     * Read: the user may view content within the group, and may be
              *       notified of and may participate in group events
-             *
              * @enum {string}
              */
             membership: "admin" | "write" | "read";
@@ -2223,21 +2429,20 @@ export interface components {
              *     * Enroled: the user is enroled in the group with the 'membership' permission
              *     * Pending: the user has requested to join the group and is currently
              *       awaiting approval by a group admin
-             *
              * @default enroled
              * @enum {string}
              */
             enrolmentStatus: "enroled" | "pending";
-            /** @description Is this user subscribed to this group's events? If so, they will be
+            /**
+             * @description Is this user subscribed to this group's events? If so, they will be
              *     notified when an event occurs.
              *
              *     Note that the group administrator may:
              *     * force Follow, so that users may not opt out of notifications
              *     * disable Notifications, so that users never receive notifications
-             *      */
+             */
             isNotificationsOn: boolean;
-            /** @description Does the user have this group set as a favourite
-             *      */
+            /** @description Does the user have this group set as a favourite */
             isFavourite: boolean;
         };
         /**
@@ -2253,17 +2458,17 @@ export interface components {
          *     For compatibility with existing code, can be defined as either:
          *     * a URI string
          *     * an object, which contains a URI string and an `auth` boolean value
-         *
          */
         link: string | {
             /** Format: uri */
             href: string;
-            /** @description Is the currently authenticated user authorized to view the resource
+            /**
+             * @description Is the currently authenticated user authorized to view the resource
              *     pointed to by `href`?
              *
              *     If this value is `null`, then it is not known whether the user may
              *     view this resource.
-             *      */
+             */
             auth?: boolean | null;
         };
         /**
@@ -2341,79 +2546,82 @@ export interface components {
         };
         /** @description Mobile App Registration */
         "registration-base": {
-            /** @description A unique string used to identify the user on the device.
+            /**
+             * @description A unique string used to identify the user on the device.
              *
              *     Ignored if using the Digistorm provider: otherwise, if not
              *     provided no device will be registered.
-             *      */
+             */
             token?: string;
-            /** @description A unique string to identify the app's identity.
-             *      */
+            /** @description A unique string to identify the app's identity. */
             appId: string;
-            /** @description An optional unique string to identify the device identity.
+            /**
+             * @description An optional unique string to identify the device identity.
              *
              *     Stored but not used if using the Digistorm provider: otherwise,
              *     this is normally not provided or is the same as the app ID due
              *     to limitations enforced by device makers.
-             *      */
+             */
             deviceId?: string;
         };
         "registration-usernamePassword": components["schemas"]["authentication-usernamePassword"] & components["schemas"]["registration-base"];
         "registration-jwt": components["schemas"]["authentication-jwt"] & components["schemas"]["registration-base"];
-        /** @description A description of how a file is stored in Schoolbox's internal file storage,
+        /**
+         * @description A description of how a file is stored in Schoolbox's internal file storage,
          *     and of how it may be retrieved.
-         *      */
+         */
         file: {
-            /** @description The location of the file in the file store.
-             *      */
+            /** @description The location of the file in the file store. */
             hash?: string;
-            /** @description The name with which the file was uploaded.
-             *      */
+            /** @description The name with which the file was uploaded. */
             name?: string;
-            /** @description The mimetype of the uploaded file.
-             *      */
+            /** @description The mimetype of the uploaded file. */
             mime?: string;
             /**
              * @description The type of the uploaded file.
-             *
              * @enum {string}
              */
             type?: "image" | "video" | "audio" | "document" | "other";
-            /** @description The uploaded file's size, in bytes.
-             *      */
+            /** @description The uploaded file's size, in bytes. */
             size?: number;
-            /** @description Relevant links for the file.
-             *      */
+            /** @description Relevant links for the file. */
             _links?: {
                 /**
                  * Format: uri
                  * @description An icon for the file's mimetype.
-                 *
+                 * @example /static/images/mime/application-image-jpg.svg
                  */
                 icon?: string;
                 /**
                  * Format: uri
                  * @description An image URL for the file (if it's an image).
-                 *
+                 * @example /storage/image.php?hash=a5e2262c38739a80255cc97e50e97b5d3030e749
                  */
                 image?: string;
                 /**
                  * Format: uri
                  * @description A stream URL for the file (if it's audio or video).
-                 *
+                 * @example /cms/sendVideo.php?id=&a5e2262c38739a80255cc97e50e97b5d3030e749type=storage
                  */
                 stream?: string;
                 /**
                  * Format: uri
                  * @description A poster URL for the file (if it's a video).
-                 *
+                 * @example /cms/videoThumb.php?size=poster&id=&a5e2262c38739a80255cc97e50e97b5d3030e749type=storage
                  */
                 poster?: string;
+                /**
+                 * Format: uri
+                 * @description A URL from which the file may be fetched.
+                 * @example /storage/fetch.php?hash=a5e2262c38739a80255cc97e50e97b5d3030e749
+                 */
+                fetch?: string;
             };
         };
         /** @description News article body, as raw HTML. */
         body: string;
-        /** @description A pointer to a file within Schoolbox, in the format:
+        /**
+         * @description A pointer to a file within Schoolbox, in the format:
          *     `$locator:$location:$filename`
          *
          *     The variables within the pointer have this meaning:
@@ -2432,94 +2640,82 @@ export interface components {
          *     See the [Upload a file](#post-/storage/asyncUpload.php)
          *     endpoint for details on how to upload a file, and receive a file
          *     pointer from that upload.
-         *      */
+         */
         filePointer: string;
-        /** @description A base-64 encoded URL to redirect to, once processing of the entity on this
+        /**
+         * @description A base-64 encoded URL to redirect to, once processing of the entity on this
          *     page is completed.
-         *      */
+         */
         returnUrl: string;
-        /** @description A topic which may be applicable to a news article.
-         *      */
+        /** @description A topic which may be applicable to a news article. */
         topic: {
             id?: components["schemas"]["id"];
-            /** @description A human-readable name for the topic.
-             *      */
+            /** @description A human-readable name for the topic. */
             name?: string;
-            /** @description A machine-readable name for the topic.
-             *      */
+            /** @description A machine-readable name for the topic. */
             slug?: string;
-            /** @description The order in which this topic will display in a topic list.
-             *      */
+            /** @description The order in which this topic will display in a topic list. */
             sequence?: number;
         };
         commonFields: {
             id?: components["schemas"]["id"];
             /** @description News article title. */
             title?: string;
-            /** @description News article displayed blurb, as raw HTML.
+            /**
+             * @description News article displayed blurb, as raw HTML.
              *
              *     This is derived from the article's blurb (if any) and body:
              *     * the blurb is used in full, if provided
              *     * if not, the body is trimmed
-             *      */
+             */
             blurb?: string;
-            /** @description Feature image of this article.
-             *      */
+            /** @description Feature image of this article. */
             featureImage?: {
-                /** @description The mimetype of the image file.
-                 *      */
+                /** @description The mimetype of the image file. */
                 mime?: string;
-                /** @description The size of the image file in bytes.
-                 *      */
+                /** @description The size of the image file in bytes. */
                 size?: number;
-                /** @description Relevant links for the file.
-                 *      */
+                /** @description Relevant links for the file. */
                 _links?: {
                     image?: {
                         auth?: boolean | null;
                         /**
                          * Format: uri
                          * @description A URL for the file storage.
-                         *
                          */
                         href?: string;
                     };
                 };
             } | null;
             publishAt?: unknown & components["schemas"]["dateTimeString"];
-            /** @description A list of topics which are applicable to the article.
-             *      */
+            /** @description A list of topics which are applicable to the article. */
             topics?: {
-                /** @description A human-readable name for the topic.
-                 *      */
+                /** @description A human-readable name for the topic. */
                 name?: string;
-                /** @description A machine-readable name for the topic.
-                 *      */
+                /** @description A machine-readable name for the topic. */
                 slug?: string;
             }[];
         };
-        /** @description The author's details.
-         *      */
+        /** @description The author's details. */
         author: {
             id?: components["schemas"]["id"];
             externalId?: components["schemas"]["externalId"];
-            /** @description The author's first name (a.k.a. given name).
-             *      */
+            /** @description The author's first name (a.k.a. given name). */
             firstname?: string;
-            /** @description The author's last name (a.k.a. surname).
-             *      */
+            /** @description The author's last name (a.k.a. surname). */
             lastname?: string;
-            /** @description The author's title.
-             *      */
+            /** @description The author's title. */
             title?: string;
-            /** @description The author's full name: usually, this is the title, first name and last
+            /**
+             * @description The author's full name: usually, this is the title, first name and last
              *     name joined together.
-             *      */
+             */
             fullname?: string;
             preferredName?: string | null;
             givenName?: string;
         };
-        /** @description A human-readable representation of the article's current
+        /**
+         * @description A human-readable representation of the article's current
          *     status.
          *
          *     * `Drafted`: the article is a draft only
@@ -2533,14 +2729,15 @@ export interface components {
          *     * `Published`: the article has been published
          *     * `Archived`: the article has expired; whilst it is no
          *       longer published, it is still readable in the archive
-         *      */
+         */
         status: string;
         statusDate: unknown & components["schemas"]["dateTimeString"];
-        /** @description Is this article sticky?
+        /**
+         * @description Is this article sticky?
          *
          *     If so, it will always display at the top of the list of
          *     articles.
-         *      */
+         */
         sticky: boolean;
         links: {
             saveForLater?: components["schemas"]["link"] & unknown;
@@ -2548,19 +2745,19 @@ export interface components {
             self?: components["schemas"]["link"] & unknown;
             update?: components["schemas"]["link"] & unknown;
         };
-        /** @description The author's details: currently, only their name.
-         *      */
+        /** @description The author's details: currently, only their name. */
         authorNameOnly: {
-            /** @description The author's full name.
-             *      */
+            /** @description The author's full name. */
             fullname?: string;
         };
         readMore: {
-            /** @description The text to show in this article's "read more" link,
+            /**
+             * @description The text to show in this article's "read more" link,
              *     if any.
-             *      */
+             */
             string?: string;
-            /** @description Is there a "read more" link?
+            /**
+             * @description Is there a "read more" link?
              *
              *     It is only available if the "read more" link
              *     configuration is not empty, and the article has one or
@@ -2568,14 +2765,13 @@ export interface components {
              *     * a feature image
              *     * a discussion thread
              *     * a body
-             *      */
+             */
             available?: boolean;
         };
         /**
          * @description A truthy integer value (0 or 1).
          *
          *     0 evaluates to false; 1 evaluates to true.
-         *
          * @default 0
          * @enum {integer}
          */
@@ -2849,8 +3045,7 @@ export interface components {
             name?: string;
             /** @description The name of the folder with any class codes appended in brackets. */
             title?: string;
-            /** @description Schoolbox Class Codes
-             *      */
+            /** @description Schoolbox Class Codes */
             codes?: string;
             /** @description Parent folder object stub. */
             parent?: {
@@ -2886,81 +3081,82 @@ export interface components {
             /** @description Array of user objects */
             guests?: components["schemas"]["userShort"][];
         } & components["schemas"]["eventCommonProps"];
-        /** @description The status of the user's attendance.
+        /**
+         * @description The status of the user's attendance.
          *
          *     * null: user is not invited to this event
          *     * 1: user has not yet responded to the invitation
          *     * 2: user has accepted the invitation
          *     * 3: user has declined the invitation
-         *      */
+         */
         calendarAttendanceStatus: number | null;
         /**
          * Calendar event attendance
          * @description A record of the invitees to a calendar event, and whether or not they are
          *     attending.
-         *
          */
         calendarAttendance: {
-            /** @description The level of attendance which applies to this event.
+            /**
+             * @description The level of attendance which applies to this event.
              *
              *     * 0: event may not be attended (usually, this means that no users will be
              *        invited to this event; however, it is possible for an event's
              *        attendance level to change)
              *     * 1: event attendees may only be invited by the event's creator
              *     * 2: any user who may view the event may invite themselves to the event
-             *      */
+             */
             level?: number;
             currentUser?: {
                 user?: components["schemas"]["userShort"];
                 status?: components["schemas"]["calendarAttendanceStatus"];
-                /** @description Can the authenticated user modify the event?
-                 *      */
+                /** @description Can the authenticated user modify the event? */
                 canModify?: boolean;
-                /** @description Can the authenticated user invite other users to the event?
-                 *      */
+                /** @description Can the authenticated user invite other users to the event? */
                 canInvite?: boolean;
             };
-            /** @description A summary of all the invitees of this event.
-             *      */
+            /** @description A summary of all the invitees of this event. */
             attendees?: {
-                /** @description A list of the event's invitees.
+                /**
+                 * @description A list of the event's invitees.
                  *
                  *     Not all events have public invitation lists: if this is the case, then
                  *     the guest list is hidden from all but the event's creator.
-                 *      */
+                 */
                 guests?: {
-                    /** @description The invitee's ID number.
-                     *      */
+                    /** @description The invitee's ID number. */
                     id?: number;
-                    /** @description The invitee's full name.
-                     *      */
+                    /** @description The invitee's full name. */
                     name?: string;
                     status?: components["schemas"]["calendarAttendanceStatus"];
                 }[];
-                /** @description The maximum number of invitees to this event, or null if there is no
+                /**
+                 * @description The maximum number of invitees to this event, or null if there is no
                  *     maximum.
-                 *      */
+                 */
                 max?: number | null;
-                /** @description The current total number of invitees to this event.
+                /**
+                 * @description The current total number of invitees to this event.
                  *
                  *     This may differ from the number of guests in the guest list, due to
                  *     the ability to create events with private invitation lists.
-                 *      */
+                 */
                 num?: number;
-                /** @description The number of available invite slots for this event.
-                 *      */
+                /** @description The number of available invite slots for this event. */
                 available?: number | null;
-                /** @description The number of invitees for this event whose invitation is pending
+                /**
+                 * @description The number of invitees for this event whose invitation is pending
                  *     response.
-                 *      */
+                 */
                 pending?: number;
-                /** @description The number of invitees for this event whose invitation has been
+                /**
+                 * @description The number of invitees for this event whose invitation has been
                  *     accepted.
-                 *      */
+                 */
                 accepted?: number;
-                /** @description The number of invitees for this event whose invitation has been
+                /**
+                 * @description The number of invitees for this event whose invitation has been
                  *     declined.
-                 *      */
+                 */
                 declined?: number;
             };
         };
@@ -2983,7 +3179,6 @@ export interface components {
                 name?: string;
                 /**
                  * @description By default, the maximum points for the capability is the sum of the highest descriptor values available in each indicator within that capability.
-                 *
                  * @example 0
                  */
                 maxValue?: number;
@@ -2997,12 +3192,10 @@ export interface components {
                     /**
                      * @description The description of the indicator.
                      * @example Communication
-                     *
                      */
                     name?: string;
                     /**
                      * @description By default, the maximum points for the indicator is the sum of the highest descriptor values available within the indicator.
-                     *
                      * @example 0
                      */
                     maxValue?: number;
@@ -3016,12 +3209,10 @@ export interface components {
                         /**
                          * @description The description of the descriptor.
                          * @example Developing in reading appropriate materials and writing on-topic.
-                         *
                          */
                         description?: string;
                         /**
                          * @description If you are using the mark range, this will be the upper point value available for that particular descriptor.
-                         *
                          * @example 0
                          */
                         maxValue?: number;
@@ -3049,7 +3240,6 @@ export interface components {
              *     and any other names, and in any case is not the definitive source of
              *     naming information; therefore in practice this will usually be the
              *     user's given name.
-             *
              * @example Rebecca
              */
             firstName?: string;
@@ -3081,7 +3271,6 @@ export interface components {
                 name?: string;
                 /**
                  * @description By default, the maximum points for the capability is the sum of the highest descriptor values available in each indicator within that capability.
-                 *
                  * @example 0
                  */
                 maxValue?: number;
@@ -3105,12 +3294,10 @@ export interface components {
                     /**
                      * @description The description of the indicator.
                      * @example Communication
-                     *
                      */
                     name?: string;
                     /**
                      * @description By default, the maximum points for the indicator is the sum of the highest descriptor values available within the indicator.
-                     *
                      * @example 0
                      */
                     maxValue?: number;
@@ -3129,12 +3316,10 @@ export interface components {
                         /**
                          * @description The description of the descriptor.
                          * @example Mostly listening, speaking on topic, reading appropriate materials, writing on-topic & using critical non-verbal communication.
-                         *
                          */
                         description?: string;
                         /**
                          * @description If you are using the mark range, this will be the upper point value available for that particular descriptor.
-                         *
                          * @example 0
                          */
                         maxValue?: number;
@@ -3159,12 +3344,10 @@ export interface components {
                 /**
                  * Format: date-time
                  * @description The date as a RFC3339 string.
-                 *
                  * @example 2022-01-30T21:00:00.000Z
                  */
                 date?: string;
-                /** @description Any files which were attached as part of the participant's response.
-                 *      */
+                /** @description Any files which were attached as part of the participant's response. */
                 files?: components["schemas"]["file"][];
                 submitter?: components["schemas"]["assessment-user"] & unknown;
             };
@@ -3176,13 +3359,11 @@ export interface components {
                  * @example Joffrey,
                  *     Your introduction was very strong, but you did not use the previous feedback, which reminded you to add evidence.
                  *     Please consider this for your next essay.
-                 *
                  */
                 comment?: string;
                 /**
                  * Format: date-time
                  * @description The date as a RFC3339 string.
-                 *
                  * @example 2022-01-30T21:00:00.000Z
                  */
                 date?: string;
@@ -3204,7 +3385,6 @@ export interface components {
              * @deprecated
              * @description The teacher's feedback for the student.
              *     (Deprecated: moved to the `feedback` object.)
-             *
              */
             comment?: string;
             /**
@@ -3212,21 +3392,18 @@ export interface components {
              * @deprecated
              * @description The date as a RFC3339 string.
              *     (Deprecated: moved to the `feedback` object.)
-             *
              */
             date?: string;
             /**
              * @deprecated
              * @description A human readable mark.
              *     (Deprecated: moved to the `feedback` object.)
-             *
              */
             mark?: string;
             /**
              * @deprecated
              * @description The mark in numeric form.
              *     (Deprecated: moved to the `feedback` object.)
-             *
              */
             normalisedMark?: number;
             rubric?: components["schemas"]["assessment-rubric-feedback"] & unknown;
@@ -3245,8 +3422,7 @@ export interface components {
              * @enum {string}
              */
             assessmentType?: "dueWork" | "quiz" | "task" | "project" | "LTI" | "lessonPlan";
-            /** @description The folder where the assessment is found.
-             *      */
+            /** @description The folder where the assessment is found. */
             folder?: {
                 /** @description The ID of the folder. */
                 id?: number;
@@ -3254,23 +3430,21 @@ export interface components {
                 name?: string;
                 /** @description Class Codes associated with the folder. */
                 code?: (string | null) | string[];
-                /** @description Year levels which the folder is associated with.
-                 *      */
+                /** @description Year levels which the folder is associated with. */
                 yearLevel?: {
                     id?: components["schemas"]["id"];
                     /** @description The name of the year level. */
                     name?: string;
                 }[] | null;
             };
-            /** @description The Course Subject Code
-             *      */
+            /** @description The Course Subject Code */
             subjectCode?: string | null;
-            /** @description Only applicable for assessmentType 'dueWork' (so value will be null for other assessmentTypes).
-             *      */
+            /** @description Only applicable for assessmentType 'dueWork' (so value will be null for other assessmentTypes). */
             commonAssessment?: boolean | null;
-            /** @description System configurable in your Admin Lists Work Types area.
+            /**
+             * @description System configurable in your Admin Lists Work Types area.
              *     Not applicable to assessmentType 'lessonPlan' (so value will be null in that case).
-             *      */
+             */
             workType?: {
                 /**
                  * @description The DB identifier of the worktype.
@@ -3288,14 +3462,12 @@ export interface components {
              *     a value of 0 indicates this assessment has no impact on the overall grade.
              *     Generally, this is a number between 0 and 100.
              *     Not applicable to assessmentTypes 'lessonPlan' and 'task' (so value will be null in those cases).
-             *
              * @example 30
              */
             weight?: number | null;
             /**
              * Format: date-time
              * @description The due date of the assessment as a RFC3339 string. This can be null for assessments in a course.
-             *
              * @example 2022-01-30T21:00:00.000Z
              */
             dueDate?: string | null;
@@ -3319,8 +3491,56 @@ export interface components {
             metadata?: components["schemas"]["listMetadata"];
         };
         /**
+         * User
+         * @description Short fields for users
+         */
+        userAuthor: {
+            id?: components["schemas"]["id"];
+            _links?: {
+                /**
+                 * Format: uri
+                 * @description URL for a link to the user's profile page.
+                 * @example /search/user/25
+                 */
+                profile?: string;
+                /**
+                 * Format: uri
+                 * @description URL for a link to the user's avatar image.
+                 * @example /portrait.php?id=25&size=square64
+                 */
+                avatar?: string;
+            };
+            /**
+             * @description The user's title (Mr., Ms., etc.).
+             * @example Ms
+             */
+            title?: string | null;
+            /**
+             * @description The user's first name.
+             *
+             *     Schoolbox doesn't distinguish between a person's actual first name
+             *     and any other names, and in any case is not the definitive source of
+             *     naming information; therefore in practice this will usually be the
+             *     user's given name.
+             * @example Rebecca
+             */
+            firstName?: string;
+            /** @description The user's preferred name. */
+            preferredName?: string | null;
+            pronoun?: string | null;
+            /**
+             * @description The user's surname.
+             * @example White
+             */
+            lastName?: string | null;
+            /** @description The user's formatted full name. */
+            fullName?: string;
+            /** @description Whether the user is deleted or not. */
+            isDeleted?: boolean;
+        };
+        /**
          * a Curriculum Code
-         * @description A Curriculm Code
+         * @description A Curriculum Code
          */
         curriculumItem: {
             id?: components["schemas"]["id"];
@@ -3328,6 +3548,203 @@ export interface components {
             name?: string;
             /** @example GCPSC-SEA */
             code?: string;
+        };
+        /**
+         * @description An array of links used to perform actions relating to this learning moment.
+         *     Whether a particular link will be present depends on the state of the learning moment.
+         *     For example, createThread will only be present if a discussionThread has not already been created.
+         */
+        "learning-moment-links": {
+            /**
+             * Format: uri
+             * @example /discussion/evidence/19/threads
+             */
+            createThread?: string;
+            /**
+             * Format: uri
+             * @example /learning/evidence/19
+             */
+            detail?: string;
+            /**
+             * Format: uri
+             * @example /learning/evidence/19/modify
+             */
+            modifyForm?: string;
+            /**
+             * Format: uri
+             * @example /learning/evidence/19
+             */
+            put?: string;
+            /**
+             * Format: uri
+             * @example /learning/evidence/19/draft
+             */
+            draft?: string;
+            /**
+             * Format: uri
+             * @example /learning/evidence/19/submit
+             */
+            submit?: string;
+            /**
+             * Format: uri
+             * @example /learning/evidence/19/publish
+             */
+            publish?: string;
+            /**
+             * Format: uri
+             * @example /learning/evidence/19/reject
+             */
+            reject?: string;
+            /**
+             * Format: uri
+             * @example /learning/evidence/19/delete
+             */
+            delete?: string;
+        };
+        "learning-moment-response": {
+            id?: components["schemas"]["id"];
+            createdAt?: components["schemas"]["dateTimeString"];
+            updatedAt?: components["schemas"]["dateTimeString"];
+            /**
+             * @description Body text of learning moment as HTML.
+             * @example <p>I learned to tie my shoelaces.  Let me explain in detail the steps...</p>
+             */
+            body?: string;
+            creator?: components["schemas"]["userAuthor"];
+            discussionThread?: {
+                id?: components["schemas"]["id"];
+                /** @description Whether the discussion thread is open to new comments or not. */
+                open?: boolean | null;
+                /** @description Currently null, but in the future will be a datetime string. */
+                createdAt?: string | null;
+                /** @description Currently null, but in the future will be a datetime string. */
+                updatedAt?: string | null;
+                _links?: {
+                    getComments?: components["schemas"]["link"] & {
+                        /** @example /discussion/evidence/19/threads/27/comments */
+                        href?: unknown;
+                    };
+                    createComment?: components["schemas"]["link"] & {
+                        /** @example /discussion/evidence/19/threads/27/comments */
+                        href?: unknown;
+                    };
+                };
+            } | null;
+            recipient?: components["schemas"]["userAuthor"];
+            /** @description Array of evidence objects. */
+            evidence?: {
+                storage?: components["schemas"]["file"];
+                /** @example photo.jpeg */
+                filename?: string;
+            }[];
+            /** @description Array of folder objects. */
+            folders?: {
+                id?: components["schemas"]["id"];
+                name?: string;
+                code?: string;
+            }[];
+            /** @enum {string} */
+            currentState?: "draft" | "submitted" | "published" | "rejected";
+            /** @description Array of curriculum node objects. */
+            curriculumNodes?: components["schemas"]["curriculumItem"][];
+            /** @description Array of tag objects */
+            tags?: {
+                id?: components["schemas"]["id"];
+                /**
+                 * @description Short text tag to help with searching.
+                 * @example Class Work
+                 */
+                name?: string;
+            }[];
+            _links?: components["schemas"]["learning-moment-links"];
+            _labels?: {
+                publish?: string;
+            };
+        };
+        "date-object": {
+            /**
+             * @description Unix timestamp
+             * @example 1759472154
+             */
+            timestamp?: number;
+            /**
+             * @description The date as it is intended to be displayed in this context.
+             * @example Oct 3, 2025
+             */
+            displayAs?: string;
+            /**
+             * @description Date in RFC3339 format.
+             * @example 2025-10-03T16:09:06+10:00
+             */
+            rfc?: string;
+        };
+        "learning-moment-payload-item": {
+            id?: components["schemas"]["id"];
+            /**
+             * @description Body text of learning moment as HTML.
+             * @example <p>I learned to tie my shoelaces.  Let me explain in detail the steps...</p>
+             */
+            body?: string;
+            /**
+             * @description Short version of body text, automatically generated from body.  Not HTML.
+             * @example I learned to tie my shoelaces.
+             */
+            blurb?: string;
+            /**
+             * @description Whether to show a 'Read more' link after the blurb text.
+             * @example false
+             */
+            showReadMore?: boolean;
+            /** @description Array of file objects */
+            files?: components["schemas"]["file"][];
+            recipient?: components["schemas"]["userAuthor"];
+            creator?: components["schemas"]["userAuthor"];
+            createdAt?: components["schemas"]["date-object"];
+            updatedAt?: components["schemas"]["date-object"];
+            /**
+             * @description Whether the learning moment has any comments.
+             * @example false
+             */
+            hasComments?: boolean;
+            /**
+             * @example draft
+             * @enum {string}
+             */
+            currentState?: "draft" | "submitted" | "published" | "rejected";
+            /** @description Array of tag objects */
+            tags?: {
+                id?: components["schemas"]["id"];
+                /**
+                 * @description Short text tag to help with searching.
+                 * @example Class Work
+                 */
+                name?: string;
+            }[];
+            /** @description Currently an empty array.  Return of curriculum nodes and filtering by curriculum nodes is planned for a future version. */
+            curriculumNodes?: Record<string, never>[];
+            _links?: components["schemas"]["learning-moment-links"];
+            _labels?: {
+                publish?: string;
+            };
+        };
+        "learning-moment-request": {
+            /**
+             * @description Body text of learning moment as HTML.
+             * @example <p>I learned to tie my shoelaces.  Let me explain in detail the steps...</p>
+             */
+            body?: string;
+            /** @description Array of evidence objects. */
+            evidence?: {
+                file?: components["schemas"]["filePointer"];
+            }[];
+            /** @description Array of curriculum node ids. */
+            curriculumNodes?: components["schemas"]["id"][];
+            /** @description Array of tag object stubs (containing id only). */
+            tags?: {
+                id?: components["schemas"]["id"];
+            }[];
+            /** @description Array of folder ids. */
+            folders?: components["schemas"]["id"][];
         };
         /**
          * A learning moment item
@@ -3338,19 +3755,16 @@ export interface components {
             /**
              * Format: date-time
              * @description The date as a RFC3339 string.
-             *
              * @example 2022-08-30T10:09:09+10:00
              */
             createdAt?: string;
             /**
              * Format: date-time
              * @description The date as a RFC3339 string.
-             *
              * @example 2022-08-30T10:09:09+10:00
              */
             updatedAt?: string;
-            /** @description The content of the Learning Moment
-             *      */
+            /** @description The content of the Learning Moment */
             body?: string;
             creator?: {
                 id?: components["schemas"]["id"];
@@ -3367,7 +3781,6 @@ export interface components {
                  *     and any other names, and in any case is not the definitive source of
                  *     naming information; therefore in practice this will usually be the
                  *     user's given name.
-                 *
                  * @example Rebecca
                  */
                 firstName?: string | null;
@@ -3400,7 +3813,6 @@ export interface components {
                  *     and any other names, and in any case is not the definitive source of
                  *     naming information; therefore in practice this will usually be the
                  *     user's given name.
-                 *
                  * @example Rebecca
                  */
                 firstName?: string | null;
@@ -3429,8 +3841,7 @@ export interface components {
                 type?: string | null;
                 /** @example 3385989 */
                 size?: number | null;
-                /** @description Will contain one of the following depending on what file type is attached
-                 *      */
+                /** @description Will contain one of the following depending on what file type is attached */
                 _links?: {
                     /** @example /static/images/mime/application-image-jpg.svg */
                     icon?: string;
@@ -3443,8 +3854,7 @@ export interface components {
                 } | null;
             } | null;
             curriculumNodes?: components["schemas"]["curriculumItem"][] | null;
-            /** @description System configurable in your Admin Lists Learning Moment area
-             *      */
+            /** @description System configurable in your Admin Lists Learning Moment area */
             tags?: {
                 /**
                  * @description the DB identifier of the Learning Moment Tags
@@ -3481,7 +3891,6 @@ export interface components {
             /**
              * Format: date-time
              * @description The date as a RFC3339 string.
-             *
              * @example 2022-08-30T10:09:09+10:00
              */
             date?: string;
@@ -3495,7 +3904,6 @@ export interface components {
             /**
              * Format: date-time
              * @description The date as a RFC3339 string.
-             *
              * @example 2022-08-30T10:09:09+10:00
              */
             createdAt?: string;
@@ -3514,7 +3922,6 @@ export interface components {
                  *     and any other names, and in any case is not the definitive source of
                  *     naming information; therefore in practice this will usually be the
                  *     user's given name.
-                 *
                  * @example Rebecca
                  */
                 firstName?: string | null;
@@ -3535,7 +3942,6 @@ export interface components {
             /**
              * Format: date-time
              * @description The date as a RFC3339 string.
-             *
              * @example 2022-08-30T10:09:09+10:00
              */
             updatedAt?: string;
@@ -3554,7 +3960,6 @@ export interface components {
                  *     and any other names, and in any case is not the definitive source of
                  *     naming information; therefore in practice this will usually be the
                  *     user's given name.
-                 *
                  * @example Rebecca
                  */
                 firstName?: string | null;
@@ -3572,53 +3977,44 @@ export interface components {
                 /** @example false */
                 isDeleted?: boolean;
             };
-            /** @example Jump Rope for Heart Team
-             *      */
+            /** @example Jump Rope for Heart Team */
             name?: string;
-            /** @description The content of the Learning Moment
-             *      */
+            /** @description The content of the Learning Moment */
             body?: string;
             image?: string | null;
             /**
              * @description The Badge Image, either system defined or selectable by the user
-             *
              * @example /images/badges/sport/23.svg
-             *
              */
             icon?: string;
             /** @example true */
             allowAsGoal?: boolean;
             /**
              * @description On First load of the achieved badge, should the badge be animated? flying stars, fly in...
-             *
              * @example true
              */
             animate?: boolean;
             category?: {
                 /** @example 4 */
                 id?: number;
-                /** @example Extra-Curricular
-                 *      */
+                /** @example Extra-Curricular */
                 name?: string;
             };
             /**
              * Format: date-time
              * @description The date as a RFC3339 string.
-             *
              * @example null
              */
             achievementExpiry?: string | null;
             /**
              * Format: date-time
              * @description The date as a RFC3339 string.
-             *
              * @example null
              */
             goalExpiry?: string | null;
             curriculumNodes?: components["schemas"]["curriculumItem"][] | null;
             /**
              * @description System configurable in your Admin Lists Learning Moment area
-             *
              * @example null
              */
             tags?: {
@@ -3636,13 +4032,11 @@ export interface components {
             _links?: {
                 /**
                  * @description the link for the user to update the badge
-                 *
                  * @example /learning/badge/10/update
                  */
                 update?: string;
                 /**
                  * @description the link for the user to delete the badge
-                 *
                  * @example /learning/badge/10
                  */
                 delete?: string;
@@ -3656,7 +4050,6 @@ export interface components {
                 goalWithdraw?: string;
                 /**
                  * @description The Badge Image, either system defined or selectable by the user
-                 *
                  * @example /static/images/badges/sport/23.svg
                  */
                 icon?: string;
@@ -3694,7 +4087,6 @@ export interface components {
                  *     and any other names, and in any case is not the definitive source of
                  *     naming information; therefore in practice this will usually be the
                  *     user's given name.
-                 *
                  * @example Rebecca
                  */
                 firstName?: string | null;
@@ -3727,7 +4119,6 @@ export interface components {
                  *     and any other names, and in any case is not the definitive source of
                  *     naming information; therefore in practice this will usually be the
                  *     user's given name.
-                 *
                  * @example Rebecca
                  */
                 firstName?: string | null;
@@ -3748,7 +4139,6 @@ export interface components {
             /**
              * Format: date-time
              * @description The date as a RFC3339 string.
-             *
              * @example 2022-08-27T12:49:11+10:00
              */
             awardedAt?: string;
@@ -3756,21 +4146,18 @@ export interface components {
             /**
              * Format: date-time
              * @description The date as a RFC3339 string.
-             *
              * @example 2022-08-27T12:49:11+10:00
              */
             reasonedAt?: string | null;
             /**
              * Format: date-time
              * @description The date as a RFC3339 string.
-             *
              * @example null
              */
             expiresAt?: string | null;
             /**
              * Format: date-time
              * @description The date as a RFC3339 string.
-             *
              * @example null
              */
             viewedOn?: string | null;
@@ -3796,7 +4183,6 @@ export interface components {
             /**
              * Format: date-time
              * @description The date as a RFC3339 string.
-             *
              * @example 2022-08-30T10:09:09+10:00
              */
             date?: string;
@@ -3829,7 +4215,6 @@ export interface components {
             /**
              * Format: date-time
              * @description The date as a RFC3339 string.
-             *
              * @example 2022-08-30T10:09:09+10:00
              */
             publishedAt?: string;
@@ -3844,28 +4229,24 @@ export interface components {
                 /**
                  * Format: date-time
                  * @description The date on which the assessment was published, as a RFC3339 string.
-                 *
                  * @example 2022-08-30T10:09:09+10:00
                  */
                 publishedAt?: string;
                 /**
                  * Format: date-time
                  * @description The earliest date on which the assessment may be started, as a RFC3339 string.
-                 *
                  * @example 2022-08-30T10:09:09+10:00
                  */
                 openAt?: string;
                 /**
                  * Format: date-time
                  * @description The date on which the assessment is due, as a RFC3339 string.
-                 *
                  * @example 2022-08-30T10:09:09+10:00
                  */
                 dueAt?: string;
                 /**
                  * Format: date-time
                  * @description The latest date on which the assessment may be submitted, as a RFC3339 string.
-                 *
                  * @example 2022-08-30T10:09:09+10:00
                  */
                 closeAt?: string;
@@ -3912,7 +4293,6 @@ export interface components {
             /**
              * Format: date-time
              * @description The date as a RFC3339 string.
-             *
              * @example 2022-08-30T10:09:09+10:00
              */
             date?: string;
@@ -3931,47 +4311,14 @@ export interface components {
             parent?: components["schemas"]["discussionComment-read"];
             /** @description A list of direct children of this comment. */
             children?: components["schemas"]["discussionComment-readList"];
-            /** @description Which role types may view this comment? If not set, assume all role
+            /**
+             * @description Which role types may view this comment? If not set, assume all role
              *     types may view it.
              *     This is likely to be replaced with a more sophisticated visibility
              *     system, which encompasses individual roles, role types, folders,
              *     and who knows what else?
-             *      */
+             */
             visibility?: ("staff" | "parent" | "student")[];
-        };
-        /**
-         * User
-         * @description Short fields for users
-         */
-        userAuthor: {
-            id?: components["schemas"]["id"];
-            /**
-             * @description The user's title (Mr., Ms., etc.).
-             * @example Ms
-             */
-            title?: string | null;
-            /**
-             * @description The user's first name.
-             *
-             *     Schoolbox doesn't distinguish between a person's actual first name
-             *     and any other names, and in any case is not the definitive source of
-             *     naming information; therefore in practice this will usually be the
-             *     user's given name.
-             *
-             * @example Rebecca
-             */
-            firstName?: string;
-            /** @description The user's preferred name. */
-            preferredName?: string | null;
-            /**
-             * @description The user's surname.
-             * @example White
-             */
-            lastName?: string | null;
-            /** @description The user's formatted full name. */
-            fullName?: string;
-            /** @description Whether the user is deleted or not. */
-            isDeleted?: boolean;
         };
         /**
          * a Pastoral Record
@@ -4000,7 +4347,6 @@ export interface components {
                  *     and any other names, and in any case is not the definitive source of
                  *     naming information; therefore in practice this will usually be the
                  *     user's given name.
-                 *
                  * @example Rebecca
                  */
                 firstName?: string | null;
@@ -4073,23 +4419,17 @@ export interface components {
                 /** @description The name of the pastoral tag. */
                 name?: string;
             }[];
-            /** @description General content of this pastoral record in raw HTML.
-             *      */
+            /** @description General content of this pastoral record in raw HTML. */
             bodyPublic?: string;
-            /** @description Confidential content of this pastoral record in raw HTML.
-             *      */
+            /** @description Confidential content of this pastoral record in raw HTML. */
             bodyPrivate?: string;
-            /** @description Files attached to General content.
-             *      */
+            /** @description Files attached to General content. */
             attachmentsPublic?: components["schemas"]["file"][];
-            /** @description Files attached to Confidential content.
-             *      */
+            /** @description Files attached to Confidential content. */
             attachmentsPrivate?: components["schemas"]["file"][];
-            /** @description General comments.
-             *      */
+            /** @description General comments. */
             commentsPublic?: components["schemas"]["discussionComment-read"][];
-            /** @description Confidential comments
-             *      */
+            /** @description Confidential comments */
             commentsPrivate?: components["schemas"]["discussionComment-read"][];
             /** @description An array of pastoral actions. */
             recordActions?: {
@@ -4110,14 +4450,12 @@ export interface components {
             /**
              * Format: date-time
              * @description The date as a RFC3339 string.
-             *
              */
             createdAt?: string;
             updatedBy?: components["schemas"]["userAuthor"];
             /**
              * Format: date-time
              * @description The date as a RFC3339 string.
-             *
              */
             updatedAt?: string;
             _links?: Record<string, never>;
@@ -4149,7 +4487,6 @@ export interface components {
                  *     and any other names, and in any case is not the definitive source of
                  *     naming information; therefore in practice this will usually be the
                  *     user's given name.
-                 *
                  * @example Rebecca
                  */
                 firstName?: string | null;
@@ -4222,23 +4559,17 @@ export interface components {
                 /** @description The name of the pastoral tag. */
                 name?: string;
             }[];
-            /** @description General content of this pastoral record in raw HTML.
-             *      */
+            /** @description General content of this pastoral record in raw HTML. */
             bodyPublic?: string;
-            /** @description Confidential content of this pastoral record in raw HTML.
-             *      */
+            /** @description Confidential content of this pastoral record in raw HTML. */
             bodyPrivate?: string;
-            /** @description Files attached to General content.
-             *      */
+            /** @description Files attached to General content. */
             attachmentsPublic?: components["schemas"]["file"][];
-            /** @description Files attached to Confidential content.
-             *      */
+            /** @description Files attached to Confidential content. */
             attachmentsPrivate?: components["schemas"]["file"][];
-            /** @description General comments.
-             *      */
+            /** @description General comments. */
             commentsPublic?: components["schemas"]["discussionComment-read"][];
-            /** @description Confidential comments
-             *      */
+            /** @description Confidential comments */
             commentsPrivate?: components["schemas"]["discussionComment-read"][];
             /** @description An array of pastoral actions. */
             recordActions?: {
@@ -4259,14 +4590,12 @@ export interface components {
             /**
              * Format: date-time
              * @description The date as a RFC3339 string.
-             *
              */
             createdAt?: string;
             updatedBy?: components["schemas"]["userAuthor"];
             /**
              * Format: date-time
              * @description The date as a RFC3339 string.
-             *
              */
             updatedAt?: string;
             _links?: Record<string, never>;
@@ -4315,13 +4644,11 @@ export interface components {
                     /**
                      * Format: uri-reference
                      * @description A link to view this course: contains a modify form.
-                     *
                      */
                     view?: string;
                     /**
                      * Format: uri-reference
                      * @description A link to delete this course
-                     *
                      */
                     delete?: string;
                 };
@@ -4344,7 +4671,6 @@ export interface components {
                     /**
                      * Format: uri-reference
                      * @description A link to view this unit's course: contains a modify form.
-                     *
                      */
                     view?: string;
                 };
@@ -4355,7 +4681,6 @@ export interface components {
          * @description An assessment usage.
          *
          *     This only includes assessments which are within a unit specification.
-         *
          */
         "curriculumNodeUsage-assessmentItem": {
             /** @enum {string} */
@@ -4374,7 +4699,6 @@ export interface components {
                     id?: components["schemas"]["id"];
                     /**
                      * @description The type of the project: always "project".
-                     *
                      * @enum {string}
                      */
                     type?: "project";
@@ -4384,7 +4708,6 @@ export interface components {
                         /**
                          * Format: uri-reference
                          * @description A link to view this project: contains a modify form.
-                         *
                          */
                         view?: string;
                     };
@@ -4393,7 +4716,6 @@ export interface components {
                     /**
                      * Format: uri-reference
                      * @description A link to view this assessment: contains a modify form.
-                     *
                      */
                     view?: string;
                 };
@@ -4402,7 +4724,6 @@ export interface components {
         /**
          * A badge usage
          * @description A badge usage.
-         *
          */
         "curriculumNodeUsage-badgeItem": {
             /** @enum {string} */
@@ -4476,13 +4797,11 @@ export interface components {
             id?: components["schemas"]["id"];
             /** @description The name of the Folder. */
             name?: string;
-            /** @description Schoolbox Class Codes
-             *      */
+            /** @description Schoolbox Class Codes */
             code?: string;
             /**
              * Year Level
              * @description Year level(s) which the folder is associated to.
-             *
              */
             readonly yearLevel?: {
                 id: components["schemas"]["id"];
@@ -4492,32 +4811,31 @@ export interface components {
         };
         common: {
             id: components["schemas"]["id"];
-            /** @description The type of search result.
-             *      */
+            /** @description The type of search result. */
             type: string;
             /**
              * Format: date-time
              * @description The date of the search result.
-             *
              * @example 2022-01-30T21:00:00Z
              */
             date?: string | null;
             /**
              * Format: uri
              * @description A link to the search result.
-             *
              */
             url: string;
-            /** @description The title of the search result.
+            /**
+             * @description The title of the search result.
              *
              *     Intended to be used as the content of the main link to the search result.
-             *      */
+             */
             title: string;
-            /** @description An optional brief line of context for the search result.
+            /**
+             * @description An optional brief line of context for the search result.
              *
              *     Intended to be displayed directly underneath the title, in order to
              *     quickly describe the result.
-             *      */
+             */
             meta?: string | null;
             /**
              * Format: uri
@@ -4525,42 +4843,44 @@ export interface components {
              *
              *     If not provided: this result's `type` should be used to determine an icon
              *     to display next to the result.
-             *
              */
             image?: string | null;
-            /** @description An optional further description of the search result.
+            /**
+             * @description An optional further description of the search result.
              *
              *     Intended to be displayed beneath the main link to the search result,
              *     and to provide further context for the search user.
              *
              *     For example: for a news article, this may be a truncated version of the
              *     article, cut so that it contains a match on the search keyword.
-             *      */
+             */
             description?: string | null;
             creator?: (Record<string, never> | null) & components["schemas"]["userAuthor"];
-            /** @description An optional list of folders which point to this search result.
+            /**
+             * @description An optional list of folders which point to this search result.
              *
              *     This list will be ordered from the top-most folder down to the folder in
              *     which the search result actually exists, but does not need to contain the
              *     entire folder hierarchy.
-             *      */
+             */
             context?: (components["schemas"]["folder"] & {
                 /**
                  * Format: uri
                  * @description A link to this folder.
-                 *
                  */
                 url?: string;
             })[];
-            /** @description The name of an icon to display next to this search result.
+            /**
+             * @description The name of an icon to display next to this search result.
              *
              *     Intended as a fallback, if the search result does not have an associated
              *     image URL.
-             *      */
+             */
             icon?: string;
-            /** @description A set of supplementary contextual links for this search result, for
+            /**
+             * @description A set of supplementary contextual links for this search result, for
              *     actions which the search user may perform on or for that result.
-             *      */
+             */
             _links?: Record<string, never>;
         };
         badge: components["schemas"]["common"] & {
@@ -4605,7 +4925,6 @@ export interface components {
              *       (activities within the project are not fetched)
              *     - assessment.task: this is a task
              *     - assessment.quiz: this is a quiz
-             *
              * @enum {unknown}
              */
             type?: "assessment.dueWork" | "assessment.lessonPlan" | "assessment.lti" | "assessment.project" | "assessment.task" | "assessment.quiz";
@@ -4636,7 +4955,6 @@ export interface components {
              *     - file.image: images
              *     - file.video: videos
              *     - file.other: any type of file which doesn't fit one of the above
-             *
              * @enum {unknown}
              */
             type?: "file.audio" | "file.document" | "file.image" | "file.video" | "file.other";
@@ -4686,7 +5004,6 @@ export interface components {
                  * @description The target URL of the tile, if there is one.
                  *
                  *     (The result URL points to the tile's location within the page.)
-                 *
                  */
                 target?: string;
             };
@@ -4700,13 +5017,11 @@ export interface components {
         /**
          * Page search sub-result
          * @description A single search result within this page.
-         *
          */
         "pageSubResult-item": components["schemas"]["assessment"] | components["schemas"]["blog"] | components["schemas"]["result-file"] | components["schemas"]["forum"] | components["schemas"]["result-link"] | components["schemas"]["textBox"] | components["schemas"]["tile"];
         /**
          * Page search sub-result list
          * @description A list of search results found within this page.
-         *
          */
         "pageSubResult-list": {
             data?: components["schemas"]["pageSubResult-item"][];
@@ -4723,7 +5038,6 @@ export interface components {
              *     - page.homepage: this is a page with neither a class, course or unit,
              *       but which still has a homepage
              *     - page.other: this is a folder which has no homepage
-             *
              * @enum {unknown}
              */
             type?: "page.class" | "page.course" | "page.unit" | "page.homepage" | "page.other";
@@ -4735,7 +5049,6 @@ export interface components {
                  *     This link does not contain a cursor: use the cursor within
                  *     `_subResults.metadata.cursor.next` to find the next page of
                  *     results.
-                 *
                  */
                 subResults?: string;
             };
@@ -4755,7 +5068,6 @@ export interface components {
              *     - user.parent: this is a parent user
              *     - user.staff: this is a staff user
              *     - user.student: this is a student user
-             *
              * @enum {unknown}
              */
             type?: "user.guest" | "user.parent" | "user.staff" | "user.student";
@@ -4772,7 +5084,6 @@ export interface components {
          *
          *     This contains only search results which are not contained within a page:
          *     pages contain their own list of sub-results.
-         *
          */
         "result-item": components["schemas"]["badge"] | components["schemas"]["event"] | components["schemas"]["news"] | components["schemas"]["page"] | components["schemas"]["user"];
         /**
@@ -4783,9 +5094,232 @@ export interface components {
             data?: components["schemas"]["result-item"][];
             metadata?: components["schemas"]["listMetadata"];
         };
+        /**
+         * @example {
+         *       "configs": [
+         *         {
+         *           "name": "site_name",
+         *           "value": "My Updated School"
+         *         },
+         *         {
+         *           "name": "theme_settings",
+         *           "value": {
+         *             "primaryColor": "#2563eb",
+         *             "secondaryColor": "#64748b",
+         *             "darkMode": true
+         *           }
+         *         },
+         *         {
+         *           "name": "allowed_file_types",
+         *           "value": [
+         *             "pdf",
+         *             "doc",
+         *             "docx",
+         *             "jpg",
+         *             "png"
+         *           ]
+         *         },
+         *         {
+         *           "name": "max_file_size",
+         *           "value": 52428800
+         *         },
+         *         {
+         *           "name": "enable_notifications",
+         *           "value": false
+         *         }
+         *       ]
+         *     }
+         */
+        "config-bulk-request": {
+            /** @description Array of configuration updates to process */
+            configs: {
+                /**
+                 * @description The unique name/key of the configuration setting
+                 * @example site_name
+                 */
+                name: string;
+                /**
+                 * @description The new configuration value
+                 * @example {
+                 *       "string_value": "Updated School Name",
+                 *       "number_value": 52428800,
+                 *       "boolean_value": true,
+                 *       "object_value": {
+                 *         "primaryColor": "#2563eb",
+                 *         "darkMode": true
+                 *       },
+                 *       "array_value": [
+                 *         "pdf",
+                 *         "doc",
+                 *         "jpg"
+                 *       ]
+                 *     }
+                 */
+                value: string | number | boolean | {
+                    [key: string]: unknown;
+                } | unknown[];
+            }[];
+        };
+        "config-item": {
+            /**
+             * @description The unique name/key of the configuration setting
+             * @example site_name
+             */
+            name: string;
+            /**
+             * @description The configuration value. Can be any valid JSON type depending on the config setting.
+             * @example {
+             *       "string_value": "My School",
+             *       "number_value": 52428800,
+             *       "boolean_value": true,
+             *       "object_value": {
+             *         "primaryColor": "#2563eb",
+             *         "darkMode": true
+             *       },
+             *       "array_value": [
+             *         "pdf",
+             *         "doc",
+             *         "jpg"
+             *       ]
+             *     }
+             */
+            value: string | number | boolean | {
+                [key: string]: unknown;
+            } | unknown[];
+            /**
+             * @description Optional description of what this configuration setting controls
+             * @example The name of the school displayed in the header
+             */
+            description?: string;
+        };
+        /**
+         * @example {
+         *       "results": [
+         *         {
+         *           "name": "site_name",
+         *           "value": "My Updated School",
+         *           "description": "The name of the school displayed in the header",
+         *           "status": "success"
+         *         },
+         *         {
+         *           "name": "theme_settings",
+         *           "value": {
+         *             "primaryColor": "#2563eb",
+         *             "secondaryColor": "#64748b",
+         *             "darkMode": true
+         *           },
+         *           "description": "Theme configuration object",
+         *           "status": "success"
+         *         },
+         *         {
+         *           "name": "allowed_file_types",
+         *           "value": [
+         *             "pdf",
+         *             "doc",
+         *             "docx",
+         *             "jpg",
+         *             "png"
+         *           ],
+         *           "description": "Array of allowed file extensions",
+         *           "status": "success"
+         *         },
+         *         {
+         *           "name": "enable_notifications",
+         *           "value": true,
+         *           "description": "Whether to enable push notifications",
+         *           "status": "success"
+         *         },
+         *         {
+         *           "name": "invalid_config",
+         *           "status": "failed",
+         *           "error": "Config 'invalid_config' not found"
+         *         }
+         *       ],
+         *       "errors": [
+         *         "Config 'invalid_config' not found"
+         *       ],
+         *       "total_processed": 5,
+         *       "successful": 4,
+         *       "failed": 1
+         *     }
+         */
+        "config-bulk-response": {
+            /** @description Array of results for each config update attempt */
+            results: ((components["schemas"]["config-item"] & {
+                /**
+                 * @example success
+                 * @enum {string}
+                 */
+                status: "success";
+            }) | {
+                /**
+                 * @description The config name that failed to update
+                 * @example invalid_config
+                 */
+                name: string;
+                /**
+                 * @example failed
+                 * @enum {string}
+                 */
+                status: "failed";
+                /**
+                 * @description Error message explaining why the update failed
+                 * @example Config 'invalid_config' not found
+                 */
+                error: string;
+            })[];
+            /**
+             * @description Array of error messages for failed updates
+             * @example [
+             *       "Config 'invalid_config' not found"
+             *     ]
+             */
+            errors: string[];
+            /**
+             * @description Total number of config updates attempted
+             * @example 5
+             */
+            total_processed: number;
+            /**
+             * @description Number of config updates that succeeded
+             * @example 4
+             */
+            successful: number;
+            /**
+             * @description Number of config updates that failed
+             * @example 1
+             */
+            failed: number;
+        };
+        "config-update": {
+            /**
+             * @description The new configuration value. Can be any valid JSON type depending on the config setting.
+             * @example {
+             *       "string_value": "Updated School Name",
+             *       "number_value": 52428800,
+             *       "boolean_value": false,
+             *       "object_value": {
+             *         "primaryColor": "#2563eb",
+             *         "secondaryColor": "#64748b",
+             *         "darkMode": true
+             *       },
+             *       "array_value": [
+             *         "pdf",
+             *         "doc",
+             *         "docx",
+             *         "jpg",
+             *         "png"
+             *       ]
+             *     }
+             */
+            value: string | number | boolean | {
+                [key: string]: unknown;
+            } | unknown[];
+        };
     };
     responses: {
-        /** @description The response that the API returns if it was unable or unwilling to fulfill a
+        /**
+         * @description The response that the API returns if it was unable or unwilling to fulfill a
          *     request.
          *
          *     If the request's "Accept" header is "application/json", this will conform to
@@ -4793,7 +5327,7 @@ export interface components {
          *     specification; otherwise, it may be a HTML document which contains a textual
          *     description of the error. For this reason, the "Accept" header should always
          *     be set to "application/json".
-         *      */
+         */
         problem: {
             headers: {
                 [name: string]: unknown;
@@ -4846,7 +5380,6 @@ export interface components {
                      * @description The name of the group.
                      *
                      *     In this context, this is the name of the group's folder.
-                     *
                      * @example Basketball
                      */
                     name?: string;
@@ -4856,7 +5389,6 @@ export interface components {
                      *     * `private`: membership is by invitation only
                      *     * `moderated`: users may apply for membership, but must be approved
                      *     * `free`: users may join and leave at any time
-                     *
                      * @enum {string}
                      */
                     type?: "private" | "moderated" | "free";
@@ -4866,20 +5398,19 @@ export interface components {
                      *     * `false`: users may subscribe to this group's events
                      *     * `true`: users must subscribe to this group's events, and may not
                      *       unsubscribe
-                     *
                      * @example true
                      */
                     isForceFollow?: boolean;
-                    /** @description Does the user have this group set as a favourite?
-                     *      */
+                    /** @description Does the user have this group set as a favourite? */
                     isFavourite?: boolean;
-                    /** @description Is this user subscribed to this group's events? If so, they will be
+                    /**
+                     * @description Is this user subscribed to this group's events? If so, they will be
                      *     notified when an event occurs.
                      *
                      *     Note that the group administrator may:
                      *     * Force Follow, so that users may not opt out of notifications
                      *     * Disable Notifications, so that users never receive notifications
-                     *      */
+                     */
                     isNotificationsOn?: boolean;
                     /**
                      * @description The enrolment status of the user for this group.
@@ -4888,7 +5419,6 @@ export interface components {
                      *     * `notEnroled`: the user is not enroled in the group
                      *     * `pending`: the user has requested to join the group and is currently
                      *       awaiting approval by a group admin
-                     *
                      * @enum {string}
                      */
                     enrolmentStatus?: "enroled" | "notEnroled" | "pending";
@@ -4902,7 +5432,6 @@ export interface components {
                      *     * `read`: the user may view content within the group, and may be
                      *       notified of and may participate in group events
                      *     * `none`: the user is not a member of the group
-                     *
                      * @enum {string}
                      */
                     membership?: "admin" | "write" | "read" | "none";
@@ -4910,7 +5439,6 @@ export interface components {
                         /**
                          * Format: uri-reference
                          * @description Gives the homepage link to the group, or NULL if the group has no homepage.
-                         *
                          * @example /homepage/83
                          */
                         homepage?: string | null;
@@ -4934,7 +5462,6 @@ export interface components {
                      * @description The name of the group.
                      *
                      *     In this context, this is the name of the group's folder.
-                     *
                      * @example Basketball
                      */
                     name?: string;
@@ -4944,7 +5471,6 @@ export interface components {
                      *     * `private`: membership is by invitation only
                      *     * `moderated`: users may apply for membership, but must be approved
                      *     * `free`: users may join and leave at any time
-                     *
                      * @enum {string}
                      */
                     type?: "private" | "moderated" | "free";
@@ -4954,20 +5480,19 @@ export interface components {
                      *     * `false`: users may subscribe to this group's events
                      *     * `true`: users must subscribe to this group's events, and may not
                      *       unsubscribe
-                     *
                      * @example true
                      */
                     isForceFollow?: boolean;
-                    /** @description Does the user have this group set as a favourite?
-                     *      */
+                    /** @description Does the user have this group set as a favourite? */
                     isFavourite?: boolean;
-                    /** @description Is this user subscribed to this group's events? If so, they will be
+                    /**
+                     * @description Is this user subscribed to this group's events? If so, they will be
                      *     notified when an event occurs.
                      *
                      *     Note that the group administrator may:
                      *     * Force Follow, so that users may not opt out of notifications
                      *     * Disable Notifications, so that users never receive notifications
-                     *      */
+                     */
                     isNotificationsOn?: boolean;
                     /**
                      * @description The enrolment status of the user for this group.
@@ -4976,7 +5501,6 @@ export interface components {
                      *     * `notEnroled`: the user is not enroled in the group
                      *     * `pending`: the user has requested to join the group and is currently
                      *       awaiting approval by a group admin
-                     *
                      * @enum {string}
                      */
                     enrolmentStatus?: "enroled" | "notEnroled" | "pending";
@@ -4990,7 +5514,6 @@ export interface components {
                      *     * `read`: the user may view content within the group, and may be
                      *       notified of and may participate in group events
                      *     * `none`: the user is not a member of the group
-                     *
                      * @enum {string}
                      */
                     membership?: "admin" | "write" | "read" | "none";
@@ -4998,7 +5521,6 @@ export interface components {
                         /**
                          * Format: uri-reference
                          * @description Gives the homepage link to the group, or NULL if the group has no homepage.
-                         *
                          * @example /homepage/83
                          */
                         homepage?: string | null;
@@ -5053,23 +5575,25 @@ export interface components {
                         preferredName?: string | null;
                         _links?: {
                             avatar?: {
-                                /** @description Is the currently authenticated user authorized to view the resource
+                                /**
+                                 * @description Is the currently authenticated user authorized to view the resource
                                  *     pointed to by `href`?
                                  *
                                  *     If this value is `null`, then it is not known whether the user may
                                  *     view this resource.
-                                 *      */
+                                 */
                                 auth?: boolean | null;
                                 /** Format: uri */
                                 href?: string | null;
                             };
                             profile?: {
-                                /** @description Is the currently authenticated user authorized to view the resource
+                                /**
+                                 * @description Is the currently authenticated user authorized to view the resource
                                  *     pointed to by `href`?
                                  *
                                  *     If this value is `null`, then it is not known whether the user may
                                  *     view this resource.
-                                 *      */
+                                 */
                                 auth?: boolean | null;
                                 /** Format: uri */
                                 href?: string | null;
@@ -5083,26 +5607,29 @@ export interface components {
                         delete?: {
                             /** Format: uri */
                             href?: string | null;
-                            /** @description Is the currently authenticated user authorized to view the resource
+                            /**
+                             * @description Is the currently authenticated user authorized to view the resource
                              *     pointed to by `href`?
                              *
                              *     If this value is `null`, then it is not known whether the user may
                              *     view this resource.
-                             *      */
+                             */
                             auth?: boolean | null;
                         };
                     };
                 };
             };
         };
-        /** @description User information, if the user was successfully authenticated and the
+        /**
+         * @description User information, if the user was successfully authenticated and the
          *     request was made via JSON.
-         *      */
+         */
         "authentication-successUser": {
             headers: {
-                /** @description Contains the value of the session cookie as defined in the "session"
+                /**
+                 * @description Contains the value of the session cookie as defined in the "session"
                  *     security scheme.
-                 *      */
+                 */
                 Cookie?: string;
                 [name: string]: unknown;
             };
@@ -5123,15 +5650,17 @@ export interface components {
                 };
             };
         };
-        /** @description A redirect to another location within the Schoolbox instance,
+        /**
+         * @description A redirect to another location within the Schoolbox instance,
          *     if the user was successfully authenticated and the request was not made
          *     via JSON.
-         *      */
+         */
         "authentication-successRedirect": {
             headers: {
-                /** @description Contains the value of the session cookie as defined in the "session"
+                /**
+                 * @description Contains the value of the session cookie as defined in the "session"
                  *     security scheme.
-                 *      */
+                 */
                 Cookie?: string;
                 [name: string]: unknown;
             };
@@ -5157,8 +5686,7 @@ export interface components {
                     fileName?: string;
                     /** @example School Events */
                     title?: string;
-                    /** @example Banner image for 2022 school events
-                     *      */
+                    /** @example Banner image for 2022 school events */
                     description?: string;
                     /** @example false */
                     hidden?: boolean;
@@ -5172,8 +5700,7 @@ export interface components {
                 };
             };
         };
-        /** @description A summary of the saved news item's status.
-         *      */
+        /** @description A summary of the saved news item's status. */
         save: {
             headers: {
                 [name: string]: unknown;
@@ -5182,36 +5709,33 @@ export interface components {
                 "application/json": {
                     articleId?: components["schemas"]["id"];
                     returnUrl?: components["schemas"]["returnUrl"];
-                    /** @description Was the article successfully saved?
+                    /**
+                     * @description Was the article successfully saved?
                      *
                      *     Note this doesn't mean that the article is necessary ready for
                      *     publishing.
-                     *      */
+                     */
                     success?: boolean;
                     /**
                      * Format: uri
                      * @description The URL via which the user may approve this article.
-                     *
                      */
                     approveRoute?: string;
                     /**
                      * Format: uri
                      * @description The URL via which the user may submit this article for publish
                      *     or review.
-                     *
                      */
                     submitRoute?: string;
                     /**
                      * Format: uri
                      * @description The URL via which the user may update this article.
-                     *
                      */
                     updateRoute?: string;
                 };
             };
         };
-        /** @description A redirect to another location within the Schoolbox instance.
-         *      */
+        /** @description A redirect to another location within the Schoolbox instance. */
         redirect: {
             headers: {
                 Location?: string;
@@ -5253,6 +5777,18 @@ export interface components {
             };
             content: {
                 "application/json": components["schemas"]["assessment-item"];
+            };
+        };
+        /** @description A list of Learning Moments for a cohort of students */
+        "evidence-cohort-payload": {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    data?: components["schemas"]["learning-moment-payload-item"][];
+                    metadata?: components["schemas"]["listMetadata"];
+                };
             };
         };
         /** @description A list of Learning Moments */
@@ -5303,6 +5839,24 @@ export interface components {
                 "application/json": components["schemas"]["pageSubResult-list"];
             };
         };
+        /** @description Bulk configuration update response */
+        "config-bulk": {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["config-bulk-response"];
+            };
+        };
+        /** @description Configuration item response */
+        "config-item": {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["config-item"];
+            };
+        };
         /** @description Information about a group, including a list of users belonging to the group. */
         "group-user-list": {
             headers: {
@@ -5316,7 +5870,6 @@ export interface components {
                     settings?: {
                         /**
                          * @description Either the ?new value from the request URL, or 0 (if ?new does not exist).
-                         *
                          * @example 0
                          */
                         new?: number;
@@ -5326,7 +5879,6 @@ export interface components {
                          *     * `private`: membership is by invitation only
                          *     * `moderated`: users may apply for membership, but must be approved
                          *     * `free`: users may join and leave at any time
-                         *
                          * @example private
                          * @enum {string}
                          */
@@ -5342,7 +5894,6 @@ export interface components {
                          *     * `false`: users may subscribe to this group's events
                          *     * `true`: users must subscribe to this group's events, and may not
                          *       unsubscribe
-                         *
                          * @example true
                          */
                         isForceFollow?: boolean;
@@ -5367,7 +5918,6 @@ export interface components {
                          *     and any other names, and in any case is not the definitive source of
                          *     naming information; therefore in practice this will usually be the
                          *     user's given name.
-                         *
                          * @example Rebecca
                          */
                         firstName?: string;
@@ -5386,7 +5936,6 @@ export interface components {
                         /**
                          * @description The user's full name: usually, this is the title, first name and last
                          *     name joined together.
-                         *
                          * @example Mr John Smith
                          */
                         fullName?: string;
@@ -5424,28 +5973,32 @@ export interface components {
         };
     };
     parameters: {
-        /** @description A generated but decodable pointer to the first record to return.
+        /**
+         * @description A generated but decodable pointer to the first record to return.
          *
          *     Each endpoint whose data accepts a cursor will return a cursor that
          *     points to the next page of the result set.
-         *      */
+         */
         cursor: components["schemas"]["cursor"];
-        /** @description An option to limit the returned results.
+        /**
+         * @description An option to limit the returned results.
          *
          *     Each endpoint whose data accepts a limit will limit
          *     their results to that number.
          *
          *     Note a maximum limit may also apply, depending on the
          *     specific type of request.
-         *      */
+         */
         limit: number;
-        /** @description The ID of an item to act upon.
+        /**
+         * @description The ID of an item to act upon.
          *
          *     The type of item that is acted upon is dependent on the endpoint in which
          *     it is included.
-         *      */
+         */
         id: number;
-        /** @description The type of item that a thread is associated with.
+        /**
+         * @description The type of item that a thread is associated with.
          *
          *     Used in conjunction with contextId to find the item with which a thread
          *     is associated, and then to determine whether the authenticated user has
@@ -5456,76 +6009,79 @@ export interface components {
          *     * `evidence` (the internal name for learning moments: not yet documented)
          *
          *     It is intended that discussion threads will be introduced to more contexts.
-         *      */
+         */
         "discussion-contextType": "comms" | "evidence";
-        /** @description The unique ID of the item that a thread is associated with.
+        /**
+         * @description The unique ID of the item that a thread is associated with.
          *
          *     Used in conjunction with contextType to find the item with which a
          *     thread is associated, and then to determine whether the authenticated
          *     user has permission to perform the requested action.
-         *      */
+         */
         "discussion-contextId": components["schemas"]["id"];
-        /** @description If provided, a relative path to redirect to upon successful authentication.
+        /**
+         * @description If provided, a relative path to redirect to upon successful authentication.
          *
          *     If not provided: will fall back to redirecting to an empty relative path (/).
-         *      */
+         */
         redirect: string;
         /** @description A JWT generated via an oAuth request. */
         jwt: string;
-        /** @description The machine-readable value (a.k.a. slug) for the selected news topic.
-         *      */
+        /** @description The machine-readable value (a.k.a. slug) for the selected news topic. */
         topic: string;
-        /** @description A key which identifies a user.
-         *      */
+        /** @description A key which identifies a user. */
         key: string;
-        /** @description Is compact mode enabled?
+        /**
+         * @description Is compact mode enabled?
          *
          *     If on, the list of attachments is loaded, and any articles loaded are
          *     considered as read by the authenticated user.
-         *      */
+         */
         compactMode: components["schemas"]["queryBoolean"];
-        /** @description Limit of results to show per page
-         *      */
+        /** @description Limit of results to show per page */
         "news-limit": number;
         /** @description A keyword to search for. */
         keyword: string;
         /** @description A JSON-encoded object representing a list of values to search for. */
         filter: {
-            /** @description If provided, filter the response to these types of object.
-             *      */
+            /** @description If provided, filter the response to these types of object. */
             types?: ("assessment" | "assessment.dueWork" | "assessment.lessonPlan" | "assessment.project" | "assessment.task" | "assessment.quiz" | "badge" | "blog" | "event" | "file" | "file.audio" | "file.document" | "file.image" | "file.video" | "file.other" | "forum" | "link" | "news" | "page" | "page.class" | "page.course" | "page.unit" | "page.homepage" | "page.other" | "textBox" | "tile" | "user" | "user.guest" | "user.parent" | "user.staff" | "user.student")[];
-            /** @description If provided, filter the response to results relevant within this date
+            /**
+             * @description If provided, filter the response to results relevant within this date
              *     span.
              *
              *     (This has different meanings for different types of object.)
-             *      */
+             */
             date?: {
                 /**
                  * Format: date-time
                  * @description A date in YYYY-MM-DD format.
-                 *
                  * @example 2023-01-01
                  */
                 from?: string;
                 /**
                  * Format: date-time
                  * @description A date in YYYY-MM-DD format.
-                 *
                  * @example 2023-12-31
                  */
                 to?: string;
             };
-            /** @description If provided, filter the response to results created by this user.
+            /**
+             * @description If provided, filter the response to results created by this user.
              *
              *     (Currently only allows filtering by user's ID, but may allow more
              *     properties later?)
-             *      */
+             */
             creator?: {
-                /** @description The ID of the creator.
-                 *      */
+                /** @description The ID of the creator. */
                 id?: number;
             };
         };
+        /**
+         * @description The unique name/key of the configuration setting
+         * @example site_name
+         */
+        configName: string;
     };
     requestBodies: {
         /** @description A user */
@@ -5546,26 +6102,27 @@ export interface components {
                 "application/json": components["schemas"]["discussionThread-read"];
             };
         };
-        /** @description Authentication data, either via JWT or username/password.
-         *      */
+        /** @description Authentication data, either via JWT or username/password. */
         authentication: {
             content: {
                 "application/x-www-form-urlencoded": components["schemas"]["authentication-usernamePassword"] | components["schemas"]["authentication-jwt"];
             };
         };
-        /** @description A request to create a mobile app registration for a user.
+        /**
+         * @description A request to create a mobile app registration for a user.
          *
          *     Includes authentication data, either via JWT or username/password.
-         *      */
+         */
         registration: {
             content: {
                 "application/x-www-form-urlencoded": components["schemas"]["registration-usernamePassword"] | components["schemas"]["registration-jwt"];
             };
         };
-        /** @description Request body for deregistering a device from receiving push notifications.
+        /**
+         * @description Request body for deregistering a device from receiving push notifications.
          *
          *     Requires JSON content type.
-         *      */
+         */
         "mobile-deregistration": {
             content: {
                 "application/json": {
@@ -5576,22 +6133,21 @@ export interface components {
                 };
             };
         };
-        /** @description News article information.
-         *      */
+        /** @description News article information. */
         newsItem: {
             content: {
                 "application/x-www-form-urlencoded": {
                     /** @description News article title. */
                     title: string;
                     body?: components["schemas"]["body"];
-                    /** @description News article blurb, as raw HTML.
+                    /**
+                     * @description News article blurb, as raw HTML.
                      *
                      *     If provided, the blurb will be displayed as the article's summary:
                      *     otherwise, a trimmed version the article's body will be used instead.
-                     *      */
+                     */
                     blurb?: string;
-                    /** @description A list of IDs of topics to associate with this news article.
-                     *      */
+                    /** @description A list of IDs of topics to associate with this news article. */
                     topics?: components["schemas"]["id"][];
                     /**
                      * @description Is this article pinned to the top of any list it is within?
@@ -5601,7 +6157,6 @@ export interface components {
                      *     A truthy integer value (0 or 1).
                      *
                      *     0 evaluates to false; 1 evaluates to true.
-                     *
                      * @default 0
                      * @enum {integer}
                      */
@@ -5612,7 +6167,6 @@ export interface components {
                      *     The format is dependent on the Schoolbox instance's "Numerical Date Format"
                      *     and "Time Format" settings: ideally, this would just be a "datetime" format
                      *     but the datetime input was developed before JSON was used for request bodies.
-                     *
                      * @example 22/06/2021 11:28am
                      */
                     publishAt: string;
@@ -5622,11 +6176,11 @@ export interface components {
                      *     The format is dependent on the Schoolbox instance's "Numerical Date Format"
                      *     and "Time Format" settings: ideally, this would just be a "datetime" format
                      *     but the datetime input was developed before JSON was used for request bodies.
-                     *
                      * @example 22/06/2021 11:28am
                      */
                     expiresAt: string;
-                    /** @description A single featured image to attach to this news item, supplied as a
+                    /**
+                     * @description A single featured image to attach to this news item, supplied as a
                      *     pointer to a file in Schoolbox. This parameter may be provided no
                      *     more than once.
                      *
@@ -5647,9 +6201,10 @@ export interface components {
                      *     See the [Upload a file](#post-/storage/asyncUpload.php)
                      *     endpoint for details on how to upload a file, and receive a file
                      *     pointer from that upload.
-                     *      */
+                     */
                     attachment?: components["schemas"]["filePointer"][] | null;
-                    /** @description Files to attach to this news item, supplied as pointers to a file in
+                    /**
+                     * @description Files to attach to this news item, supplied as pointers to a file in
                      *     Schoolbox. This parameter may be provided multiple times to attach
                      *     multiple files.
                      *
@@ -5670,9 +6225,10 @@ export interface components {
                      *     See the [Upload a file](#post-/storage/asyncUpload.php)
                      *     endpoint for details on how to upload a file, and receive a file
                      *     pointer from that upload.
-                     *      */
+                     */
                     attachedFiles?: components["schemas"]["filePointer"][] | null;
-                    /** @description A comma-separated list of audiences for this news item.
+                    /**
+                     * @description A comma-separated list of audiences for this news item.
                      *
                      *     Each audience will be in one of two formats:
                      *     * simple audiences: `$entityType:$entityValue:$relationship`
@@ -5706,7 +6262,7 @@ export interface components {
                      *       audience, targeting the intersection of:
                      *       * users in campus ID 2
                      *       * users in year ID 3
-                     *      */
+                     */
                     audience: string;
                 };
             };
@@ -5721,16 +6277,13 @@ export interface components {
                      *     May contain placeholder values, preceded with a `:` character
                      *     (e.g. `:placeholderName`): these will be replaced with the
                      *     corresponding value in `messageParams`.
-                     *
                      * @example Checkout the :version Release notes
-                     *
                      */
                     message: string;
                     /**
                      * @description A set of key-value pairs: each key should match a placeholder in
                      *     `message`, and its corresponding value will replace that placeholder
                      *     in the final message.
-                     *
                      * @example {
                      *       "version": "25.0"
                      *     }
@@ -5741,7 +6294,6 @@ export interface components {
                     from?: {
                         /**
                          * @description User who initially created this message, if unset defaults to Unknown User.
-                         *
                          * @example Schoolbox Admin
                          */
                         fullName?: string;
@@ -5750,7 +6302,6 @@ export interface components {
                      * Format: uri-reference
                      * @description Url for when clicking the notification to redirect to, if unset, defaults to #
                      *     can be both absolute or relative.
-                     *
                      * @example https://help.schoolbox.com.au/homepage/3343
                      */
                     href?: string;
@@ -5789,8 +6340,7 @@ export interface components {
                 };
             };
         };
-        /** @description Pastoral record
-         *      */
+        /** @description Pastoral record */
         "pastoral-item": {
             content: {
                 "application/x-www-form-urlencoded": {
@@ -5808,25 +6358,30 @@ export interface components {
                     occurredOn?: string | null;
                     /** @description The ID of a pastoral type to associate with this pastoral record. */
                     typeId: number;
-                    /** @description The ID of a pastoral sub-type to associate to this pastoral record.\
+                    /**
+                     * @description The ID of a pastoral sub-type to associate to this pastoral record.\
                      *     The sub-type must already be associated with the type provided as typeId.\
                      *     This can be null, if the pastoral type does not have any sub-type.\
                      *     This cannot be null, if the pastoral type has sub-type(s).
-                     *      */
+                     */
                     subtypeId?: number | null;
-                    /** @description The ID of a pastoral severity to associate with this pastoral record.\
+                    /**
+                     * @description The ID of a pastoral severity to associate with this pastoral record.\
                      *     Required only if Allow specification of severity on pastoral records config is ON.
-                     *      */
+                     */
                     severityId?: number | null;
-                    /** @description General content of this pastoral record in raw HTML.\
+                    /**
+                     * @description General content of this pastoral record in raw HTML.\
                      *     The following tokens will be substituted with the students details on creation: [firstname], [preferredname], [surname], [fullname], [year], [house].
-                     *      */
+                     */
                     body_public?: string | null;
-                    /** @description Confidential content of this pastoral record in raw HTML.\
+                    /**
+                     * @description Confidential content of this pastoral record in raw HTML.\
                      *     The following tokens will be substituted with the students details on creation: [firstname], [preferredname], [surname], [fullname], [year], [house].
-                     *      */
+                     */
                     body_private?: string | null;
-                    /** @description Files to attach to general content of the pastoral record, supplied as pointers to a file in Schoolbox.\
+                    /**
+                     * @description Files to attach to general content of the pastoral record, supplied as pointers to a file in Schoolbox.\
                      *     Each pointer will be in the format:\
                      *     `$locator:$location:$filename`
                      *     The variables within the pointer have this meaning:
@@ -5842,9 +6397,10 @@ export interface components {
                      *     * `$filename` is the filename that the file will be given once it is uploaded to wherever it is being uploaded
                      *
                      *     See the [Upload a file](#post-/storage/asyncUpload.php) endpoint for details on how to upload a file, and receive a file pointer from that upload.
-                     *      */
+                     */
                     "public_attachments[]"?: unknown[] | null;
-                    /** @description Files to attach to confidential content of the pastoral record, supplied as pointers to a file in Schoolbox.\
+                    /**
+                     * @description Files to attach to confidential content of the pastoral record, supplied as pointers to a file in Schoolbox.\
                      *     Each pointer will be in the format:\
                      *     `$locator:$location:$filename`
                      *     The variables within the pointer have this meaning:
@@ -5860,28 +6416,32 @@ export interface components {
                      *     * `$filename` is the filename that the file will be given once it is uploaded to wherever it is being uploaded
                      *
                      *     See the [Upload a file](#post-/storage/asyncUpload.php) endpoint for details on how to upload a file, and receive a file pointer from that upload.
-                     *      */
+                     */
                     "private_attachments[]"?: unknown[] | null;
-                    /** @description An array of IDs of pastoral action.\
+                    /**
+                     * @description An array of IDs of pastoral action.\
                      *     Available only if Enable Pastoral Actions config is ON.
-                     *      */
+                     */
                     "actions[]"?: number[] | null;
-                    /** @description Comma separated IDs of existing Pastoral Record Tags.\
+                    /**
+                     * @description Comma separated IDs of existing Pastoral Record Tags.\
                      *     If non numerical string is provided, it'll be silently discarded.\
                      *     To provide a name to create a new tag, use tagNames instead.
-                     *      */
+                     */
                     tags?: string | null;
-                    /** @description Comma separated names of Pastoral Record Tags.\
+                    /**
+                     * @description Comma separated names of Pastoral Record Tags.\
                      *     If Allow Staff to Create Pastoral Care Tags config is ON, attempts to create a new tag, if not alraeady exists.\
                      *     The max length of a tag name is 255 chars.
-                     *      */
+                     */
                     tagNames?: string | null;
                     /**
                      * Format: float
                      * @description Points of this pastoral record.
                      */
                     points?: number | null;
-                    /** @description An array of pairs of a role and its access level to this pastoral record in the format of:\
+                    /**
+                     * @description An array of pairs of a role and its access level to this pastoral record in the format of:\
                      *     `$roleId => $accessLevel`
                      *     * `$roleId` is one of the following:
                      *       * The ID of a role of Staff Role Type with Access Pastoral Care permission
@@ -5891,18 +6451,20 @@ export interface components {
                      *       * 0 - Deny
                      *       * 1 - General
                      *       * 2 - General + Confidential
-                     *      */
+                     */
                     role?: unknown[] | null;
-                    /** @description An array of pairs of a pastoral group and its access level to this pastoral record in the format of:\
+                    /**
+                     * @description An array of pairs of a pastoral group and its access level to this pastoral record in the format of:\
                      *     `$pastoralGroupId => $accessLevel`
                      *     * `$pastoralGroupId` is the ID of a pastoral group to set access level to
                      *     * `$accessLevel` is an integer representation of access level of the $roleId
                      *       * 0 - Deny
                      *       * 1 - General
                      *       * 2 - General + Confidential
-                     *      */
+                     */
                     group?: unknown[] | null;
-                    /** @description An array of pairs of a user and its access level to this pastoral record in the format of:\
+                    /**
+                     * @description An array of pairs of a user and its access level to this pastoral record in the format of:\
                      *     `$userId => $accessLevel`
                      *     * `$userId` is ID of a user to set access level to. The user must be one of:
                      *       * a staff with pastoral access
@@ -5911,13 +6473,12 @@ export interface components {
                      *       * 0 - Deny
                      *       * 1 - General
                      *       * 2 - General + Confidential
-                     *      */
+                     */
                     user?: unknown[] | null;
                 };
             };
         };
-        /** @description Pastoral record
-         *      */
+        /** @description Pastoral record */
         "pastoral-partial-item": {
             content: {
                 "application/json": {
@@ -5931,44 +6492,52 @@ export interface components {
                     occurredOn?: string | null;
                     /** @description The ID of a pastoral type to associate with this pastoral record. */
                     typeId?: number;
-                    /** @description The ID of a pastoral sub-type to associate to this pastoral record.\
+                    /**
+                     * @description The ID of a pastoral sub-type to associate to this pastoral record.\
                      *     The sub-type must already be associated with the type provided as typeId.\
                      *     This can be null, if the pastoral type does not have any sub-type.\
                      *     This cannot be null, if the pastoral type has sub-type(s).
-                     *      */
+                     */
                     subtypeId?: number | null;
-                    /** @description The ID of a pastoral severity to associate with this pastoral record.\
+                    /**
+                     * @description The ID of a pastoral severity to associate with this pastoral record.\
                      *     Required only if Allow specification of severity on pastoral records config is ON.
-                     *      */
+                     */
                     severityId?: number | null;
-                    /** @description General content of this pastoral record in raw HTML.\
+                    /**
+                     * @description General content of this pastoral record in raw HTML.\
                      *     The following tokens will be substituted with the students details on creation: [firstname], [preferredname], [surname], [fullname], [year], [house].
-                     *      */
+                     */
                     body_public?: string | null;
-                    /** @description Confidential content of this pastoral record in raw HTML.\
+                    /**
+                     * @description Confidential content of this pastoral record in raw HTML.\
                      *     The following tokens will be substituted with the students details on creation: [firstname], [preferredname], [surname], [fullname], [year], [house].
-                     *      */
+                     */
                     body_private?: string | null;
-                    /** @description An array of IDs of pastoral action.\
+                    /**
+                     * @description An array of IDs of pastoral action.\
                      *     Available only if Enable Pastoral Actions config is ON.
-                     *      */
+                     */
                     "actions[]"?: number[] | null;
-                    /** @description Comma separated IDs of existing Pastoral Record Tags.\
+                    /**
+                     * @description Comma separated IDs of existing Pastoral Record Tags.\
                      *     If non numerical string is provided, it'll be silently discarded.\
                      *     To provide a name to create a new tag, use tagNames instead.
-                     *      */
+                     */
                     tags?: string | null;
-                    /** @description Comma separated names of Pastoral Record Tags.\
+                    /**
+                     * @description Comma separated names of Pastoral Record Tags.\
                      *     If Allow Staff to Create Pastoral Care Tags config is ON, attempts to create a new tag, if not alraeady exists.\
                      *     The max length of a tag name is 255 chars.
-                     *      */
+                     */
                     tagNames?: string | null;
                     /**
                      * Format: float
                      * @description Points of this pastoral record.
                      */
                     points?: number | null;
-                    /** @description An array of pairs of a role and its access level to this pastoral record in the format of:\
+                    /**
+                     * @description An array of pairs of a role and its access level to this pastoral record in the format of:\
                      *     `$roleId => $accessLevel`
                      *     * `$roleId` is one of the following:
                      *       * The ID of a role of Staff Role Type with Access Pastoral Care permission
@@ -5978,18 +6547,20 @@ export interface components {
                      *       * 0 - Deny
                      *       * 1 - General
                      *       * 2 - General + Confidential
-                     *      */
+                     */
                     role?: unknown[] | null;
-                    /** @description An array of pairs of a pastoral group and its access level to this pastoral record in the format of:\
+                    /**
+                     * @description An array of pairs of a pastoral group and its access level to this pastoral record in the format of:\
                      *     `$pastoralGroupId => $accessLevel`
                      *     * `$pastoralGroupId` is the ID of a pastoral group to set access level to
                      *     * `$accessLevel` is an integer representation of access level of the $roleId
                      *       * 0 - Deny
                      *       * 1 - General
                      *       * 2 - General + Confidential
-                     *      */
+                     */
                     group?: unknown[] | null;
-                    /** @description An array of pairs of a user and its access level to this pastoral record in the format of:\
+                    /**
+                     * @description An array of pairs of a user and its access level to this pastoral record in the format of:\
                      *     `$userId => $accessLevel`
                      *     * `$userId` is ID of a user to set access level to. The user must be one of:
                      *       * a staff with pastoral access
@@ -5998,9 +6569,21 @@ export interface components {
                      *       * 0 - Deny
                      *       * 1 - General
                      *       * 2 - General + Confidential
-                     *      */
+                     */
                     user?: unknown[] | null;
                 };
+            };
+        };
+        /** @description Bulk configuration update request */
+        "config-bulk": {
+            content: {
+                "application/json": components["schemas"]["config-bulk-request"];
+            };
+        };
+        /** @description Configuration update request */
+        "config-update": {
+            content: {
+                "application/json": components["schemas"]["config-update"];
             };
         };
     };
@@ -6012,13 +6595,13 @@ export interface operations {
     userSearch: {
         parameters: {
             query?: {
-                /** @description Will search `username`, `firstname`, `lastname` and `preferred_name` for non exact matches.
-                 *      */
+                /** @description Will search `username`, `firstname`, `lastname` and `preferred_name` for non exact matches. */
                 search?: string;
-                /** @description Json encoded object of fields and values to filter users on. \
+                /**
+                 * @description Json encoded object of fields and values to filter users on. \
                  *     For example, to get user with username `jcoles`: \
                  *     `filter=%7b%22username%22%3a%22jcoles%22%7d`
-                 *      */
+                 */
                 filter?: {
                     /** @example 501 */
                     externalId?: string;
@@ -6071,20 +6654,22 @@ export interface operations {
                         name?: string;
                     };
                 };
-                /** @description A generated but decodable pointer to the first record to return.
+                /**
+                 * @description A generated but decodable pointer to the first record to return.
                  *
                  *     Each endpoint whose data accepts a cursor will return a cursor that
                  *     points to the next page of the result set.
-                 *      */
+                 */
                 cursor?: components["parameters"]["cursor"];
-                /** @description An option to limit the returned results.
+                /**
+                 * @description An option to limit the returned results.
                  *
                  *     Each endpoint whose data accepts a limit will limit
                  *     their results to that number.
                  *
                  *     Note a maximum limit may also apply, depending on the
                  *     specific type of request.
-                 *      */
+                 */
                 limit?: components["parameters"]["limit"];
             };
             header?: never;
@@ -6114,11 +6699,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -6134,11 +6720,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -6154,11 +6741,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -6174,11 +6762,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -6200,11 +6789,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -6220,11 +6810,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -6240,11 +6831,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
                 groupId: number;
             };
@@ -6261,11 +6853,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
                 groupId: number;
             };
@@ -6282,11 +6875,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
                 groupId: number;
             };
@@ -6303,11 +6897,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
                 groupId: number;
             };
@@ -6330,11 +6925,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
                 groupId: number;
             };
@@ -6364,7 +6960,8 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The type of item that a thread is associated with.
+                /**
+                 * @description The type of item that a thread is associated with.
                  *
                  *     Used in conjunction with contextId to find the item with which a thread
                  *     is associated, and then to determine whether the authenticated user has
@@ -6375,14 +6972,15 @@ export interface operations {
                  *     * `evidence` (the internal name for learning moments: not yet documented)
                  *
                  *     It is intended that discussion threads will be introduced to more contexts.
-                 *      */
+                 */
                 contextType: components["parameters"]["discussion-contextType"];
-                /** @description The unique ID of the item that a thread is associated with.
+                /**
+                 * @description The unique ID of the item that a thread is associated with.
                  *
                  *     Used in conjunction with contextType to find the item with which a
                  *     thread is associated, and then to determine whether the authenticated
                  *     user has permission to perform the requested action.
-                 *      */
+                 */
                 contextId: components["parameters"]["discussion-contextId"];
             };
             cookie?: never;
@@ -6406,7 +7004,8 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The type of item that a thread is associated with.
+                /**
+                 * @description The type of item that a thread is associated with.
                  *
                  *     Used in conjunction with contextId to find the item with which a thread
                  *     is associated, and then to determine whether the authenticated user has
@@ -6417,20 +7016,22 @@ export interface operations {
                  *     * `evidence` (the internal name for learning moments: not yet documented)
                  *
                  *     It is intended that discussion threads will be introduced to more contexts.
-                 *      */
+                 */
                 contextType: components["parameters"]["discussion-contextType"];
-                /** @description The unique ID of the item that a thread is associated with.
+                /**
+                 * @description The unique ID of the item that a thread is associated with.
                  *
                  *     Used in conjunction with contextType to find the item with which a
                  *     thread is associated, and then to determine whether the authenticated
                  *     user has permission to perform the requested action.
-                 *      */
+                 */
                 contextId: components["parameters"]["discussion-contextId"];
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -6446,7 +7047,8 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The type of item that a thread is associated with.
+                /**
+                 * @description The type of item that a thread is associated with.
                  *
                  *     Used in conjunction with contextId to find the item with which a thread
                  *     is associated, and then to determine whether the authenticated user has
@@ -6457,20 +7059,22 @@ export interface operations {
                  *     * `evidence` (the internal name for learning moments: not yet documented)
                  *
                  *     It is intended that discussion threads will be introduced to more contexts.
-                 *      */
+                 */
                 contextType: components["parameters"]["discussion-contextType"];
-                /** @description The unique ID of the item that a thread is associated with.
+                /**
+                 * @description The unique ID of the item that a thread is associated with.
                  *
                  *     Used in conjunction with contextType to find the item with which a
                  *     thread is associated, and then to determine whether the authenticated
                  *     user has permission to perform the requested action.
-                 *      */
+                 */
                 contextId: components["parameters"]["discussion-contextId"];
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -6492,7 +7096,8 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The type of item that a thread is associated with.
+                /**
+                 * @description The type of item that a thread is associated with.
                  *
                  *     Used in conjunction with contextId to find the item with which a thread
                  *     is associated, and then to determine whether the authenticated user has
@@ -6503,20 +7108,22 @@ export interface operations {
                  *     * `evidence` (the internal name for learning moments: not yet documented)
                  *
                  *     It is intended that discussion threads will be introduced to more contexts.
-                 *      */
+                 */
                 contextType: components["parameters"]["discussion-contextType"];
-                /** @description The unique ID of the item that a thread is associated with.
+                /**
+                 * @description The unique ID of the item that a thread is associated with.
                  *
                  *     Used in conjunction with contextType to find the item with which a
                  *     thread is associated, and then to determine whether the authenticated
                  *     user has permission to perform the requested action.
-                 *      */
+                 */
                 contextId: components["parameters"]["discussion-contextId"];
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -6536,16 +7143,18 @@ export interface operations {
     getCommentsByThread: {
         parameters: {
             query?: {
-                /** @description A generated but decodable pointer to the first record to return.
+                /**
+                 * @description A generated but decodable pointer to the first record to return.
                  *
                  *     Each endpoint whose data accepts a cursor will return a cursor that
                  *     points to the next page of the result set.
-                 *      */
+                 */
                 cursor?: components["parameters"]["cursor"];
             };
             header?: never;
             path: {
-                /** @description The type of item that a thread is associated with.
+                /**
+                 * @description The type of item that a thread is associated with.
                  *
                  *     Used in conjunction with contextId to find the item with which a thread
                  *     is associated, and then to determine whether the authenticated user has
@@ -6556,20 +7165,22 @@ export interface operations {
                  *     * `evidence` (the internal name for learning moments: not yet documented)
                  *
                  *     It is intended that discussion threads will be introduced to more contexts.
-                 *      */
+                 */
                 contextType: components["parameters"]["discussion-contextType"];
-                /** @description The unique ID of the item that a thread is associated with.
+                /**
+                 * @description The unique ID of the item that a thread is associated with.
                  *
                  *     Used in conjunction with contextType to find the item with which a
                  *     thread is associated, and then to determine whether the authenticated
                  *     user has permission to perform the requested action.
-                 *      */
+                 */
                 contextId: components["parameters"]["discussion-contextId"];
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -6583,16 +7194,18 @@ export interface operations {
     createCommentInThread: {
         parameters: {
             query?: {
-                /** @description A generated but decodable pointer to the first record to return.
+                /**
+                 * @description A generated but decodable pointer to the first record to return.
                  *
                  *     Each endpoint whose data accepts a cursor will return a cursor that
                  *     points to the next page of the result set.
-                 *      */
+                 */
                 cursor?: components["parameters"]["cursor"];
             };
             header?: never;
             path: {
-                /** @description The type of item that a thread is associated with.
+                /**
+                 * @description The type of item that a thread is associated with.
                  *
                  *     Used in conjunction with contextId to find the item with which a thread
                  *     is associated, and then to determine whether the authenticated user has
@@ -6603,20 +7216,22 @@ export interface operations {
                  *     * `evidence` (the internal name for learning moments: not yet documented)
                  *
                  *     It is intended that discussion threads will be introduced to more contexts.
-                 *      */
+                 */
                 contextType: components["parameters"]["discussion-contextType"];
-                /** @description The unique ID of the item that a thread is associated with.
+                /**
+                 * @description The unique ID of the item that a thread is associated with.
                  *
                  *     Used in conjunction with contextType to find the item with which a
                  *     thread is associated, and then to determine whether the authenticated
                  *     user has permission to perform the requested action.
-                 *      */
+                 */
                 contextId: components["parameters"]["discussion-contextId"];
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -6640,7 +7255,8 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The type of item that a thread is associated with.
+                /**
+                 * @description The type of item that a thread is associated with.
                  *
                  *     Used in conjunction with contextId to find the item with which a thread
                  *     is associated, and then to determine whether the authenticated user has
@@ -6651,20 +7267,22 @@ export interface operations {
                  *     * `evidence` (the internal name for learning moments: not yet documented)
                  *
                  *     It is intended that discussion threads will be introduced to more contexts.
-                 *      */
+                 */
                 contextType: components["parameters"]["discussion-contextType"];
-                /** @description The unique ID of the item that a thread is associated with.
+                /**
+                 * @description The unique ID of the item that a thread is associated with.
                  *
                  *     Used in conjunction with contextType to find the item with which a
                  *     thread is associated, and then to determine whether the authenticated
                  *     user has permission to perform the requested action.
-                 *      */
+                 */
                 contextId: components["parameters"]["discussion-contextId"];
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -6684,16 +7302,18 @@ export interface operations {
     getCommentsByParent: {
         parameters: {
             query?: {
-                /** @description A generated but decodable pointer to the first record to return.
+                /**
+                 * @description A generated but decodable pointer to the first record to return.
                  *
                  *     Each endpoint whose data accepts a cursor will return a cursor that
                  *     points to the next page of the result set.
-                 *      */
+                 */
                 cursor?: components["parameters"]["cursor"];
             };
             header?: never;
             path: {
-                /** @description The type of item that a thread is associated with.
+                /**
+                 * @description The type of item that a thread is associated with.
                  *
                  *     Used in conjunction with contextId to find the item with which a thread
                  *     is associated, and then to determine whether the authenticated user has
@@ -6704,20 +7324,22 @@ export interface operations {
                  *     * `evidence` (the internal name for learning moments: not yet documented)
                  *
                  *     It is intended that discussion threads will be introduced to more contexts.
-                 *      */
+                 */
                 contextType: components["parameters"]["discussion-contextType"];
-                /** @description The unique ID of the item that a thread is associated with.
+                /**
+                 * @description The unique ID of the item that a thread is associated with.
                  *
                  *     Used in conjunction with contextType to find the item with which a
                  *     thread is associated, and then to determine whether the authenticated
                  *     user has permission to perform the requested action.
-                 *      */
+                 */
                 contextId: components["parameters"]["discussion-contextId"];
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -6731,10 +7353,11 @@ export interface operations {
     apiSessionGet: {
         parameters: {
             query: {
-                /** @description If provided, a relative path to redirect to upon successful authentication.
+                /**
+                 * @description If provided, a relative path to redirect to upon successful authentication.
                  *
                  *     If not provided: will fall back to redirecting to an empty relative path (/).
-                 *      */
+                 */
                 redirect?: components["parameters"]["redirect"];
                 /** @description A JWT generated via an oAuth request. */
                 jwt: components["parameters"]["jwt"];
@@ -6754,10 +7377,11 @@ export interface operations {
     apiSessionPost: {
         parameters: {
             query?: {
-                /** @description If provided, a relative path to redirect to upon successful authentication.
+                /**
+                 * @description If provided, a relative path to redirect to upon successful authentication.
                  *
                  *     If not provided: will fall back to redirecting to an empty relative path (/).
-                 *      */
+                 */
                 redirect?: components["parameters"]["redirect"];
             };
             header?: never;
@@ -6781,7 +7405,6 @@ export interface operations {
                  * @description The provider that will handle the sending of push notifications to the device.
                  *
                  *     While Apple (APNS) and Google Android (GCM) are still supported, they are deprecated.
-                 *
                  * @example Firebase
                  */
                 provider: "GCM" | "APNS" | "Firebase" | "Digistorm";
@@ -6791,8 +7414,7 @@ export interface operations {
         requestBody?: components["requestBodies"]["registration"];
         responses: {
             201: components["responses"]["authentication-successUser"];
-            /** @description This error occurs when the registration request cannot be processed due to a missing or invalid parameter.
-             *      */
+            /** @description This error occurs when the registration request cannot be processed due to a missing or invalid parameter. */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -6818,7 +7440,6 @@ export interface operations {
                  * @description The type of device that is connecting to the service.
                  *
                  *     Only "Firebase" is currently supported for deregistration.
-                 *
                  * @example Firebase
                  */
                 provider: "GCM" | "APNS" | "Firebase" | "Digistorm";
@@ -6836,10 +7457,11 @@ export interface operations {
                     "text/plain": string;
                 };
             };
-            /** @description This error occurs when the deregistration request cannot be processed. Common causes include:
+            /**
+             * @description This error occurs when the deregistration request cannot be processed. Common causes include:
              *     - An unsupported provider specified in the path parameter
              *     - No matching registration found for the provided device token and app ID combination
-             *      */
+             */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -6854,11 +7476,12 @@ export interface operations {
     storageAsyncUpload: {
         parameters: {
             query?: {
-                /** @description An optional date at which the uploaded file is considered to expire: after
+                /**
+                 * @description An optional date at which the uploaded file is considered to expire: after
                  *     this date, the file will be subject to garbage collection.
                  *
                  *     If not provided: the uploaded file will never expire.
-                 *      */
+                 */
                 expiryDate?: string;
             };
             header?: never;
@@ -6871,46 +7494,41 @@ export interface operations {
                     /**
                      * Format: binary
                      * @description The file being uploaded.
-                     *
                      */
                     upload: string;
                 };
             };
         };
         responses: {
-            /** @description A description of a file upload.
-             *      */
+            /** @description A description of a file upload. */
             default: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": {
-                        /** @description The HTTP response code, usually 200 for a successful upload.
-                         *      */
+                        /** @description The HTTP response code, usually 200 for a successful upload. */
                         error?: number;
-                        /** @description A pointer to the now uploaded file within Schoolbox, in the format
+                        /**
+                         * @description A pointer to the now uploaded file within Schoolbox, in the format
                          *     `store:$hash`.
                          *
                          *     `store` is the locator used to find the file: `$hash` is its
                          *     location within the store.
-                         *      */
+                         */
                         hash?: string;
-                        /** @description A user-friendly message for what went wrong with the upload
+                        /**
+                         * @description A user-friendly message for what went wrong with the upload
                          *     (if anything).
-                         *      */
+                         */
                         message?: string;
-                        /** @description File metadata.
-                         *      */
+                        /** @description File metadata. */
                         meta?: {
-                            /** @description The mimetype of the uploaded file.
-                             *      */
+                            /** @description The mimetype of the uploaded file. */
                             type?: string;
-                            /** @description The uploaded file's size, in bytes.
-                             *      */
+                            /** @description The uploaded file's size, in bytes. */
                             size?: number;
-                            /** @description The uploaded file's name.
-                             *      */
+                            /** @description The uploaded file's name. */
                             name?: string;
                             file?: components["schemas"]["file"];
                         };
@@ -6982,27 +7600,26 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description A single news article.
-             *      */
+            /** @description A single news article. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": {
-                        /** @description Has the authenticated user saved this article for later?
-                         *      */
+                        /** @description Has the authenticated user saved this article for later? */
                         isSavedForLater?: boolean;
                         article?: components["schemas"]["commonFields"] & {
                             body?: components["schemas"]["body"];
@@ -7025,11 +7642,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -7045,27 +7663,26 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description A summary of the deleted news item.
-             *      */
+            /** @description A summary of the deleted news item. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": {
-                        /** @description Was the article successfully deleted?
-                         *      */
+                        /** @description Was the article successfully deleted? */
                         success?: boolean;
                         returnUrl?: components["schemas"]["returnUrl"];
                     };
@@ -7080,19 +7697,21 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
-                /** @description The status to put the article into.
+                /**
+                 * @description The status to put the article into.
                  *
                  *     - `submit`: put the article into the mod queue
                  *     - `accept`: accept the article for publication
                  *     - `reject`: block the article from being published, or retract it from
                  *                 publication
-                 *      */
+                 */
                 status: "submit" | "accept" | "reject";
             };
             cookie?: never;
@@ -7100,25 +7719,26 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/x-www-form-urlencoded": {
-                    /** @description Why was the article rejected?
+                    /**
+                     * @description Why was the article rejected?
                      *
                      *     (Only applies if rejecting the article.)
-                     *      */
+                     */
                     rejectionReason?: string;
                 };
             };
         };
         responses: {
             302: components["responses"]["redirect"];
-            /** @description A summary of the article's status change.
-             *      */
+            /** @description A summary of the article's status change. */
             default: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": {
-                        /** @description * `0`: successfully approved
+                        /**
+                         * @description * `0`: successfully approved
                          *     * `1`:
                          *       * some attributes invalid (if the response code was invalid)
                          *       * some other user has already put the article in this state,
@@ -7129,15 +7749,13 @@ export interface operations {
                          *       putting it in this state
                          *     * `3`: the article may not be put into this state
                          *     * `4`: an unspecified error
-                         *      */
+                         */
                         errorCode?: number;
-                        /** @description A brief message detailing what succeeded, or went wrong
-                         *      */
+                        /** @description A brief message detailing what succeeded, or went wrong */
                         message?: string;
                         /**
                          * Format: uri
                          * @description A URL to redirect to once the article state changes
-                         *
                          */
                         redirect?: string;
                     };
@@ -7171,19 +7789,19 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Currently always empty for this endpoint.
-             *      */
+            /** @description Currently always empty for this endpoint. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -7201,19 +7819,19 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Currently always empty for this endpoint.
-             *      */
+            /** @description Currently always empty for this endpoint. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -7235,8 +7853,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description A list of articles which the authenticated user has written.
-             *      */
+            /** @description A list of articles which the authenticated user has written. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -7256,8 +7873,7 @@ export interface operations {
     "commsNews.getListForIndex": {
         parameters: {
             query?: {
-                /** @description The machine-readable value (a.k.a. slug) for the selected news topic.
-                 *      */
+                /** @description The machine-readable value (a.k.a. slug) for the selected news topic. */
                 topic?: components["parameters"]["topic"];
             };
             header?: never;
@@ -7266,8 +7882,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description A list of articles which are audienced to the authenticated user.
-             *      */
+            /** @description A list of articles which are audienced to the authenticated user. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -7278,16 +7893,18 @@ export interface operations {
                         statusDate?: components["schemas"]["statusDate"];
                         readMore?: components["schemas"]["readMore"];
                         metadata?: {
-                            /** @description The number of comments on this article.
+                            /**
+                             * @description The number of comments on this article.
                              *
                              *     May be null, in which case there are no comments.
-                             *      */
+                             */
                             commentCount?: number;
                         };
-                        /** @description The number of attachments on this article.
+                        /**
+                         * @description The number of attachments on this article.
                          *
                          *     May be null, in which case there are no attachments.
-                         *      */
+                         */
                         attachments?: number;
                         viewedAt?: unknown & components["schemas"]["dateTimeString"];
                         _links?: components["schemas"]["links"];
@@ -7302,16 +7919,14 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description A key which identifies a user.
-                 *      */
+                /** @description A key which identifies a user. */
                 key: components["parameters"]["key"];
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description RSS feed of articles.
-             *      */
+            /** @description RSS feed of articles. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -7326,31 +7941,31 @@ export interface operations {
     "commsNews.getListForHomepage": {
         parameters: {
             query?: {
-                /** @description Is compact mode enabled?
+                /**
+                 * @description Is compact mode enabled?
                  *
                  *     If on, the list of attachments is loaded, and any articles loaded are
                  *     considered as read by the authenticated user.
-                 *      */
+                 */
                 c?: components["parameters"]["compactMode"];
-                /** @description Limit of results to show per page
-                 *      */
+                /** @description Limit of results to show per page */
                 l?: components["parameters"]["news-limit"];
             };
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description A list of articles which are audienced to the given folder.
-             *      */
+            /** @description A list of articles which are audienced to the given folder. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -7397,16 +8012,14 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        /** @description The event to create
-         *      */
+        /** @description The event to create */
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["eventRequestFieldsForCreate"];
             };
         };
         responses: {
-            /** @description The created event
-             *      */
+            /** @description The created event */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -7423,25 +8036,24 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
         };
-        /** @description The event including desired modifications
-         *      */
+        /** @description The event including desired modifications */
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["eventRequestFieldsForModify"];
             };
         };
         responses: {
-            /** @description The modified event
-             *      */
+            /** @description The modified event */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -7458,11 +8070,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -7472,13 +8085,11 @@ export interface operations {
                 "application/json": {
                     /**
                      * @description The new start date as a RFC3339 string. Eg. "2018-01-28T00:00:00+11:00".
-                     *
                      * @example 2018-01-28T00:00:00+11:00
                      */
                     start?: string;
                     /**
                      * @description The new end date as a RFC3339 string. Eg. "2018-01-28T00:00:00+11:00".
-                     *
                      * @example 2018-01-28T00:00:00+11:00
                      */
                     end?: string;
@@ -7492,8 +8103,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Empty body
-             *      */
+            /** @description Empty body */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -7508,11 +8118,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -7522,7 +8133,6 @@ export interface operations {
                 "application/json": {
                     /**
                      * @description Either 'self' (to delete only the one event), or 'series' (to delete all events in the series).
-                     *
                      * @example self
                      * @enum {string}
                      */
@@ -7531,8 +8141,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Empty body
-             *      */
+            /** @description Empty body */
             204: {
                 headers: {
                     [name: string]: unknown;
@@ -7547,11 +8156,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -7567,11 +8177,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -7579,8 +8190,7 @@ export interface operations {
         requestBody: {
             content: {
                 "application/x-www-form-urlencoded": {
-                    /** @description A comma separated list of user IDs to invite to this event.
-                     *      */
+                    /** @description A comma separated list of user IDs to invite to this event. */
                     guests?: string;
                 };
             };
@@ -7595,11 +8205,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -7615,11 +8226,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -7635,11 +8247,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -7647,8 +8260,7 @@ export interface operations {
         requestBody: {
             content: {
                 "application/x-www-form-urlencoded": {
-                    /** @description A user ID to remove attendance from.
-                     *      */
+                    /** @description A user ID to remove attendance from. */
                     userId?: number;
                 };
             };
@@ -7661,7 +8273,8 @@ export interface operations {
     assessmentSearch: {
         parameters: {
             query: {
-                /** @description URL-encoded JSON object consisting of fields and values to filter assessments on.
+                /**
+                 * @description URL-encoded JSON object consisting of fields and values to filter assessments on.
                  *
                  *     Example 1:
                  *
@@ -7683,17 +8296,15 @@ export interface operations {
                  *
                  *     The full URL to use either of the above examples will look like this: \
                  *     `[base URL]/api/assessment?filter=[URL-encoded JSON filter]`
-                 *      */
+                 */
                 filter: {
                     /**
                      * @description The ID of the assessment to search.
-                     *
                      * @example 256
                      */
                     assessmentId?: number;
                     /**
                      * @description A part of title to filter assessments on.
-                     *
                      * @example English 3/4 [Final]
                      */
                     title?: string;
@@ -7725,12 +8336,10 @@ export interface operations {
                     subjectCode?: string[];
                     /**
                      * @description Limit assessments to only those that have a weight set.
-                     *
                      * @example false
                      */
                     weighted?: boolean;
-                    /** @description Select either one of the following fields to filter on:
-                     *      */
+                    /** @description Select either one of the following fields to filter on: */
                     workType?: {
                         /**
                          * @description The DB identifier of the worktype.
@@ -7747,20 +8356,17 @@ export interface operations {
                         /**
                          * Format: date-time
                          * @description An RFC3339 time string including timezone eg. 2017-10-12T14:20:50+10:00
-                         *
                          * @example 2017-10-12T14:20:50+10:00
                          */
                         from?: string;
                         /**
                          * Format: date-time
                          * @description An RFC3339 time string including timezone eg. 2017-10-12T14:20:50+10:00
-                         *
                          * @example 2019-10-12T14:20:50+10:00
                          */
                         to?: string;
                     };
-                    /** @description Select either one of the following fields to filter on year levels associated with folder:
-                     *      */
+                    /** @description Select either one of the following fields to filter on year levels associated with folder: */
                     yearLevel?: {
                         /**
                          * @description The db identifier of the yearlevel.
@@ -7781,20 +8387,22 @@ export interface operations {
                         id?: number;
                     };
                 };
-                /** @description A generated but decodable pointer to the first record to return.
+                /**
+                 * @description A generated but decodable pointer to the first record to return.
                  *
                  *     Each endpoint whose data accepts a cursor will return a cursor that
                  *     points to the next page of the result set.
-                 *      */
+                 */
                 cursor?: components["parameters"]["cursor"];
-                /** @description An option to limit the returned results.
+                /**
+                 * @description An option to limit the returned results.
                  *
                  *     Each endpoint whose data accepts a limit will limit
                  *     their results to that number.
                  *
                  *     Note a maximum limit may also apply, depending on the
                  *     specific type of request.
-                 *      */
+                 */
                 limit?: components["parameters"]["limit"];
             };
             header?: never;
@@ -7812,11 +8420,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -7855,7 +8464,6 @@ export interface operations {
                      *     - Numeric values: 95, 87.5
                      *     - Percentage strings: "67 %", "85%"
                      *     - Fraction strings: "5/10", "18/20"
-                     *
                      * @example A+
                      */
                     mark?: number | string;
@@ -7945,11 +8553,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -7966,23 +8575,245 @@ export interface operations {
             default: components["responses"]["problem"];
         };
     };
+    putEvidenceBulkPublish: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /** @description Array of learning moment ids. */
+                    momentIds?: components["schemas"]["id"][];
+                    /**
+                     * @description Whether comments on the learning moments should be deleted before the learning moments are published.
+                     * @example false
+                     */
+                    deleteComments?: boolean;
+                };
+            };
+        };
+        responses: {
+            /** @description Successfully published learning moments. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": (components["schemas"]["learning-moment-response"] & {
+                        /** @example published */
+                        currentState?: unknown;
+                    })[];
+                };
+            };
+            default: components["responses"]["problem"];
+        };
+    };
+    putEvidenceBulkReject: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /** @description Array of learning moment ids. */
+                    momentIds?: components["schemas"]["id"][];
+                    /**
+                     * @description The reason for the decision not to publish the learning moment in its current state.
+                     *     Note this will appear in a comment in the discussion thread of the rejected learning moment.
+                     * @example Please add more detail to your descriptions.
+                     */
+                    rejectionReason?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successfully rejected learning moments. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": (components["schemas"]["learning-moment-response"] & {
+                        /** @example rejected */
+                        currentState?: unknown;
+                    })[];
+                };
+            };
+            default: components["responses"]["problem"];
+        };
+    };
+    evidenceCohortPayload: {
+        parameters: {
+            query?: {
+                /**
+                 * @description Comma-separated list of integer userIds (referring to owners) for filtering to specific learning moment owners.
+                 *     Or an array of userIds as URL parameters (e.g. 'userIds[]=1&userIds=2...')
+                 */
+                userIds?: string;
+                /**
+                 * @description Comma-separated list of integer userIds (referring to authors) for filtering to specific learning moment authors.
+                 *     Or an array of authorIds as URL parameters (e.g. 'authorIds[]=1&authorIds=2...')
+                 */
+                authorIds?: string;
+                /**
+                 * @description Comma-separated list of integer folderIds for filtering to learning moments linked to specific folders.
+                 *     Or an array of folderIds as URL parameters (e.g. 'folderIds[]=1&folderIds=2...')
+                 */
+                folderIds?: string;
+                /**
+                 * @description Comma-separated list of integer tagIds for filtering to learning moments having specific tags.
+                 *     Or an array of tagIds as URL parameters (e.g. 'tagIds[]=1&tagIds=2...')
+                 */
+                tagIds?: string;
+                /**
+                 * @description Comma-separated list of states for filtering to learning moments in specific states.
+                 *     Or an array of states as URL parameters (e.g. 'states[]=rejected&states=draft...')
+                 */
+                states?: "draft" | "submitted" | "published" | "rejected";
+                /**
+                 * @description A date in YYYY-MM-DD format.
+                 * @example 2025-10-15
+                 */
+                from?: string;
+                /**
+                 * @description A date in YYYY-MM-DD format.
+                 * @example 2025-10-15
+                 */
+                to?: string;
+            };
+            header?: never;
+            path: {
+                /** @description The ID of a class or group folder.  The cohort is the set of users involved in that class or group. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["evidence-cohort-payload"];
+            default: components["responses"]["problem"];
+        };
+    };
+    postEvidenceDraftMultiUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A comma-separated list of userIds for whom the learning moment should be put into 'draft' state. */
+                ids: string;
+            };
+            cookie?: never;
+        };
+        /** @description The content of the learning moment to save. */
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["learning-moment-request"];
+            };
+        };
+        responses: {
+            /** @description Successfully drafted a learning moment. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": (components["schemas"]["learning-moment-response"] & {
+                        /** @example draft */
+                        currentState?: unknown;
+                    })[];
+                };
+            };
+            default: components["responses"]["problem"];
+        };
+    };
+    postEvidencePublishMultiUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A comma-separated list of userIds for whom the learning moment should be published. */
+                ids: string;
+            };
+            cookie?: never;
+        };
+        /** @description The content of the learning moment to save. */
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["learning-moment-request"];
+            };
+        };
+        responses: {
+            /** @description Successfully published a learning moment. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": (components["schemas"]["learning-moment-response"] & {
+                        /** @example published */
+                        currentState?: unknown;
+                    })[];
+                };
+            };
+            default: components["responses"]["problem"];
+        };
+    };
+    postEvidenceSubmitMultiUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A comma-separated list of userIds for whom the learning moment should be submitted. */
+                ids: string;
+            };
+            cookie?: never;
+        };
+        /** @description The content of the learning moment to save. */
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["learning-moment-request"];
+            };
+        };
+        responses: {
+            /** @description Successfully submitted a learning moment. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": (components["schemas"]["learning-moment-response"] & {
+                        /** @example submitted */
+                        currentState?: unknown;
+                    })[];
+                };
+            };
+            default: components["responses"]["problem"];
+        };
+    };
     "learningMomentEvidence.postMomentForUsers": {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
         };
         requestBody?: components["requestBodies"]["evidence-item"];
         responses: {
-            /** @description Successfully Created a Learning moment. */
+            /** @description Successfully created a learning moment. */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -7999,18 +8830,19 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
         };
         requestBody?: components["requestBodies"]["evidence-item"];
         responses: {
-            /** @description Successfully Updated a Learning moment */
+            /** @description Successfully updated a learning moment */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -8022,23 +8854,24 @@ export interface operations {
             default: components["responses"]["problem"];
         };
     };
-    deleteEvidence: {
+    deleteLearningMoment: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description The Learning Moment was deleted successfully. */
+            /** @description Successfully deleted a learning moment. */
             204: {
                 headers: {
                     [name: string]: unknown;
@@ -8048,21 +8881,157 @@ export interface operations {
             default: components["responses"]["problem"];
         };
     };
+    putEvidenceDraft: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The ID of the learning moment you wish to put into a 'draft' state. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        /** @description The learning moment to save.  Only fields to be updated need to be included in the request. */
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["learning-moment-request"];
+            };
+        };
+        responses: {
+            /** @description Successfully drafted a learning moment. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["learning-moment-response"] & {
+                        /** @example draft */
+                        currentState?: unknown;
+                    };
+                };
+            };
+            default: components["responses"]["problem"];
+        };
+    };
+    putEvidencePublish: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The ID of the learning moment you wish to put into a 'published' state. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        /** @description The learning moment to save.  Only fields to be updated need to be included in the request. */
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["learning-moment-request"];
+            };
+        };
+        responses: {
+            /** @description Successfully published a learning moment. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["learning-moment-response"] & {
+                        /** @example published */
+                        currentState?: unknown;
+                    };
+                };
+            };
+            default: components["responses"]["problem"];
+        };
+    };
+    putEvidenceReject: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The ID of the learning moment you wish to put into a 'rejected' state. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        /** @description The learning moment to save.  Only fields to be updated need to be included in the request. */
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["learning-moment-request"] & {
+                    /**
+                     * @description The reason for the decision not to publish the learning moment in its current state.
+                     *     Note this will appear in a comment in the discussion thread of the rejected learning moment.
+                     * @example Please add more detail to your descriptions.
+                     */
+                    rejectionReason?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successfully rejected a learning moment. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["learning-moment-response"] & {
+                        /** @example rejected */
+                        currentState?: unknown;
+                    };
+                };
+            };
+            default: components["responses"]["problem"];
+        };
+    };
+    putEvidenceSubmit: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The ID of the learning moment you wish to put into a 'submitted' state. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        /** @description The learning moment to save.  Only fields to be updated need to be included in the request. */
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["learning-moment-request"];
+            };
+        };
+        responses: {
+            /** @description Successfully submitted a learning moment. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["learning-moment-response"] & {
+                        /** @example submitted */
+                        currentState?: unknown;
+                    };
+                };
+            };
+            default: components["responses"]["problem"];
+        };
+    };
     evidenceFeed: {
         parameters: {
             query?: {
                 filter?: {
-                    /** @example [
+                    /**
+                     * @example [
                      *       "achievements",
                      *       "feedback",
                      *       "goals",
                      *       "learningMoments"
-                     *     ] */
+                     *     ]
+                     */
                     filterNames?: ("achievements" | "feedback" | "goals" | "learningMoments")[];
                     /**
                      * @description String to match a tag on one or more learning moments.
                      *     Note that tag is only relevant if 'learningMoments' is included in filterNames.
-                     *
                      * @example Class Work
                      */
                     tag?: string;
@@ -8079,7 +9048,6 @@ export interface operations {
                     /**
                      * Format: date-time
                      * @description The date time of the object in `YYYY-MM-DD hh:mm:ss` format.
-                     *
                      * @example 2022-08-30 10:09:09
                      */
                     date?: string;
@@ -8124,11 +9092,12 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -8150,29 +9119,32 @@ export interface operations {
     "curriculumApiUsage.getNodeUsage": {
         parameters: {
             query?: {
-                /** @description A generated but decodable pointer to the first record to return.
+                /**
+                 * @description A generated but decodable pointer to the first record to return.
                  *
                  *     Each endpoint whose data accepts a cursor will return a cursor that
                  *     points to the next page of the result set.
-                 *      */
+                 */
                 cursor?: components["parameters"]["cursor"];
-                /** @description An option to limit the returned results.
+                /**
+                 * @description An option to limit the returned results.
                  *
                  *     Each endpoint whose data accepts a limit will limit
                  *     their results to that number.
                  *
                  *     Note a maximum limit may also apply, depending on the
                  *     specific type of request.
-                 *      */
+                 */
                 limit?: components["parameters"]["limit"];
             };
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -8186,28 +9158,30 @@ export interface operations {
     searchCourses: {
         parameters: {
             query?: {
-                /** @description Will do a fuzzy match on the `course` name. **_You may only define either query or folder at a time._**
-                 *      */
+                /** @description Will do a fuzzy match on the `course` name. **_You may only define either query or folder at a time._** */
                 query?: string;
-                /** @description Passing folder ID will return related courses as suggestions. If the folder contains curriculum code(s), the
+                /**
+                 * @description Passing folder ID will return related courses as suggestions. If the folder contains curriculum code(s), the
                  *     suggestions will return a list of other courses that fulfils the same curriculum code(s).
                  *     **_You may only define either query or folder at a time._**
-                 *      */
+                 */
                 folder?: number;
-                /** @description A generated but decodable pointer to the first record to return.
+                /**
+                 * @description A generated but decodable pointer to the first record to return.
                  *
                  *     Each endpoint whose data accepts a cursor will return a cursor that
                  *     points to the next page of the result set.
-                 *      */
+                 */
                 cursor?: components["parameters"]["cursor"];
-                /** @description An option to limit the returned results.
+                /**
+                 * @description An option to limit the returned results.
                  *
                  *     Each endpoint whose data accepts a limit will limit
                  *     their results to that number.
                  *
                  *     Note a maximum limit may also apply, depending on the
                  *     specific type of request.
-                 *      */
+                 */
                 limit?: components["parameters"]["limit"];
             };
             header?: never;
@@ -8227,20 +9201,22 @@ export interface operations {
                 keyword: components["parameters"]["keyword"];
                 /** @description A JSON-encoded object representing a list of values to search for. */
                 filter?: components["parameters"]["filter"];
-                /** @description A generated but decodable pointer to the first record to return.
+                /**
+                 * @description A generated but decodable pointer to the first record to return.
                  *
                  *     Each endpoint whose data accepts a cursor will return a cursor that
                  *     points to the next page of the result set.
-                 *      */
+                 */
                 cursor?: components["parameters"]["cursor"];
-                /** @description An option to limit the returned results.
+                /**
+                 * @description An option to limit the returned results.
                  *
                  *     Each endpoint whose data accepts a limit will limit
                  *     their results to that number.
                  *
                  *     Note a maximum limit may also apply, depending on the
                  *     specific type of request.
-                 *      */
+                 */
                 limit?: components["parameters"]["limit"];
             };
             header?: never;
@@ -8260,29 +9236,32 @@ export interface operations {
                 keyword: components["parameters"]["keyword"];
                 /** @description A JSON-encoded object representing a list of values to search for. */
                 filter?: components["parameters"]["filter"];
-                /** @description A generated but decodable pointer to the first record to return.
+                /**
+                 * @description A generated but decodable pointer to the first record to return.
                  *
                  *     Each endpoint whose data accepts a cursor will return a cursor that
                  *     points to the next page of the result set.
-                 *      */
+                 */
                 cursor?: components["parameters"]["cursor"];
-                /** @description An option to limit the returned results.
+                /**
+                 * @description An option to limit the returned results.
                  *
                  *     Each endpoint whose data accepts a limit will limit
                  *     their results to that number.
                  *
                  *     Note a maximum limit may also apply, depending on the
                  *     specific type of request.
-                 *      */
+                 */
                 limit?: components["parameters"]["limit"];
             };
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
@@ -8293,16 +9272,70 @@ export interface operations {
             default: components["responses"]["problem"];
         };
     };
+    configBulkPatch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: components["requestBodies"]["config-bulk"];
+        responses: {
+            200: components["responses"]["config-bulk"];
+            /** @description Invalid request body format */
+            400: components["responses"]["problem"];
+            default: components["responses"]["problem"];
+        };
+    };
+    configGet: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description The unique name/key of the configuration setting
+                 * @example site_name
+                 */
+                configName: components["parameters"]["configName"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["config-item"];
+            default: components["responses"]["problem"];
+        };
+    };
+    configPatch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description The unique name/key of the configuration setting
+                 * @example site_name
+                 */
+                configName: components["parameters"]["configName"];
+            };
+            cookie?: never;
+        };
+        requestBody: components["requestBodies"]["config-update"];
+        responses: {
+            200: components["responses"]["config-item"];
+            default: components["responses"]["problem"];
+        };
+    };
     groupGetUsersInGroup: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of an item to act upon.
+                /**
+                 * @description The ID of an item to act upon.
                  *
                  *     The type of item that is acted upon is dependent on the endpoint in which
                  *     it is included.
-                 *      */
+                 */
                 id: components["parameters"]["id"];
             };
             cookie?: never;
