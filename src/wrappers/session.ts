@@ -1,13 +1,11 @@
-import type { operations } from "@/types";
+import type { operations, SchoolboxContext } from "@/types";
 
 type SchoolboxResponse =
   operations["apiSessionGet"]["responses"]["200"]["content"]["application/json"];
 
-export async function authSession(
-  fetch: typeof globalThis.fetch,
-  domain: string,
-  jwt: string,
-) {
+export async function authSession(ctx: SchoolboxContext) {
+  const { fetch, domain, jwt } = ctx;
+
   const response = await fetch(
     `https://${domain}/api/session?jwt=${encodeURIComponent(jwt)}`,
     {

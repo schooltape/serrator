@@ -12,3 +12,4 @@ function getEnv(name: string): string {
 
 export const DOMAIN = getEnv("DOMAIN");
 export const JWT = getEnv("JWT");
+export const ctx = { fetch, domain: DOMAIN, jwt: JWT };

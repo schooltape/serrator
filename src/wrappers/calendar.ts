@@ -1,4 +1,4 @@
-import type { operations } from "@/types";
+import type { operations, SchoolboxContext } from "@/types";
 import { getUnixTime } from "date-fns";
 import { registerMobile } from "./registerMobile";
 
@@ -9,13 +9,13 @@ type SchoolboxResponse =
  * route: /calendar/ajax/full
  */
 export async function getCalendar(
-  fetch: typeof globalThis.fetch,
-  domain: string,
-  jwt: string,
+  ctx: SchoolboxContext,
   start: Date,
   end: Date,
 ): Promise<SchoolboxResponse> {
-  const result = await registerMobile(fetch, domain, jwt);
+  const { fetch, domain, jwt } = ctx;
+
+  const result = await registerMobile(ctx);
   if (result.id === undefined) throw new Error("user id is undefined");
   const userId = result.id;
 

@@ -1,3 +1,9 @@
+export interface SchoolboxContext {
+  fetch: typeof globalThis.fetch;
+  domain: string;
+  jwt: string;
+}
+
 export interface SchoolboxTimetableEvent {
   title: string;
   start: Date;

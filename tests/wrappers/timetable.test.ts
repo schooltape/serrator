@@ -1,7 +1,7 @@
 import { authFetchParse } from "@/utils";
 import { describe, it, expect, beforeAll } from "bun:test";
 import { getTimetable } from "@/wrappers";
-import { DOMAIN, JWT } from "@/env";
+import { ctx, DOMAIN } from "@/env";
 import type { SchoolboxTimetableEvent } from "@/types";
 import { getClasses } from "@/scrapers";
 
@@ -9,7 +9,7 @@ describe("getTimetable", () => {
   let result: SchoolboxTimetableEvent[];
 
   beforeAll(async () => {
-    result = await getTimetable(fetch, DOMAIN, JWT);
+    result = await getTimetable(ctx);
     // console.log(result);
   });
 

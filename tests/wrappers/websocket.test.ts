@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterEach } from "bun:test";
-import { DOMAIN, JWT } from "@/env";
+import { ctx, DOMAIN } from "@/env";
 import { authSession, SchoolboxWebSocket, ConnectionState } from "@/wrappers";
 import type { WebsocketMessage } from "@/types";
 
@@ -8,8 +8,7 @@ let cookie: string;
 let ws: SchoolboxWebSocket | null = null;
 
 beforeAll(async () => {
-  const result = await authSession(fetch, DOMAIN, JWT);
-  cookie = result.cookie;
+  cookie = (await authSession(ctx)).cookie;
 });
 
 afterEach(async () => {

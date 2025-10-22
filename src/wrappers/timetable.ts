@@ -1,4 +1,8 @@
-import type { SchoolboxTimetableEvent, operations } from "@/types";
+import type {
+  SchoolboxContext,
+  SchoolboxTimetableEvent,
+  operations,
+} from "@/types";
 import { endOfWeek, getUnixTime, parseISO, startOfWeek } from "date-fns";
 import { registerMobile } from "./registerMobile";
 
@@ -6,11 +10,11 @@ import { registerMobile } from "./registerMobile";
  * route: /calendar/ajax/full
  */
 export async function getTimetable(
-  fetch: typeof globalThis.fetch,
-  domain: string,
-  jwt: string,
+  ctx: SchoolboxContext,
 ): Promise<SchoolboxTimetableEvent[]> {
-  const result = await registerMobile(fetch, domain, jwt);
+  const { fetch, domain, jwt } = ctx;
+
+  const result = await registerMobile(ctx);
   if (result.id === undefined) throw new Error("user id is undefined");
   const userId = result.id;
 

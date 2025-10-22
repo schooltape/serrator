@@ -1,28 +1,13 @@
 import { describe, it, expect, beforeAll } from "bun:test";
 import { endOfWeek, parseISO, startOfWeek } from "date-fns";
 import { getCalendar, registerMobile } from "@/wrappers";
-import { DOMAIN, JWT } from "@/env";
+import { ctx } from "@/env";
 
 describe("getCalendar", () => {
-  let userId: number;
-
   const date = new Date();
 
-  beforeAll(async () => {
-    const result = await registerMobile(fetch, DOMAIN, JWT);
-    // console.log(result);
-    if (result.id === undefined) throw new Error("user id is undefined");
-    userId = result.id;
-  });
-
   it("can fetch calendar events", async () => {
-    const result = await getCalendar(
-      fetch,
-      DOMAIN,
-      JWT,
-      startOfWeek(date),
-      endOfWeek(date),
-    );
+    const result = await getCalendar(ctx, startOfWeek(date), endOfWeek(date));
 
     // console.log(result);
     expect(result).toBeDefined();
