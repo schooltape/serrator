@@ -4,7 +4,7 @@ type SchoolboxResponse =
   operations["apiSessionGet"]["responses"]["200"]["content"]["application/json"];
 
 export async function authSession(
-  fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>,
+  fetch: typeof globalThis.fetch,
   domain: string,
   jwt: string,
 ) {

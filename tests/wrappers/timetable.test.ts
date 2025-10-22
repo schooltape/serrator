@@ -1,21 +1,15 @@
-import { authFetchParams, authFetchParse } from "@/utils";
+import { authFetchParse } from "@/utils";
 import { describe, it, expect, beforeAll } from "bun:test";
-import { getTimetable, registerMobile } from "@/wrappers";
-import { DOMAIN } from "@/env";
+import { getTimetable } from "@/wrappers";
+import { DOMAIN, JWT } from "@/env";
 import type { SchoolboxTimetableEvent } from "@/types";
 import { getClasses } from "@/scrapers";
 
 describe("getTimetable", () => {
-  let userId: number;
   let result: SchoolboxTimetableEvent[];
 
   beforeAll(async () => {
-    await registerMobile(DOMAIN, authFetchParams).then((result) => {
-      if (result.id === undefined) throw new Error("user id is undefined");
-      userId = result.id;
-    });
-
-    result = await getTimetable(authFetchParams, DOMAIN, userId);
+    result = await getTimetable(fetch, DOMAIN, JWT);
     // console.log(result);
   });
 

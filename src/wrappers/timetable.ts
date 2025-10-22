@@ -1,23 +1,36 @@
 import type { SchoolboxTimetableEvent, operations } from "@/types";
 import { endOfWeek, getUnixTime, parseISO, startOfWeek } from "date-fns";
+import { registerMobile } from "./registerMobile";
 
 /**
  * route: /calendar/ajax/full
  */
 export async function getTimetable(
-  fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>,
+  fetch: typeof globalThis.fetch,
   domain: string,
-  userId: number,
+  jwt: string,
 ): Promise<SchoolboxTimetableEvent[]> {
+  const result = await registerMobile(fetch, domain, jwt);
+  if (result.id === undefined) throw new Error("user id is undefined");
+  const userId = result.id;
+
   const date = new Date();
+
   const params: Record<string, string> = {
     userId: userId.toString(),
     start: getUnixTime(startOfWeek(date)).toString(),
     end: getUnixTime(endOfWeek(date)).toString(),
     timetableCalendar: "true",
   };
+
   const url = `https://${domain}/calendar/ajax/full${params ? `?${new URLSearchParams(params).toString()}` : ""}`;
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
 
   if (!response.ok)
     throw new Error(
