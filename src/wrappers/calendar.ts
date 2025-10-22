@@ -1,4 +1,3 @@
-import { BASE_URL } from "@/env";
 import type { operations } from "@/types";
 import { getUnixTime } from "date-fns";
 
@@ -10,6 +9,7 @@ type SchoolboxResponse =
  */
 export async function getCalendar(
   fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>,
+  baseUrl: string,
   userId: number,
   start: Date,
   end: Date,
@@ -20,7 +20,7 @@ export async function getCalendar(
     end: getUnixTime(end).toString(),
   };
 
-  const url = `https://${BASE_URL}/calendar/ajax/full${params ? `?${new URLSearchParams(params).toString()}` : ""}`;
+  const url = `https://${baseUrl}/calendar/ajax/full${params ? `?${new URLSearchParams(params).toString()}` : ""}`;
   const response = await fetch(url);
 
   if (!response.ok)

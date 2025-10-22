@@ -15,7 +15,7 @@ describe("getTimetable", () => {
       userId = result.id;
     });
 
-    result = await getTimetable(authFetchParams, userId);
+    result = await getTimetable(authFetchParams, BASE_URL, userId);
     // console.log(result);
   });
 

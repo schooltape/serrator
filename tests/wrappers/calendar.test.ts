@@ -19,6 +19,7 @@ describe("getCalendar", () => {
   it("can fetch calendar events", async () => {
     const result = await getCalendar(
       authFetchParams,
+      BASE_URL,
       userId,
       startOfWeek(date),
       endOfWeek(date),
