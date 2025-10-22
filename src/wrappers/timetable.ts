@@ -12,7 +12,7 @@ import { registerMobile } from "./registerMobile";
 export async function getTimetable(
   ctx: SchoolboxContext,
 ): Promise<SchoolboxTimetableEvent[]> {
-  const { fetch, domain, jwt } = ctx;
+  const { domain, jwt, fetch } = ctx;
 
   const result = await registerMobile(ctx);
   if (result.id === undefined) throw new Error("user id is undefined");

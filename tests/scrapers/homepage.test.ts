@@ -1,23 +1,17 @@
 import { describe, it, expect, beforeAll } from "bun:test";
 import type { SchoolboxHomepage } from "@/types";
-import { authFetchParse } from "@/utils";
-import { DOMAIN } from "@/env";
+import { ctx } from "@/env";
 import { getHomepage } from "@/scrapers";
 
 describe("getHomepage", () => {
   let result: SchoolboxHomepage;
 
   beforeAll(async () => {
-    result = await authFetchParse(
-      // TODO)) implement
-      `https://${DOMAIN}/`,
-      getHomepage,
-    );
+    result = await getHomepage(ctx, "/");
+    // console.log(result);
   });
 
   it("can extract homepage data from /", () => {
-    // console.log(result);
-
     expect(result).toBeDefined();
     expect(result.title).toBeString();
     const tiles = result.tiles;

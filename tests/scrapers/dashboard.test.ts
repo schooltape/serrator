@@ -1,6 +1,5 @@
-import { DOMAIN } from "@/env";
+import { ctx } from "@/env";
 import type { SchoolboxDashboard } from "@/types";
-import { authFetchParse } from "@/utils";
 import { describe, it, expect, beforeAll } from "bun:test";
 import { getDashboard } from "@/scrapers";
 
@@ -8,7 +7,7 @@ describe("getDashboard", () => {
   let result: SchoolboxDashboard;
 
   beforeAll(async () => {
-    result = await authFetchParse(`https://${DOMAIN}/`, getDashboard);
+    result = await getDashboard(ctx);
   });
 
   it("can extract dashboard from /", () => {

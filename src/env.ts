@@ -1,4 +1,6 @@
 import * as dotenv from "dotenv";
+import { JSDOM } from "jsdom";
+import type { SchoolboxContext } from "./types";
 
 dotenv.config();
 
@@ -12,4 +14,14 @@ function getEnv(name: string): string {
 
 export const DOMAIN = getEnv("DOMAIN");
 export const JWT = getEnv("JWT");
-export const ctx = { fetch, domain: DOMAIN, jwt: JWT };
+
+export const ctx: SchoolboxContext = {
+  domain: DOMAIN,
+  jwt: JWT,
+  fetch,
+  parser: async (res: Response) => {
+    const html = await res.text();
+    const dom = new JSDOM(html);
+    return dom.window.document;
+  },
+};

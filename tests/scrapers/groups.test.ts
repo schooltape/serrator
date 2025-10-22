@@ -1,6 +1,5 @@
-import { DOMAIN } from "@/env";
+import { ctx } from "@/env";
 import type { SchoolboxGroup } from "@/types";
-import { authFetchParse } from "@/utils";
 import { describe, it, expect, beforeAll } from "bun:test";
 import { getGroups } from "@/scrapers";
 
@@ -8,10 +7,7 @@ describe("getGroups", () => {
   let result: SchoolboxGroup[];
 
   beforeAll(async () => {
-    result = await authFetchParse(
-      `https://${DOMAIN}/groups#all-groups`,
-      getGroups,
-    );
+    result = await getGroups(ctx);
   });
 
   it("can extract groups from /groups", () => {

@@ -1,7 +1,6 @@
-import { authFetchParse } from "@/utils";
 import { describe, it, expect, beforeAll } from "bun:test";
 import { getTimetable } from "@/wrappers";
-import { ctx, DOMAIN } from "@/env";
+import { ctx } from "@/env";
 import type { SchoolboxTimetableEvent } from "@/types";
 import { getClasses } from "@/scrapers";
 
@@ -38,10 +37,7 @@ describe("getTimetable", () => {
   });
 
   it("can find associated class names of timetable events", async () => {
-    const classes = await authFetchParse(
-      `https://${DOMAIN}/learning/classes`,
-      getClasses,
-    );
+    const classes = await getClasses(ctx);
 
     for (const event of result) {
       if (!event.allDay) {

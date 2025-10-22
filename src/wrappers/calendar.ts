@@ -13,7 +13,7 @@ export async function getCalendar(
   start: Date,
   end: Date,
 ): Promise<SchoolboxResponse> {
-  const { fetch, domain, jwt } = ctx;
+  const { domain, jwt, fetch } = ctx;
 
   const result = await registerMobile(ctx);
   if (result.id === undefined) throw new Error("user id is undefined");

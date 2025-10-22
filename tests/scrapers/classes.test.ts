@@ -1,17 +1,13 @@
 import { describe, it, expect, beforeAll } from "bun:test";
-import { DOMAIN } from "@/env";
+import { ctx } from "@/env";
 import { type SchoolboxClass } from "@/types";
-import { authFetchParse } from "@/utils";
 import { getClasses } from "@/scrapers";
 
 describe("getClasses", () => {
   let result: SchoolboxClass[];
 
   beforeAll(async () => {
-    result = await authFetchParse(
-      `https://${DOMAIN}/learning/classes`,
-      getClasses,
-    );
+    result = await getClasses(ctx);
   });
 
   it("can extract classes from /learning/classes", () => {

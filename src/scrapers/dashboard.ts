@@ -1,10 +1,26 @@
-import type { SchoolboxNavLink, SchoolboxDashboard } from "@/types";
+import type {
+  SchoolboxNavLink,
+  SchoolboxDashboard,
+  SchoolboxContext,
+} from "@/types";
 import { getTileGroups } from "./utils";
 
 /**
  * route: /
  */
-export function getDashboard(document: Document): SchoolboxDashboard {
+export async function getDashboard(
+  ctx: SchoolboxContext,
+): Promise<SchoolboxDashboard> {
+  const { domain, jwt, fetch, parser } = ctx;
+
+  const document = await parser(
+    await fetch(`https://${domain}/`, {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    }),
+  );
+
   // get navigation links
   const navLinks: SchoolboxNavLink[] = Array.from(
     document.querySelectorAll<HTMLLIElement>("#overflow-nav li[data-id]"),

@@ -4,7 +4,7 @@ type SchoolboxResponse =
   operations["apiSessionGet"]["responses"]["200"]["content"]["application/json"];
 
 export async function authSession(ctx: SchoolboxContext) {
-  const { fetch, domain, jwt } = ctx;
+  const { domain, jwt, fetch } = ctx;
 
   const response = await fetch(
     `https://${domain}/api/session?jwt=${encodeURIComponent(jwt)}`,

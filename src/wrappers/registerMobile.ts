@@ -6,7 +6,7 @@ type SchoolboxResponse =
 export async function registerMobile(
   ctx: SchoolboxContext,
 ): Promise<SchoolboxResponse> {
-  const { fetch, domain, jwt } = ctx;
+  const { domain, jwt, fetch } = ctx;
 
   const response = await fetch(`https://${domain}/api/register/Firebase`, {
     method: "POST",
