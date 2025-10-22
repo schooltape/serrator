@@ -165,8 +165,12 @@ describe("websocket", () => {
     });
 
     ws.fetch(1);
-    await new Promise((resolve) => {
-      ws?.onMessage(resolve);
+    await new Promise<void>((resolve) => {
+      ws?.onMessage((msg) => {
+        if ("fetch" in msg) {
+          resolve();
+        }
+      });
       setTimeout(resolve, 1000);
     });
 
