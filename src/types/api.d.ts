@@ -901,10 +901,13 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get full calendar events for a given user
-         * @description Returns a list of calendar events for the user, including classes, pastoral care, ensembles, activities, due work, excursions, assemblies, and other scheduled items.
+         * Get calendar events
+         * @description Retrieve calendar events for a given user and date range.  Maximum recommended range is 1 month.
+         *
+         *     This mirrors the data returned by the calendar ajax endpoint and is
+         *     used to populate the calendar UI. Results include timetable, resource booking, school and individual events.
          */
-        get: operations["getCalendarAjaxFull"];
+        get: operations["calendarAjax.getFull"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2406,8 +2409,34 @@ export interface components {
              *
              *     This token is passed to the Schoolbox API according to the "BearerAuth"
              *     security scheme (i.e. in a HTTP header `Authorization: Bearer $token`).
+             * @example 3MiOiJ2YWdyYW50LmRldi5zY2hvb2xib3guY2xvdWQiLCJzdWIiOiJhbGFyZXNzIiwianRpIjoiZDM1N...
              */
             token?: string;
+            /**
+             * @description The creation datetime for the token.
+             * @example Nov 11, 2025 2:45pm
+             */
+            createdAt?: string;
+            /**
+             * @description The datetime when the token expires. Will be `null` for indefinite token lifetime.
+             * @example Dec 25, 2025 3:45pm
+             */
+            expiry?: string;
+            /**
+             * @description The user who created the token.
+             * @example John Smith
+             */
+            createdBy?: string;
+            /**
+             * @description The identifier of the JWT.
+             * @example u82jddg5-ky61-z9w3-0098-334hxb27dhg0
+             */
+            jwtId?: string;
+            /**
+             * @description This is `true` when a JWT was either generated for the user, or it already existed for the user.
+             * @example true
+             */
+            showExisting?: boolean;
         };
         /** Writable Group Membership Fields */
         "userGroupMembership-writableFields": {
@@ -2776,100 +2805,163 @@ export interface components {
          * @enum {integer}
          */
         queryBoolean: 0 | 1;
-        eventAjaxData: {
-            meta?: {
-                /** @description Unique identifier for the event. */
-                eventId?: number;
-                /**
-                 * @description Human-readable time range for the event.
-                 * @example 9:00am–9:00pm
-                 */
-                time?: string;
-                /** @description Title of the event. */
-                title?: string;
-                /** @description More details about the event. */
-                detail?: string;
-                /** @description Location name or description. */
-                location?: string;
-                eventType?: string;
-                variant?: string;
-                /**
-                 * @description Event category or type.
-                 * @example Sport
-                 */
-                type?: string;
-                author?: string;
-                authorId?: number;
-                level?: string;
-                /** @description Whether the event is completed. */
-                completed?: boolean;
-                /** @description Name of the folder associated with the event. */
-                folderName?: string;
-                /** @description ID of the folder associated with the event. */
-                folderId?: number;
-                workType?: string;
-                /** @description ID of the work type. */
-                workTypeId?: number;
-                weighted?: number;
-                /**
-                 * @description Assessment type.
-                 * @example project
-                 */
-                assessmentType?: string;
-                /** @description Colour associated with the event. */
-                colour?: string | null;
-                /** @description Whether the event is editable. */
-                editable?: boolean;
-            };
-            links?: {
-                category?: {
-                    id?: number;
-                    name?: string;
+        /**
+         * @description The status of the user's attendance.
+         *
+         *     * null: user is not invited to this event
+         *     * 1: user has not yet responded to the invitation
+         *     * 2: user has accepted the invitation
+         *     * 3: user has declined the invitation
+         */
+        calendarAttendanceStatus: number | null;
+        ajaxEvent: {
+            /** @description Optional resource identifier for resource-timeline views. */
+            resourceId?: (string | number) | null;
+            /**
+             * @description Display title of the event.
+             * @example Staff Meeting
+             */
+            title: string;
+            /**
+             * @description Start in RFC3339 date-time or date (YYYY-MM-DD) format if all day.
+             * @example 2025-10-01T16:00:00+11:00
+             */
+            start: string;
+            /**
+             * @description End in RFC3339 date-time or date (YYYY-MM-DD) format if all day.
+             * @example 2025-10-01T17:00:00+11:00
+             */
+            end: string;
+            /**
+             * @description Whether the event is editable for the current user.
+             * @example true
+             */
+            editable: boolean;
+            /**
+             * @description Whether the event spans the whole day.
+             * @example false
+             */
+            allDay: boolean;
+            /**
+             * @description CSS color string for the event.
+             * @example #29839e
+             */
+            color: string;
+            /**
+             * @description Space-separated CSS classes that describe the event source/type/level.  Useful for client side filtering.
+             * @example source1 type3 campus1
+             */
+            className: string;
+            /** @description Additional metadata and links used by the calendar UI. */
+            data: {
+                /** @description Event metadata used by the UI and links. */
+                meta?: {
+                    /**
+                     * @description Whether this event is editable by the current user.
+                     * @example true
+                     */
+                    editable?: boolean;
+                    /**
+                     * @description Identifier of the event (may be an integer id or external string id).
+                     * @example 178
+                     */
+                    eventId?: number | string;
+                    /**
+                     * @description Human-readable time range.
+                     * @example 4:00pm&ndash;5:00pm
+                     */
+                    time?: string;
+                    /** @description Additional details for the event. May contain HTML markup. */
+                    detail?: string;
+                    /**
+                     * @description Location or room for the event.
+                     * @example Staffroom
+                     */
+                    location?: string;
+                    /**
+                     * @description Event type id.
+                     * @example 3
+                     */
+                    eventTypeId?: number;
+                    /**
+                     * @description Event type code as a CSS class string.
+                     * @example type3
+                     */
+                    eventType?: string;
+                    /**
+                     * @description Variant of the item. Typically "event".
+                     * @example event
+                     */
+                    variant?: string;
+                    /**
+                     * @description Friendly type or category label.
+                     * @example Meeting
+                     */
+                    type?: string;
+                    /**
+                     * @description Name of the event author, if any.
+                     * @example Cecilia Cordonnier
+                     */
+                    author?: string;
+                    /**
+                     * @description Author id, or -1 if not applicable.
+                     * @example 12
+                     */
+                    authorId?: number;
+                    /**
+                     * @description Encoded classification e.g. source/type/level classes.
+                     * @example source1 type3 campus1
+                     */
+                    level?: string;
+                    /**
+                     * @description Whether the event has been completed (for task-like events).
+                     * @example false
+                     */
+                    completed?: boolean;
+                    /**
+                     * @description Series identifier when part of a repeating series.
+                     * @example 8
+                     */
+                    seriesId?: (number | string) | null;
                 };
-                path?: string;
-            };
-            styles?: {
-                /** @description Whether the event is visible. */
-                visible?: boolean;
-            };
-            attendance?: {
-                icon?: boolean;
-                status?: boolean;
-                requestButton?: boolean;
-                listButton?: boolean;
-            };
-            custom?: {
-                modifyLink?: boolean;
-                moreDetailsLink?: string;
-            };
-            timetable?: {
-                code?: string;
-                staff?: {
-                    [key: string]: string;
+                /** @description Related links for the event. */
+                links?: {
+                    category?: {
+                        /** @example -1 */
+                        id?: number;
+                        /** @example  */
+                        name?: string;
+                    };
+                    /**
+                     * @description Internal path to the event details page, if available.
+                     * @example /calendar/event/178
+                     */
+                    path?: string | null;
+                };
+                styles?: {
+                    /**
+                     * @description Extra style flags.
+                     * @example
+                     */
+                    visible?: string;
+                };
+                /** @description Attendance information when applicable. */
+                attendance?: {
+                    /** @example false */
+                    hasAttendance?: boolean;
+                    status?: {
+                        current?: components["schemas"]["calendarAttendanceStatus"];
+                    };
+                };
+                /** @description Class attendance link info, present for class events. */
+                classAttendance?: {
+                    url?: string | null;
+                    target?: string | null;
                 };
             };
         };
-        eventAjax: {
-            resourceId?: string | null;
-            /** @description The event title. */
-            title?: string;
-            /** @description Start time or date of the event (ISO 8601). */
-            start?: string;
-            /** @description End time or date of the event (ISO 8601). */
-            end?: string;
-            /** @description Whether the event is editable by the user. */
-            editable?: boolean;
-            /** @description Whether the event lasts all day. */
-            allDay?: boolean;
-            /**
-             * @description Hex code for the event color.
-             * @example #ff7537
-             */
-            color?: string;
-            className?: string;
-            /** @description Additional data related to the event. */
-            data?: components["schemas"]["eventAjaxData"];
-        }[];
+        /** @description A list of calendar events for the requested date range. */
+        ajaxEventList: components["schemas"]["ajaxEvent"][];
         eventCommonProps: {
             /**
              * @description Whether the event is an all day event.
@@ -3068,7 +3160,7 @@ export interface components {
                 type?: string;
                 /**
                  * @description CSS colour string
-                 * @example #ff7537
+                 * @example null
                  */
                 color?: string;
             };
@@ -3081,15 +3173,6 @@ export interface components {
             /** @description Array of user objects */
             guests?: components["schemas"]["userShort"][];
         } & components["schemas"]["eventCommonProps"];
-        /**
-         * @description The status of the user's attendance.
-         *
-         *     * null: user is not invited to this event
-         *     * 1: user has not yet responded to the invitation
-         *     * 2: user has accepted the invitation
-         *     * 3: user has declined the invitation
-         */
-        calendarAttendanceStatus: number | null;
         /**
          * Calendar event attendance
          * @description A record of the invitees to a calendar event, and whether or not they are
@@ -3883,7 +3966,7 @@ export interface components {
         /** Evidence */
         evidenceList: {
             /**
-             * @description evidence - discriminator for Evidence object
+             * @description moment - discriminator for learning moment object
              * @example evidence
              */
             discriminator: string;
@@ -5743,13 +5826,13 @@ export interface components {
             };
             content?: never;
         };
-        /** @description A list of calendar events */
-        "event-list": {
+        /** @description A list of calendar events for the requested date range. */
+        "calendarAjaxEvent-list": {
             headers: {
                 [name: string]: unknown;
             };
             content: {
-                "application/json": components["schemas"]["eventAjax"];
+                "application/json": components["schemas"]["ajaxEventList"];
             };
         };
         /** @description Calendar event attendance. */
@@ -6040,6 +6123,25 @@ export interface components {
         compactMode: components["schemas"]["queryBoolean"];
         /** @description Limit of results to show per page */
         "news-limit": number;
+        /**
+         * @description Start of the date range (inclusive) as a UNIX timestamp in seconds.
+         *
+         *     This is used to bound the range of calendar events returned.
+         */
+        start: number;
+        /**
+         * @description End of the date range (exclusive) as a UNIX timestamp in seconds.
+         *
+         *     This is used to bound the range of calendar events returned.
+         */
+        end: number;
+        /** @description The user ID whose calendar events should be retrieved. */
+        userId: number;
+        /**
+         * @description Optional folder ID. When supplied, the endpoint will only include events
+         *     associated with the group identified by this folderId.
+         */
+        folderId: number;
         /** @description A keyword to search for. */
         keyword: string;
         /** @description A JSON-encoded object representing a list of values to search for. */
@@ -6237,11 +6339,12 @@ export interface components {
                      *
                      *     The variables within each audience string have this meaning:
                      *     * `$entityType` is the type of audience: currently out of
-                     *       `campus`, `folder`, `role`, `school_house`, `year`
+                     *       `campus`, 'fixturesteam', `folder`, `role`, `school_house`, `user`, `year`
                      *     * `$entityValue` is the identifier for the audience, JSON-encoded
                      *       then base64-encoded
                      *     * `$relationship` is the users who are actually in the identified
                      *       audience:
+                     *
                      *       * `self` for the users associated directly with the audience
                      *       * `teachers_of` for the teachers of users in the audience
                      *       * `parents_of` for the parents of users in the audience
@@ -6252,6 +6355,7 @@ export interface components {
                      *     Examples:
                      *     * `campus:IjEi:self` is a simple audience, targeting users in campus
                      *       ID 1
+                     *     * `user:IjIi:self,user:IjI4Ig==:self` is a simple audience, targeting user ID 2 and user ID 28
                      *     * `folder:IjU1Ig==:parents_of` is a simple audience, targeting
                      *       parents of users in folder ID 55
                      *     * `folder:IjU1Ig==:parents_of` is a simple audience, targeting
@@ -7982,18 +8086,28 @@ export interface operations {
             default: components["responses"]["problem"];
         };
     };
-    getCalendarAjaxFull: {
+    "calendarAjax.getFull": {
         parameters: {
             query: {
-                /** @description The ID of the user for whom to retrieve calendar events. */
-                userId: components["schemas"]["id"];
-                /** @description Unix timestamp representing the start of the date range for which to retrieve calendar events. */
-                start?: number;
-                /** @description Unix timestamp representing the end of the date range for which to retrieve calendar events. */
-                end?: number;
-                componentInstanceId?: components["schemas"]["id"];
-                /** @description If true, only timetable-based events are returned. */
-                timetableCalendar?: boolean;
+                /**
+                 * @description Start of the date range (inclusive) as a UNIX timestamp in seconds.
+                 *
+                 *     This is used to bound the range of calendar events returned.
+                 */
+                start: components["parameters"]["start"];
+                /**
+                 * @description End of the date range (exclusive) as a UNIX timestamp in seconds.
+                 *
+                 *     This is used to bound the range of calendar events returned.
+                 */
+                end: components["parameters"]["end"];
+                /** @description The user ID whose calendar events should be retrieved. */
+                userId: components["parameters"]["userId"];
+                /**
+                 * @description Optional folder ID. When supplied, the endpoint will only include events
+                 *     associated with the group identified by this folderId.
+                 */
+                folderId?: components["parameters"]["folderId"];
             };
             header?: never;
             path?: never;
@@ -8001,7 +8115,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            200: components["responses"]["event-list"];
+            200: components["responses"]["calendarAjaxEvent-list"];
             default: components["responses"]["problem"];
         };
     };
