@@ -70,6 +70,7 @@ export interface SchoolboxNotification {
   body: string;
   unread: boolean;
   date: Date;
+  action: "posted" | "marked" | "opened"; // These are the only actions I can find, may be more
 }
 
 namespace SchoolboxTimetable {

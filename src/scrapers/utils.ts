@@ -97,6 +97,14 @@ export function getNotification(el: Element): SchoolboxNotification {
 
   const date = parse(dateString, "EEEE d MMMM yyyy h:mma", new Date());
 
+
+  const action = body.includes("posted")
+    ? "posted"
+    : body.includes("marked")
+      ? "marked"
+      : "opened";
+  
+
   return {
     link,
     imgUrl,
@@ -104,5 +112,6 @@ export function getNotification(el: Element): SchoolboxNotification {
     body,
     unread,
     date,
+    action
   };
 }
