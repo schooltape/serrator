@@ -61,7 +61,7 @@ export function getCard(el: Element): SchoolboxCard {
 }
 
 export function getNotification(el: Element): SchoolboxNotification {
-  const link = el.querySelector(".card > a")?.getAttribute("href") || undefined;
+  const link = el.querySelector(".card > a")?.getAttribute("href");
 
   if (!link) throw new Error("link expected");
 
