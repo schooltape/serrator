@@ -16,13 +16,13 @@ describe("getNotifications", () => {
     expect(Array.isArray(result)).toBe(true);
     expect(result.length).toBeGreaterThan(0);
 
-    result.forEach((cls) => {
-      expect(cls.link).toBeString();
-      expect(cls.body).toBeString();
-      expect(cls.unread).toBeBoolean();
-      expect(cls.date).toBeDate();
+    result.forEach((notif) => {
+      expect(notif.link).toBeString();
+      expect(notif.body).toBeString();
+      expect(notif.unread).toBeBoolean();
+      expect(notif.date).toBeDate();
 
-      if (cls.action === null) console.warn("unknown action for:", cls);
+      if (notif.action === null) console.warn("unknown action for:", notif);
     });
   });
 });
