@@ -66,11 +66,11 @@ export interface SchoolboxNavLink {
 export interface SchoolboxNotification {
   link: string;
   imgUrl?: string;
-  userIds: string[]; // Can have mulitple users, e.g. squashed posts on a social stream
+  userIds: string[]; // can have mulitple users, e.g. squashed posts on a social stream
   body: string;
   unread: boolean;
   date: Date;
-  action: "posted" | "marked" | "opened"; // These are the only actions I can find, may be more
+  action: "posted" | "replied" | "opened" | "marked" | "overdue" | null;
 }
 
 namespace SchoolboxTimetable {

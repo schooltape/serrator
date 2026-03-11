@@ -97,13 +97,17 @@ export function getNotification(el: Element): SchoolboxNotification {
 
   const date = parse(dateString, "EEEE d MMMM yyyy h:mma", new Date());
 
+  // exclude within double quotes as it may contain the action keywords
+  const header = body.replace(/"[^"]*"/g, "")?.trim() ?? "";
 
-  const action = body.includes("posted")
-    ? "posted"
-    : body.includes("marked")
-      ? "marked"
-      : "opened";
-  
+
+  const action =
+    header.includes("posted") ? "posted" :
+    header.includes("replied") ? "replied" :
+    header.includes("opened") ? "opened" :
+    header.includes("marked") ? "marked" :
+    header.includes("overdue") ? "overdue" :
+    null;
 
   return {
     link,
