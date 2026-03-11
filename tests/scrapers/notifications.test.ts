@@ -3,7 +3,7 @@ import { ctx } from "@/env";
 import { type SchoolboxNotification } from "@/types";
 import { getNotifications } from "@/scrapers";
 
-describe("getNotificationes", () => {
+describe("getNotifications", () => {
   let result: SchoolboxNotification[];
 
   beforeAll(async () => {
