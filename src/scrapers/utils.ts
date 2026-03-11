@@ -1,4 +1,9 @@
-import type { SchoolboxCard, SchoolboxTile, SchoolboxTileGroup } from "@/types";
+import type {
+  SchoolboxCard,
+  SchoolboxNotification,
+  SchoolboxTile,
+  SchoolboxTileGroup,
+} from "@/types";
 
 export function getUrlFromCss(css: string) {
   return css.match(/"(.*?)"/)?.[1] ?? "";
@@ -50,5 +55,40 @@ export function getCard(el: Element): SchoolboxCard {
     code,
     name,
     imageUrl,
+  };
+}
+
+export function getNotification(el: Element): SchoolboxNotification {
+  const link = el.querySelector(".card > a")?.getAttribute("href") || undefined;
+
+  if (!link) throw new Error("link expected");
+
+  const imgUrl =
+    el.querySelector(".card > a > img")?.getAttribute("src") || undefined;
+
+  /*
+    get all links
+    filter out those that don't have 'user' in them (generally the main content link)
+    user regex to extract userId from link, e.g. /search/user/1234 -> 1234
+    filter out undefined
+  */
+  const userIds = Array.from(el.querySelectorAll(".card > .body > a"))
+    .map((link) => link.getAttribute("href"))
+    .filter((href) => href?.includes("user"))
+    .map((href) => href?.match(/\d+$/)?.[0])
+    .filter((id) => id !== undefined);
+
+  const body = el.querySelector(".card > .body")?.textContent.trim().replaceAll("\n", "");
+
+  if (!body) throw new Error("body expected");
+
+  const unread = el.classList.contains("unread");
+
+  return {
+    link,
+    imgUrl,
+    userIds,
+    body,
+    unread,
   };
 }
