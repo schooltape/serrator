@@ -69,6 +69,7 @@ export interface SchoolboxNotification {
   userIds: string[]; // Can have mulitple users, e.g. squashed posts on a social stream
   body: string;
   unread: boolean;
+  date: Date;
 }
 
 namespace SchoolboxTimetable {

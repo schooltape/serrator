@@ -5,6 +5,8 @@ import type {
   SchoolboxTileGroup,
 } from "@/types";
 
+import { parse } from "date-fns";
+
 export function getUrlFromCss(css: string) {
   return css.match(/"(.*?)"/)?.[1] ?? "";
 }
@@ -78,11 +80,22 @@ export function getNotification(el: Element): SchoolboxNotification {
     .map((href) => href?.match(/\d+$/)?.[0])
     .filter((id) => id !== undefined);
 
-  const body = el.querySelector(".card > .body")?.textContent.trim().replaceAll("\n", "");
+  const body = el
+    .querySelector(".card > .body")
+    ?.textContent.trim()
+    .replaceAll("\n", "");
 
   if (!body) throw new Error("body expected");
 
   const unread = el.classList.contains("unread");
+
+  const dateString = el
+    .querySelector(".card > .meta > time")
+    ?.getAttribute("title");
+
+  if (!dateString) throw new Error("date expected");
+
+  const date = parse(dateString, "EEEE d MMMM yyyy h:mma", new Date());
 
   return {
     link,
@@ -90,5 +103,6 @@ export function getNotification(el: Element): SchoolboxNotification {
     userIds,
     body,
     unread,
+    date,
   };
 }

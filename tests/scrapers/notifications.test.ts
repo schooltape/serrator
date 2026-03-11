@@ -20,6 +20,7 @@ describe("getNotificationes", () => {
       expect(cls.link).toBeString();
       expect(cls.body).toBeString();
       expect(cls.unread).toBeBoolean();
+      expect(cls.date).toBeDate();
     });
   });
 });
