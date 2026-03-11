@@ -1164,7 +1164,7 @@ export interface paths {
                      * @example dueWork
                      * @enum {string}
                      */
-                    assessmentType?: "task" | "quiz" | "dueWork" | "LTI" | "project";
+                    assessmentType?: "task" | "quiz" | "dueWork" | "LTI" | "project" | "dialogAgent";
                     folder?: ({
                         /**
                          * @description ID of the folder containing the assessment.
@@ -1903,6 +1903,42 @@ export interface paths {
         get: operations["groupGetUsersInGroup"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/differentiation-profiles/student/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description The ID of an item to act upon.
+                 *
+                 *     The type of item that is acted upon is dependent on the endpoint in which
+                 *     it is included.
+                 */
+                id: components["parameters"]["id"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Get a differentiation profile
+         * @description Retrieve the differentiation profile for a specific student.
+         */
+        get: operations["getDifferentiationProfile"];
+        /**
+         * Update a differentiation profile
+         * @description Update an existing differentiation profile.
+         */
+        put: operations["updateDifferentiationProfile"];
+        /**
+         * Create a differentiation profile
+         * @description Create a new differentiation profile.
+         */
+        post: operations["createDifferentiationProfile"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3504,7 +3540,7 @@ export interface components {
              * @example task
              * @enum {string}
              */
-            assessmentType?: "dueWork" | "quiz" | "task" | "project" | "LTI" | "lessonPlan";
+            assessmentType?: "dueWork" | "quiz" | "task" | "project" | "LTI" | "lessonPlan" | "dialogAgent";
             /** @description The folder where the assessment is found. */
             folder?: {
                 /** @description The ID of the folder. */
@@ -5399,6 +5435,122 @@ export interface components {
                 [key: string]: unknown;
             } | unknown[];
         };
+        /**
+         * A Differentiation Profile
+         * @description A Differentiation Profile object
+         */
+        differentiation: {
+            id: components["schemas"]["id"];
+            /**
+             * @description Status flags for the differentiation profile
+             * @example []
+             */
+            readonly status: ("unpopulated" | "expired" | "out-of-date")[];
+            /** @description The student associated with the differentiation profile */
+            student: {
+                /** @example 69 */
+                id?: number;
+                /** @example Eden Reed */
+                fullName?: string;
+                /** @example Eden */
+                givenName?: string;
+                /** @example Reed */
+                lastName?: string;
+                yearLevel?: {
+                    /** @example 4 */
+                    id?: number;
+                    /** @example 3 */
+                    name?: string;
+                };
+                _links?: {
+                    /** @example /search/user/69 */
+                    profile?: string;
+                };
+            };
+            /**
+             * @description Array of adjustment categories (if applicable)
+             * @example [
+             *       {
+             *         "id": 1,
+             *         "name": "Physical"
+             *       },
+             *       {
+             *         "id": 2,
+             *         "name": "Cognitive"
+             *       }
+             *     ]
+             */
+            adjustment_category?: {
+                id?: number;
+                name?: string;
+            }[] | null;
+            /**
+             * @description Array of adjustment levels (if applicable)
+             * @example [
+             *       {
+             *         "id": 1,
+             *         "name": "Extensive"
+             *       }
+             *     ]
+             */
+            adjustment_level?: {
+                id?: number;
+                name?: string;
+            }[] | null;
+            /**
+             * @description Overview of the differentiation profile (if applicable)
+             * @example null
+             */
+            overview?: string | null;
+            /**
+             * @description Interests and strengths (if applicable)
+             * @example null
+             */
+            interests_strengths?: string | null;
+            /**
+             * @description Needs and challenges (if applicable)
+             * @example null
+             */
+            needs_challenges?: string | null;
+            /**
+             * @description Strategies and adjustments (if applicable)
+             * @example null
+             */
+            strategies_adjustments?: string | null;
+            /**
+             * @description Goals for the student (if applicable)
+             * @example Goal 1: Improve reading comprehension.
+             */
+            goals?: string | null;
+            /** @description Related routes for the differentiation profile */
+            _routes?: {
+                /** @example /differentiation-profiles/linkedRecords/69 */
+                linkedRecords?: string | null;
+                /** @example /differentiation-profiles/create/69 */
+                create?: string | null;
+                /** @example /differentiation-profiles/edit/69 */
+                edit?: string | null;
+            };
+            created_at?: components["schemas"]["dateTimeString"];
+            /**
+             * @description Who created the profile
+             * @example Mr John Smith
+             */
+            created_by?: string;
+            updated_at?: components["schemas"]["dateTimeString"];
+            /**
+             * @description Who last updated the profile
+             * @example Mr John Smith
+             */
+            updated_by?: string;
+            /**
+             * Datetime
+             * Format: date-time
+             * @description When the profile was deleted (if applicable). The date as a RFC3339 string.
+             * @example null
+             */
+            deleted_at?: string | null;
+        };
     };
     responses: {
         /**
@@ -6027,6 +6179,12 @@ export interface components {
                          * @example Staff
                          */
                         role?: string;
+                        /**
+                         * @description The type of this role. Different role types have different levels of
+                         *     access to different parts of Schoolbox.
+                         * @enum {string}
+                         */
+                        roleType?: "staff" | "student" | "parent" | "guest";
                         /** @example true */
                         isStaff?: boolean;
                         /**
@@ -6052,6 +6210,15 @@ export interface components {
                         accessType?: "read" | "write" | "admin";
                     }[];
                 };
+            };
+        };
+        /** @description A differentiation profile object. */
+        differentiationProfile: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["differentiation"];
             };
         };
     };
@@ -6637,7 +6804,7 @@ export interface components {
                     tagNames?: string | null;
                     /**
                      * Format: float
-                     * @description Points of this pastoral record.
+                     * @description Points of this pastoral record. Setting this to null will remove the points value from the pastoral record.
                      */
                     points?: number | null;
                     /**
@@ -6688,6 +6855,57 @@ export interface components {
         "config-update": {
             content: {
                 "application/json": components["schemas"]["config-update"];
+            };
+        };
+        /** @description Differentiation profile object. */
+        differentiation: {
+            content: {
+                "application/json": {
+                    /** @description Array of adjustment category ids */
+                    adjustment_category?: {
+                        /** @example 1 */
+                        id?: number;
+                    }[] | null;
+                    /**
+                     * @description Array of adjustment level ids
+                     * @example [
+                     *       {
+                     *         "id": 3
+                     *       },
+                     *       {
+                     *         "id": 4
+                     *       }
+                     *     ]
+                     */
+                    adjustment_level?: {
+                        id?: number;
+                    }[] | null;
+                    /**
+                     * @description Overview of the differentiation profile (if applicable)
+                     * @example null
+                     */
+                    overview?: string | null;
+                    /**
+                     * @description Interests and strengths (if applicable)
+                     * @example null
+                     */
+                    interests_strengths?: string | null;
+                    /**
+                     * @description Needs and challenges (if applicable)
+                     * @example null
+                     */
+                    needs_challenges?: string | null;
+                    /**
+                     * @description Strategies and adjustments (if applicable)
+                     * @example null
+                     */
+                    strategies_adjustments?: string | null;
+                    /**
+                     * @description Goals for the student (if applicable)
+                     * @example Goal 1: Improve reading comprehension.
+                     */
+                    goals?: string | null;
+                };
             };
         };
     };
@@ -8427,7 +8645,7 @@ export interface operations {
                      * @example dueWork
                      * @enum {string}
                      */
-                    assessmentType?: "task" | "quiz" | "dueWork" | "LTI" | "project";
+                    assessmentType?: "task" | "quiz" | "dueWork" | "LTI" | "project" | "dialogAgent";
                     folder?: ({
                         /**
                          * @description ID of the folder containing the assessment.
@@ -9457,6 +9675,69 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["group-user-list"];
+            default: components["responses"]["problem"];
+        };
+    };
+    getDifferentiationProfile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description The ID of an item to act upon.
+                 *
+                 *     The type of item that is acted upon is dependent on the endpoint in which
+                 *     it is included.
+                 */
+                id: components["parameters"]["id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["differentiationProfile"];
+            default: components["responses"]["problem"];
+        };
+    };
+    updateDifferentiationProfile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description The ID of an item to act upon.
+                 *
+                 *     The type of item that is acted upon is dependent on the endpoint in which
+                 *     it is included.
+                 */
+                id: components["parameters"]["id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: components["requestBodies"]["differentiation"];
+        responses: {
+            200: components["responses"]["differentiationProfile"];
+            default: components["responses"]["problem"];
+        };
+    };
+    createDifferentiationProfile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description The ID of an item to act upon.
+                 *
+                 *     The type of item that is acted upon is dependent on the endpoint in which
+                 *     it is included.
+                 */
+                id: components["parameters"]["id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: components["requestBodies"]["differentiation"];
+        responses: {
+            201: components["responses"]["differentiationProfile"];
             default: components["responses"]["problem"];
         };
     };
