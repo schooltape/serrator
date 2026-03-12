@@ -1,0 +1,38 @@
+import { ctx } from "@/env";
+import { describe, it, expect, beforeAll } from "bun:test";
+import type { SchoolboxDashboard } from "./types";
+import { getDashboard } from ".";
+
+describe("getDashboard", () => {
+  let result: SchoolboxDashboard;
+
+  beforeAll(async () => {
+    result = await getDashboard(ctx);
+  });
+
+  it("can extract dashboard from /", () => {
+    // console.log(result);
+
+    expect(result).toBeDefined();
+
+    expect(result.navLinks).toBeArray();
+    for (const navLink of result.navLinks) {
+      expect(navLink.name).toBeString();
+      expect(navLink.link).toBeString();
+      expect(navLink.iconId).toBeString();
+    }
+
+    const tiles = result.tiles;
+    expect(tiles).toBeArray();
+    tiles.forEach((tileGroup) => {
+      // console.log(tileGroup);
+      expect(tileGroup).toBeArray();
+      expect(tileGroup.length).toBeGreaterThan(0);
+
+      tileGroup.forEach((tile) => {
+        expect(tile.title).toBeString();
+        expect(tile.link).toBeString();
+      });
+    });
+  });
+});
