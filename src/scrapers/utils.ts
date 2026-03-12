@@ -1,9 +1,4 @@
-import type {
-  SchoolboxCard,
-  SchoolboxNotification,
-  SchoolboxTile,
-  SchoolboxTileGroup,
-} from "@/types";
+import type { SchoolboxCard, SchoolboxNotification, SchoolboxTile, SchoolboxTileGroup } from "@/types";
 
 import { parse } from "date-fns";
 
@@ -13,11 +8,8 @@ export function getUrlFromCss(css: string) {
 
 export function getTileGroups(document: Document): SchoolboxTileGroup[] {
   return Array.from(document.querySelectorAll(".tileList")).map((tileGroup) => {
-    const tiles: SchoolboxTile[] = Array.from(
-      tileGroup.querySelectorAll<HTMLLIElement>("li.tile"),
-    ).map((tile) => {
-      const imageAttr =
-        document.defaultView?.getComputedStyle(tile).backgroundImage;
+    const tiles: SchoolboxTile[] = Array.from(tileGroup.querySelectorAll<HTMLLIElement>("li.tile")).map((tile) => {
+      const imageAttr = document.defaultView?.getComputedStyle(tile).backgroundImage;
       return {
         title: tile.querySelector(".title")?.textContent?.trim() || "",
         link: tile.querySelector("a")?.getAttribute("href") || "",
@@ -29,26 +21,18 @@ export function getTileGroups(document: Document): SchoolboxTileGroup[] {
 }
 
 export function getCard(el: Element): SchoolboxCard {
-  const url =
-    el.querySelector(".card-content > div > h3 > a")?.getAttribute("href") ||
-    undefined;
+  const url = el.querySelector(".card-content > div > h3 > a")?.getAttribute("href") || undefined;
 
   // get first text node of meta element
   const meta = el.querySelector(".card-content > div > p.meta");
-  const code =
-    meta?.childNodes[0]?.nodeType === 3
-      ? meta.childNodes[0].textContent?.trim()
-      : undefined;
+  const code = meta?.childNodes[0]?.nodeType === 3 ? meta.childNodes[0].textContent?.trim() : undefined;
 
   if (!code) throw new Error("card code expected");
 
-  const name = (
-    el.querySelector(".card-content > div > h3") as HTMLElement
-  ).textContent.trim();
+  const name = (el.querySelector(".card-content > div > h3") as HTMLElement).textContent.trim();
 
   const backgroundImage =
-    (el.querySelector(".card-content > div > div.card-image") as HTMLElement)
-      ?.style.backgroundImage || undefined;
+    (el.querySelector(".card-content > div > div.card-image") as HTMLElement)?.style.backgroundImage || undefined;
 
   const imageUrl = backgroundImage ? getUrlFromCss(backgroundImage) : undefined;
 
@@ -65,8 +49,7 @@ export function getNotification(el: Element): SchoolboxNotification {
 
   if (!link) throw new Error("link expected");
 
-  const imgUrl =
-    el.querySelector(".card > a > img")?.getAttribute("src") || undefined;
+  const imgUrl = el.querySelector(".card > a > img")?.getAttribute("src") || undefined;
 
   /*
     get all links
@@ -80,18 +63,13 @@ export function getNotification(el: Element): SchoolboxNotification {
     .map((href) => href?.match(/\d+$/)?.[0])
     .filter((id) => id !== undefined);
 
-  const body = el
-    .querySelector(".card > .body")
-    ?.textContent.trim()
-    .replaceAll("\n", "");
+  const body = el.querySelector(".card > .body")?.textContent.trim().replaceAll("\n", "");
 
   if (!body) throw new Error("body expected");
 
   const unread = el.classList.contains("unread");
 
-  const dateString = el
-    .querySelector(".card > .meta > time")
-    ?.getAttribute("title");
+  const dateString = el.querySelector(".card > .meta > time")?.getAttribute("title");
 
   if (!dateString) throw new Error("date expected");
 
@@ -100,14 +78,17 @@ export function getNotification(el: Element): SchoolboxNotification {
   // exclude within double quotes as it may contain the action keywords
   const header = body.replace(/"[^"]*"/g, "")?.trim() ?? "";
 
-
-  const action =
-    header.includes("posted") ? "posted" :
-    header.includes("replied") ? "replied" :
-    header.includes("opened") ? "opened" :
-    header.includes("marked") ? "marked" :
-    header.includes("overdue") ? "overdue" :
-    null;
+  const action = header.includes("posted")
+    ? "posted"
+    : header.includes("replied")
+      ? "replied"
+      : header.includes("opened")
+        ? "opened"
+        : header.includes("marked")
+          ? "marked"
+          : header.includes("overdue")
+            ? "overdue"
+            : null;
 
   return {
     link,
@@ -116,6 +97,6 @@ export function getNotification(el: Element): SchoolboxNotification {
     body,
     unread,
     date,
-    action
+    action,
   };
 }

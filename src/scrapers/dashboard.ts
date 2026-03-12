@@ -1,16 +1,10 @@
-import type {
-  SchoolboxNavLink,
-  SchoolboxDashboard,
-  SchoolboxContext,
-} from "@/types";
+import type { SchoolboxNavLink, SchoolboxDashboard, SchoolboxContext } from "@/types";
 import { getTileGroups } from "./utils";
 
 /**
  * route: /
  */
-export async function getDashboard(
-  ctx: SchoolboxContext,
-): Promise<SchoolboxDashboard> {
+export async function getDashboard(ctx: SchoolboxContext): Promise<SchoolboxDashboard> {
   const { domain, jwt, fetch, parser } = ctx;
 
   const document = await parser(
@@ -32,8 +26,7 @@ export async function getDashboard(
     const link = anchor?.getAttribute("href");
     const iconId = anchor?.className?.replace("icon-", "").trim();
 
-    if (!name || !link || !iconId)
-      throw new Error("missing required fields on nav link");
+    if (!name || !link || !iconId) throw new Error("missing required fields on nav link");
 
     return {
       name,

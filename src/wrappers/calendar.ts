@@ -2,17 +2,12 @@ import type { operations, SchoolboxContext } from "@/types";
 import { getUnixTime } from "date-fns";
 import { registerMobile } from "./registerMobile";
 
-type SchoolboxResponse =
-  operations["getCalendarAjaxFull"]["responses"]["200"]["content"]["application/json"];
+type SchoolboxResponse = operations["getCalendarAjaxFull"]["responses"]["200"]["content"]["application/json"];
 
 /**
  * route: /calendar/ajax/full
  */
-export async function getCalendar(
-  ctx: SchoolboxContext,
-  start: Date,
-  end: Date,
-): Promise<SchoolboxResponse> {
+export async function getCalendar(ctx: SchoolboxContext, start: Date, end: Date): Promise<SchoolboxResponse> {
   const { domain, jwt, fetch } = ctx;
 
   const result = await registerMobile(ctx);
@@ -34,10 +29,7 @@ export async function getCalendar(
     },
   });
 
-  if (!response.ok)
-    throw new Error(
-      `failed to fetch calendar data: ${response.status} ${response.statusText}`,
-    );
+  if (!response.ok) throw new Error(`failed to fetch calendar data: ${response.status} ${response.statusText}`);
 
   const data: SchoolboxResponse = await response.json();
   return data;

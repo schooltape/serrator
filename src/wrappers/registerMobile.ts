@@ -1,11 +1,8 @@
 import type { operations, SchoolboxContext } from "@/types";
 
-type SchoolboxResponse =
-  operations["mobileRegister"]["responses"]["201"]["content"]["application/json"];
+type SchoolboxResponse = operations["mobileRegister"]["responses"]["201"]["content"]["application/json"];
 
-export async function registerMobile(
-  ctx: SchoolboxContext,
-): Promise<SchoolboxResponse> {
+export async function registerMobile(ctx: SchoolboxContext): Promise<SchoolboxResponse> {
   const { domain, jwt, fetch } = ctx;
 
   const response = await fetch(`https://${domain}/api/register/Firebase`, {

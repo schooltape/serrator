@@ -1,17 +1,11 @@
-import type {
-  SchoolboxContext,
-  SchoolboxTimetableEvent,
-  operations,
-} from "@/types";
+import type { SchoolboxContext, SchoolboxTimetableEvent, operations } from "@/types";
 import { endOfWeek, getUnixTime, parseISO, startOfWeek } from "date-fns";
 import { registerMobile } from "./registerMobile";
 
 /**
  * route: /calendar/ajax/full
  */
-export async function getTimetable(
-  ctx: SchoolboxContext,
-): Promise<SchoolboxTimetableEvent[]> {
+export async function getTimetable(ctx: SchoolboxContext): Promise<SchoolboxTimetableEvent[]> {
   const { domain, jwt, fetch } = ctx;
 
   const result = await registerMobile(ctx);
@@ -36,10 +30,7 @@ export async function getTimetable(
     },
   });
 
-  if (!response.ok)
-    throw new Error(
-      `failed to fetch calendar data: ${response.status} ${response.statusText}`,
-    );
+  if (!response.ok) throw new Error(`failed to fetch calendar data: ${response.status} ${response.statusText}`);
 
   const data: operations["getCalendarAjaxFull"]["responses"]["200"]["content"]["application/json"] =
     await response.json();
@@ -47,15 +38,8 @@ export async function getTimetable(
 
   const events: SchoolboxTimetableEvent[] = [];
   for (const event of data) {
-    if (
-      !event.title ||
-      !event.start ||
-      !event.end ||
-      event.allDay === undefined
-    ) {
-      throw new Error(
-        `missing required fields in event: ${JSON.stringify(event)}`,
-      );
+    if (!event.title || !event.start || !event.end || event.allDay === undefined) {
+      throw new Error(`missing required fields in event: ${JSON.stringify(event)}`);
     }
 
     // skip over all-day events such as day markers

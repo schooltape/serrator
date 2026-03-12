@@ -1,20 +1,16 @@
 import type { operations, SchoolboxContext } from "@/types";
 
-type SchoolboxResponse =
-  operations["apiSessionGet"]["responses"]["200"]["content"]["application/json"];
+type SchoolboxResponse = operations["apiSessionGet"]["responses"]["200"]["content"]["application/json"];
 
 export async function authSession(ctx: SchoolboxContext) {
   const { domain, jwt, fetch } = ctx;
 
-  const response = await fetch(
-    `https://${domain}/api/session?jwt=${encodeURIComponent(jwt)}`,
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
+  const response = await fetch(`https://${domain}/api/session?jwt=${encodeURIComponent(jwt)}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
     },
-  );
+  });
 
   // console.log(response.status);
 

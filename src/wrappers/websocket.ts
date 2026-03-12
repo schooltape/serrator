@@ -27,10 +27,7 @@ export class SchoolboxWebSocket {
     this.#cookie = cookie;
   }
 
-  static async create(
-    url: string,
-    cookie: string,
-  ): Promise<SchoolboxWebSocket> {
+  static async create(url: string, cookie: string): Promise<SchoolboxWebSocket> {
     if (!cookie) throw new Error("cookie is required for WebSocket connection");
 
     const instance = new SchoolboxWebSocket(url, cookie);
@@ -41,15 +38,9 @@ export class SchoolboxWebSocket {
   #connect(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.#cleanup();
-      this.#setState(
-        this.#reconnectAttempts === 0
-          ? ConnectionState.CONNECTING
-          : ConnectionState.RECONNECTING,
-      );
+      this.#setState(this.#reconnectAttempts === 0 ? ConnectionState.CONNECTING : ConnectionState.RECONNECTING);
 
-      console.log(
-        `${this.#reconnectAttempts === 0 ? "connecting" : "reconnecting"} to websocket...`,
-      );
+      console.log(`${this.#reconnectAttempts === 0 ? "connecting" : "reconnecting"} to websocket...`);
 
       this.#ws = new WebSocket(this.#url, {
         headers: {
@@ -125,9 +116,7 @@ export class SchoolboxWebSocket {
       this.#reconnectAttempts++;
       const delay = this.#reconnectDelay * 2 ** (this.#reconnectAttempts - 1);
 
-      console.log(
-        `reconnect attempt ${this.#reconnectAttempts}/${this.#maxReconnectAttempts} in ${delay}ms`,
-      );
+      console.log(`reconnect attempt ${this.#reconnectAttempts}/${this.#maxReconnectAttempts} in ${delay}ms`);
 
       setTimeout(() => {
         this.#connect().catch((err) => {
@@ -144,10 +133,7 @@ export class SchoolboxWebSocket {
   #cleanup() {
     if (this.#ws) {
       this.#ws.removeAllListeners();
-      if (
-        this.#ws.readyState === WebSocket.OPEN ||
-        this.#ws.readyState === WebSocket.CONNECTING
-      ) {
+      if (this.#ws.readyState === WebSocket.OPEN || this.#ws.readyState === WebSocket.CONNECTING) {
         this.#ws.close();
       }
     }

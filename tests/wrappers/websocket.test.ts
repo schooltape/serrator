@@ -62,10 +62,7 @@ describe("websocket", () => {
         reject(err);
       });
 
-      setTimeout(
-        () => reject(new Error("did not receive subscribe:true")),
-        5000,
-      );
+      setTimeout(() => reject(new Error("did not receive subscribe:true")), 5000);
     });
 
     expect(lastMessage).toBe(JSON.stringify({ subscribe: true }));
@@ -127,9 +124,7 @@ describe("websocket", () => {
   });
 
   it.todo("handles 401 unauthorized cookie", () => {
-    return expect(
-      SchoolboxWebSocket.create(url, "invalid_cookie"),
-    ).rejects.toThrow("401 unauthorised: invalid cookie");
+    return expect(SchoolboxWebSocket.create(url, "invalid_cookie")).rejects.toThrow("401 unauthorised: invalid cookie");
   });
 
   it("closes the websocket and stops reconnection", async () => {

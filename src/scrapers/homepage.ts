@@ -4,12 +4,8 @@ import { getTileGroups } from "./utils";
 /**
  * route: /homepage/{id} or /homepage/code/{code}
  */
-export async function getHomepage(
-  ctx: SchoolboxContext,
-  pathname: string,
-): Promise<SchoolboxHomepage> {
-  if (!pathname.startsWith("/"))
-    throw new Error("expected pathname to begin with /");
+export async function getHomepage(ctx: SchoolboxContext, pathname: string): Promise<SchoolboxHomepage> {
+  if (!pathname.startsWith("/")) throw new Error("expected pathname to begin with /");
 
   const { domain, jwt, fetch, parser } = ctx;
 

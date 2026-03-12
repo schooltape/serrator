@@ -4,9 +4,7 @@ import { getNotification } from "./utils";
 /**
  * route: /notifications
  */
-export async function getNotifications(
-  ctx: SchoolboxContext,
-): Promise<SchoolboxNotification[]> {
+export async function getNotifications(ctx: SchoolboxContext): Promise<SchoolboxNotification[]> {
   const { domain, jwt, fetch, parser } = ctx;
 
   const document = await parser(

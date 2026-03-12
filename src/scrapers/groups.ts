@@ -3,9 +3,7 @@ import type { SchoolboxContext, SchoolboxGroup } from "@/types";
 /**
  * route: /groups#all-groups
  */
-export async function getGroups(
-  ctx: SchoolboxContext,
-): Promise<SchoolboxGroup[]> {
+export async function getGroups(ctx: SchoolboxContext): Promise<SchoolboxGroup[]> {
   const { domain, jwt, fetch, parser } = ctx;
 
   const document = await parser(
@@ -17,9 +15,7 @@ export async function getGroups(
   );
 
   const groups = JSON.parse(
-    document
-      .querySelector("#manage-groups-container manage-groups")
-      ?.getAttribute(":groups") as string,
+    document.querySelector("#manage-groups-container manage-groups")?.getAttribute(":groups") as string,
   ) as SchoolboxGroup[];
 
   return groups;

@@ -4,9 +4,7 @@ import { getCard } from "./utils";
 /**
  * route: /learning/classes
  */
-export async function getClasses(
-  ctx: SchoolboxContext,
-): Promise<SchoolboxClass[]> {
+export async function getClasses(ctx: SchoolboxContext): Promise<SchoolboxClass[]> {
   const { domain, jwt, fetch, parser } = ctx;
 
   const document = await parser(
