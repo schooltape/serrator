@@ -11,7 +11,7 @@
   "scripts": {
     "check": "tsc --noEmit",
     "format": "prettier --write .",
-    "generate-types": "openapi-typescript ./api/openapi/openapi.yaml -o ./src/types/api.d.ts"
+    "generate-types": "openapi-typescript ./api/openapi/openapi.yaml -o ./src/api.d.ts"
   },
   "dependencies": {
     "date-fns": "^4.1.0",
