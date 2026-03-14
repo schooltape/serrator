@@ -9,6 +9,7 @@
   },
   "types": "./src/types/index.d.ts",
   "scripts": {
+    "check": "tsc --noEmit",
     "format": "prettier --write .",
     "generate-types": "openapi-typescript ./api/openapi/openapi.yaml -o ./src/types/api.d.ts"
   },
