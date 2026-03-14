@@ -19,7 +19,6 @@ Endpoints that are consumable by students:
 - `/news/{id}`
 - `/user/token`
 
-
 Documented endpoints that have not been tested:
 
 - `/api/register/{provider}`
