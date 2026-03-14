@@ -1,6 +1,5 @@
 import * as dotenv from "dotenv";
 import { JSDOM } from "jsdom";
-import type { SchoolboxContext } from "./types";
 
 dotenv.config();
 
@@ -14,6 +13,13 @@ function getEnv(name: string): string {
 
 export const DOMAIN = getEnv("DOMAIN");
 export const JWT = getEnv("JWT");
+
+export interface SchoolboxContext {
+  domain: string;
+  jwt: string;
+  fetch: typeof globalThis.fetch;
+  parser: (res: Response) => Promise<Document>;
+}
 
 export const ctx: SchoolboxContext = {
   domain: DOMAIN,
