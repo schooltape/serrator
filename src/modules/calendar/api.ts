@@ -1,6 +1,6 @@
 import { getUnixTime } from "date-fns";
 import { registerMobile } from "../registerMobile/api";
-import type { SchoolboxContext } from "@/types";
+import type { SchoolboxContext } from "@/env";
 
 // TODO: type response
 /**

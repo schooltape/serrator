@@ -1,5 +1,5 @@
 import type { operations } from "@/api";
-import type { SchoolboxContext } from "@/types";
+import type { SchoolboxContext } from "@/env";
 
 type SchoolboxResponse = operations["mobileRegister"]["responses"]["201"]["content"]["application/json"];
 

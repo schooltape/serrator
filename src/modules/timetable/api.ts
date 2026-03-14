@@ -1,7 +1,7 @@
 import { endOfWeek, getUnixTime, parseISO, startOfWeek } from "date-fns";
 import type { SchoolboxTimetableEvent } from "./types";
 import { registerMobile } from "../registerMobile";
-import type { SchoolboxContext } from "@/types";
+import type { SchoolboxContext } from "@/env";
 
 /**
  * route: /calendar/ajax/full

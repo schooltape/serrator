@@ -1,4 +1,4 @@
-import type { SchoolboxContext } from "@/types";
+import type { SchoolboxContext } from "@/env";
 import { getCard } from "@/utils";
 import type { SchoolboxClass } from "./types";
 

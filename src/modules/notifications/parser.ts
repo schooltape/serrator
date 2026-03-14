@@ -1,4 +1,4 @@
-import type { SchoolboxContext } from "@/types";
+import type { SchoolboxContext } from "@/env";
 import type { SchoolboxNotification } from "./types";
 import { getNotification } from "@/utils";
 
